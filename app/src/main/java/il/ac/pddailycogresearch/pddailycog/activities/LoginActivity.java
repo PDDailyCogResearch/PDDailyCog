@@ -107,4 +107,10 @@ public class LoginActivity extends AppCompatActivity {
     private void onError(@StringRes int msgID) {
         CommonUtils.showMessage(this, msgID);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CommonUtils.closeApp(this);
+    }
 }

@@ -28,10 +28,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         if (!FirebaseIO.getInstance().isUserLogged())
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        
     }
 
     @OnClick({R.id.mainButtonOk,R.id.buttonMainOpenQuestionnaire})
