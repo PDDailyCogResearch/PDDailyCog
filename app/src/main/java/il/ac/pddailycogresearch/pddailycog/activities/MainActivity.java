@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mainButtonOk:
-                startActivity(new Intent(MainActivity.this, AirplaneModeRequestActivity.class));
+                //TODO fix before sending
+               // startActivity(new Intent(MainActivity.this, AirplaneModeRequestActivity.class));
+                startActivity(new Intent(MainActivity.this, DrinkChoreActivity.class));
                 break;
             case R.id.buttonMainOpenQuestionnaire:
                 startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class));
