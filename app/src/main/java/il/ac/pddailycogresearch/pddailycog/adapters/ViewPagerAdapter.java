@@ -12,14 +12,16 @@ import il.ac.pddailycogresearch.pddailycog.fragments.RadioQuestionFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private static final int COUNT = 15;
-    public ViewPagerAdapter(FragmentManager fm) {
+    private int activityChoreNum;
+    public ViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
         super(fm);
+        this.activityChoreNum=activityChoreNum;
     }
 
     @Override
     public Fragment getItem(int position) {
         Fragment currentFragment = null;
-        currentFragment = RadioQuestionFragment.newInstance(String.valueOf(position), "hi");
+        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
        /* switch (position) {
             case 0:
                 currentFragment = RadioQuestionFragment.newInstance("0", "hi");

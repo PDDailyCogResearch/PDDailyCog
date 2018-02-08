@@ -34,6 +34,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
 
 
 public class TrialChoreActivity extends AppCompatActivity implements
@@ -114,6 +115,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         terminateChore();
+        MediaUtils.stopMediaPlayer(button_sound);
         super.onStop();
     }
 
@@ -184,7 +186,11 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void toggleMediaPlayer() {
-        if(mpori==null) {
+        MediaUtils.toggleMediaPlayer(getApplicationContext(),R.raw.trial_instrc_male_sound,button_sound);
+        if(MediaUtils.isPlaying()){
+            onSoundButtonClick();
+        }
+/*        if(mpori==null) {
             mpori = MediaPlayer.create(getApplicationContext(), R.raw.trial_instrc_male_sound);
         }
         if (mpori.isPlaying()) {
@@ -195,7 +201,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
             button_sound.setImageResource(R.drawable.stop_ic);
             mpori.start();
             onSoundButtonClick();
-        }
+        }*/
     }
 
     private void replaceFragment(int nextPart) {
@@ -306,9 +312,10 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onInstructionFragmentDetach() {
         buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
         button_sound.setVisibility(View.GONE);
-        if (mpori!=null){
-            mpori.stop();
-        }
+        MediaUtils.stopMediaPlayer(button_sound);
+//        if (mpori!=null){
+//            mpori.stop();
+//        }
     }
 
     //takePictureFragment callback

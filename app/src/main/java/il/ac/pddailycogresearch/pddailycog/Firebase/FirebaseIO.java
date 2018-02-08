@@ -141,13 +141,13 @@ public class FirebaseIO {
         );
     }
 
-    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener){
+    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
         mUserReference.child(Consts.QUESTIONNAIRE_KEY).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         List<Integer> answers = new ArrayList<Integer>();
-                        for (DataSnapshot valSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot valSnapshot : dataSnapshot.getChildren()) {
                             answers.add(valSnapshot.getValue(Integer.class));
                         }
                         firebaseQuestionnaireListener.onAnswersRetreived(answers);
@@ -180,10 +180,35 @@ public class FirebaseIO {
         });
     }
 
-    public void saveQuestionnaireAnswer(int key, int value){
-        mUserReference.child(Consts.QUESTIONNAIRE_KEY).child(String.valueOf(key)).setValue(value);
+    public void saveKeyValuePair(String collection, int choreNum, String key, int value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
     }
-    public void saveQuestionnaireAnswer(List<Integer> answers){
+
+    public void saveIncrementalKeyValuePair(final String collection, final int choreNum, final String key, final long value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum)).child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        long prevValue = 0;
+                        if (dataSnapshot.exists()) {
+                            prevValue = dataSnapshot.getValue(Long.class);
+                        }
+                        long nextValue = prevValue + value;
+                        mUserReference.child(collection).child(String.valueOf(choreNum))
+                                .child(key).setValue(nextValue);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //TODO error handle
+                    }
+                }
+        );
+    }
+
+
+    public void saveQuestionnaireAnswer(List<Integer> answers) {
         mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
     }
 

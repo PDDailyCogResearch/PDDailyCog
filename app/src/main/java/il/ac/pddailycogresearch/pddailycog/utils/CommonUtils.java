@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.provider.Settings;
 import android.content.Intent;
@@ -13,10 +14,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -33,6 +36,8 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListen
  */
 
 public final class CommonUtils {
+
+    private static final String TAG = CommonUtils.class.getSimpleName();
 
     private CommonUtils(){
 
@@ -85,5 +90,20 @@ public final class CommonUtils {
         }
     }
 
+   /* public static int[] getIdArrayFromResources(Activity activity,@ArrayRes int arrayId) {
+        int[] idsArray;
+        TypedArray ta= activity.getResources().obtainTypedArray(arrayId);
+        int n = ta.length();
+        idsArray = new int[n];
+        for (int i = 0; i < n; ++i) {
+            int id = ta.getResourceId(i, 0);
+            if (id > 0) {
+                idsArray[i] = id;
+            } else {
+                Log.e(TAG,"array xml error");
+            }
+        }
+        return idsArray;
+    }*/
 
 }

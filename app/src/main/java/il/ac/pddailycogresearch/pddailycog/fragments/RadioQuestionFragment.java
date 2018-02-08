@@ -8,13 +8,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
+import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
+import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,18 +34,27 @@ import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 public class RadioQuestionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_POSITION = "position";
+    private static final String ARG_CHORE_NUM = "chore_num";
+    private static final String SELECTION_TAG = "selection";
+    private static final String TOTAL_TIME_TAG = "total-time";
     @BindView(R.id.textViewQuestionRadioFragment)
     TextView textViewQuestionRadioFragment;
     Unbinder unbinder;
+    @BindView(R.id.textViewInstructionRadioFragment)
+    TextView textViewInstructionRadioFragment;
+    @BindView(R.id.radioGroupRadioFragment)
+    RadioGroup radioGroupRadioFragment;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int position;
+    private int choreNum;
 
     private OnFragmentInteractionListener mListener;
-    private String mValue;
+
+    private int selection = -1;
+    private long currentSessionStartTime;
+    private long totalTime;
+    private JsonRadioButton question;
 
     public RadioQuestionFragment() {
         // Required empty public constructor
@@ -48,16 +64,16 @@ public class RadioQuestionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param position Parameter 1.
+     * @param choreNum Parameter 2.
      * @return A new instance of fragment RadioQuestionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RadioQuestionFragment newInstance(String param1, String param2) {
+    public static RadioQuestionFragment newInstance(int position, int choreNum) {
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_POSITION, position);
+        args.putInt(ARG_CHORE_NUM, choreNum);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,14 +82,15 @@ public class RadioQuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            position = getArguments().getInt(ARG_POSITION);
+            choreNum = getArguments().getInt(ARG_CHORE_NUM);
         }
-        if(savedInstanceState!=null) {
-            mValue = savedInstanceState.getString("1");
+        if (savedInstanceState != null) {
+            selection = savedInstanceState.getInt(SELECTION_TAG);
+            totalTime = savedInstanceState.getLong(TOTAL_TIME_TAG);
         }
-        else
-            mValue = CommonUtils.getTimeStamp();
+
+        //TODO take selection from db?
     }
 
     @Override
@@ -82,22 +99,61 @@ public class RadioQuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_radio_question, container, false);
         unbinder = ButterKnife.bind(this, view);
-        textViewQuestionRadioFragment.setText(mParam1+ " : "+mValue);
+        if(selection!=-1) {
+            mListener.enableNext();
+        }
+        initViews();
         return view;
+    }
+
+    private void initViews() {
+         question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + position);
+        if (question == null) {
+            textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
+            mListener.enableNext();
+            return;
+        }
+        textViewQuestionRadioFragment.setText(question.getQuestion());
+        textViewInstructionRadioFragment.setText(question.getInstruction());
+        initRadioGroup(question.getAnswer());
+
+    }
+
+    private void initRadioGroup(ArrayList<String> answers) {
+        View.OnClickListener radioButtonsListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {/*
+                int radioButtonID = radioGroupRatingFragment.getCheckedRadioButtonId();
+                View radioButton = radioGroupRatingFragment.findViewById(radioButtonID);*/
+                selection = radioGroupRadioFragment.indexOfChild(v);
+                mListener.enableNext();
+                //  mListener.onRatingChanged(idx + 1);
+            }
+        };
+
+        for (String answer : answers) {
+            // RadioButton rb = new RadioButton(getContext(),null,R.style.tryRadioButton);
+            RadioButton rb = (RadioButton) getLayoutInflater().inflate(R.layout.template_radiobutton, null);
+
+            rb.setText(answer);
+            rb.setOnClickListener(radioButtonsListener);
+            //  radioGroupRadioFragment.setId(radioGroupRadioFragment.getChildCount());
+
+            radioGroupRadioFragment.addView(rb);
+            if (radioGroupRadioFragment.indexOfChild(rb) == selection)
+                radioGroupRadioFragment.check(rb.getId());
+        }
+        //    radioGroupRadioFragment.setOrientation(LinearLayout.HORIZONTAL);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("1",mValue);
+        outState.putInt(SELECTION_TAG, selection);
+       /// calcTotalTime(); //because this method will occur before onStop()
+        outState.putLong(TOTAL_TIME_TAG, totalTime);
         super.onSaveInstanceState(outState);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -111,9 +167,39 @@ public class RadioQuestionFragment extends Fragment {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            currentSessionStartTime = System.currentTimeMillis();
+            if(mListener!=null&&(selection!=-1||question==null)){
+                mListener.enableNext();
+            }
+        }
+        else {
+            calcTotalTime();
+            saveToDb();
+        }
+    }
+
+
+    private void calcTotalTime() {
+        long elapsedTime = System.currentTimeMillis() - currentSessionStartTime;
+        totalTime = totalTime + elapsedTime;
+        currentSessionStartTime = System.currentTimeMillis();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
+       // saveToDb();
         mListener = null;
+    }
+
+    private void saveToDb() {
+        if (selection >= 0) {
+            FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, selection);
+        }
+        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.TIME_KEY_PREFIX + position, totalTime);
     }
 
     @Override
@@ -134,7 +220,7 @@ public class RadioQuestionFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void enableNext();
     }
 
 }

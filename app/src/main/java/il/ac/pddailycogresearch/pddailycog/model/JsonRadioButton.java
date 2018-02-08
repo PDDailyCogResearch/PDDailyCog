@@ -1,6 +1,6 @@
 package il.ac.pddailycogresearch.pddailycog.model;
 
-import android.text.style.QuoteSpan;
+import java.util.ArrayList;
 
 /**
  * Created by ggrot on 07/02/2018.
@@ -8,12 +8,12 @@ import android.text.style.QuoteSpan;
 
 public class JsonRadioButton {
     private String question;
-    private String instr;
-    private String answer;
+    private String instruction;
+    private ArrayList<String> answer;
 
-    public JsonRadioButton(String question, String instr, String answer) {
+    public JsonRadioButton(String question, String instr, ArrayList<String> answer) {
         this.question = question;
-        this.instr = instr;
+        this.instruction = instr;
         this.answer = answer;
     }
 
@@ -25,19 +25,19 @@ public class JsonRadioButton {
         this.question = question;
     }
 
-    public String getInstr() {
-        return instr;
+    public String getInstruction() {
+        return instruction;
     }
 
-    public void setInstr(String instr) {
-        this.instr = instr;
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
 
-    public String getAnswer() {
+    public ArrayList<String> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(ArrayList<String> answer) {
         this.answer = answer;
     }
 

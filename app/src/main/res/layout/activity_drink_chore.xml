@@ -7,15 +7,25 @@
     android:orientation="vertical"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.DrinkChoreActivity">
     <Button
-        android:id="@+id/buttonDrinkActivity"
+        android:id="@+id/buttonNextDrinkActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="next"/>
-    <Button
-        android:id="@+id/buttonDrinkActivity2"
+   <!-- <Button
+        android:id="@+id/buttonSoundDrinkActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="prev"/>
+        android:text="prev"/>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonSoundDrinkActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="15dp"
+        android:src="@drawable/sound_icon"
+        app:backgroundTint="@color/colorButtons"
+        app:fabSize="normal" />
     <il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager
         android:id="@+id/viewPagerDrinkActivity"
         android:layout_width="match_parent"
