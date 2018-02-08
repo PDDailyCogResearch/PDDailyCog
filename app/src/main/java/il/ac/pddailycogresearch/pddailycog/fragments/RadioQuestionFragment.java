@@ -1,7 +1,7 @@
 package il.ac.pddailycogresearch.pddailycog.fragments;
 //hi rotem:)
+
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -53,7 +53,6 @@ public class RadioQuestionFragment extends Fragment {
 
     private int selection = -1;
     private long currentSessionStartTime;
-    private long totalTime;
     private JsonRadioButton question;
 
     public RadioQuestionFragment() {
@@ -87,7 +86,6 @@ public class RadioQuestionFragment extends Fragment {
         }
         if (savedInstanceState != null) {
             selection = savedInstanceState.getInt(SELECTION_TAG);
-            totalTime = savedInstanceState.getLong(TOTAL_TIME_TAG);
         }
 
         //TODO take selection from db?
@@ -99,7 +97,7 @@ public class RadioQuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_radio_question, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if(selection!=-1) {
+        if (selection != -1) {
             mListener.enableNext();
         }
         initViews();
@@ -107,7 +105,7 @@ public class RadioQuestionFragment extends Fragment {
     }
 
     private void initViews() {
-         question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + position);
+        question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + position);
         if (question == null) {
             textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
             mListener.enableNext();
@@ -149,8 +147,6 @@ public class RadioQuestionFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt(SELECTION_TAG, selection);
-       /// calcTotalTime(); //because this method will occur before onStop()
-        outState.putLong(TOTAL_TIME_TAG, totalTime);
         super.onSaveInstanceState(outState);
     }
 
@@ -167,31 +163,48 @@ public class RadioQuestionFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (getUserVisibleHint()) {
+            currentSessionStartTime = System.currentTimeMillis();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (getUserVisibleHint() && !isResumed()) {
+            addTimeToDb();
+        }
+        saveToDb();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            currentSessionStartTime = System.currentTimeMillis();
-            if(mListener!=null&&(selection!=-1||question==null)){
-                mListener.enableNext();
+        if (isResumed()) {
+            if (isVisibleToUser) {
+                currentSessionStartTime = System.currentTimeMillis();
+                if (mListener != null && (selection != -1 || question == null)) {
+                    mListener.enableNext();
+                }
+            } else {
+                addTimeToDb();
             }
-        }
-        else {
-            calcTotalTime();
-            saveToDb();
         }
     }
 
 
-    private void calcTotalTime() {
+    private void addTimeToDb() {
         long elapsedTime = System.currentTimeMillis() - currentSessionStartTime;
-        totalTime = totalTime + elapsedTime;
+        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.TIME_KEY_PREFIX + position, elapsedTime);
         currentSessionStartTime = System.currentTimeMillis();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-       // saveToDb();
+        // saveToDb();
         mListener = null;
     }
 
@@ -199,7 +212,6 @@ public class RadioQuestionFragment extends Fragment {
         if (selection >= 0) {
             FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, selection);
         }
-        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.TIME_KEY_PREFIX + position, totalTime);
     }
 
     @Override
@@ -213,10 +225,6 @@ public class RadioQuestionFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
