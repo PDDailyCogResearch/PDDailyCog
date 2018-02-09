@@ -14,14 +14,14 @@ import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
-import il.ac.pddailycogresearch.pddailycog.fragments.RadioQuestionFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
 
 public class DrinkChoreActivity extends AppCompatActivity implements
         RadioQuestionFragment.OnFragmentInteractionListener {
 
-    private static final int CHORE_NUM = 2;
+    private static final int CHORE_NUM = 0;
     private static final String BACK_PRESS_NUM_TAG = "back_press_num";
 
     @BindView(R.id.viewPagerDrinkActivity)

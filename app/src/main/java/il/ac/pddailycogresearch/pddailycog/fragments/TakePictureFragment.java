@@ -8,22 +8,17 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
-import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,7 +30,7 @@ import static android.app.Activity.RESULT_OK;
  * to handle interaction events.
  */
 public class TakePictureFragment extends Fragment {
-    private static final String IMG_ANSOLUTE_PATH_TAG = "img_absolute_path";
+    private static final String IMG_ABSOLUTE_PATH_TAG = "img_absolute_path";
     private static final String IMG_URI_TAG = "img_uri";
     @BindView(R.id.imageViewTakePictureFragment)
     ImageView imageViewTakePictureFragment;
@@ -63,7 +58,7 @@ public class TakePictureFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_take_picture, container, false);
         if(savedInstanceState!=null) {
-            imgAbsolutePath = savedInstanceState.getString(IMG_ANSOLUTE_PATH_TAG);
+            imgAbsolutePath = savedInstanceState.getString(IMG_ABSOLUTE_PATH_TAG);
             imgUri = (Uri) savedInstanceState.getParcelable(IMG_URI_TAG);
         }
         unbinder = ButterKnife.bind(this, view);
@@ -101,7 +96,7 @@ public class TakePictureFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(IMG_ANSOLUTE_PATH_TAG,imgAbsolutePath);
+        outState.putString(IMG_ABSOLUTE_PATH_TAG,imgAbsolutePath);
         outState.putParcelable(IMG_URI_TAG,imgUri);
         super.onSaveInstanceState(outState);
     }

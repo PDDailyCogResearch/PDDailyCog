@@ -180,7 +180,44 @@ public class FirebaseIO {
         });
     }
 
+    public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(imageDbKey).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String path = (String) dataSnapshot.getValue();
+                            if (path != null && path.split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
+                                saveImage(Uri.parse(path),
+                                        new IOnFirebaseSaveImageListener() {
+                                            @Override
+                                            public void onImageSaved(Uri downloadUrl) {
+                                                saveKeyValuePair(collection, choreNum, imageDbKey, downloadUrl.toString());
+                                            }
+
+                                            @Override
+                                            public void onError(String msg) {
+                                                Log.e(TAG, msg);
+                                            }
+                                        });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
+    }
+
     public void saveKeyValuePair(String collection, int choreNum, String key, int value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
+    public void saveKeyValuePair(String collection, int choreNum, String key, String value) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(key).setValue(value);
     }

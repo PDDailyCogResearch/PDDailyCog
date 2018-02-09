@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import il.ac.pddailycogresearch.pddailycog.fragments.RadioQuestionFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 
 /**
  * Created by User on 07/02/2018.
@@ -13,15 +14,20 @@ import il.ac.pddailycogresearch.pddailycog.fragments.RadioQuestionFragment;
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private static final int COUNT = 15;
     private int activityChoreNum;
+
     public ViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
         super(fm);
-        this.activityChoreNum=activityChoreNum;
+        this.activityChoreNum = activityChoreNum;
     }
 
     @Override
     public Fragment getItem(int position) {
         Fragment currentFragment = null;
-        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
+        if (position == 0) {
+            currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
+        } else {
+            currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
+        }
        /* switch (position) {
             case 0:
                 currentFragment = RadioQuestionFragment.newInstance("0", "hi");

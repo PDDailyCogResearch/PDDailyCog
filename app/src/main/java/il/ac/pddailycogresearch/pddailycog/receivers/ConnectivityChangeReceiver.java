@@ -30,7 +30,13 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
         //act only if there is internet connection and if it is the first instance to react
         //needed because in airplane toggle happens few connectivity changes
         if(isNetworkAvailable(context)&&++race==1) {
-            saveChoreImageInDB(context);
+            FirebaseIO.getInstance().resaveImageByKey(
+                    Consts.CHORES_KEY, 0,Consts.RESULT_KEY_PREFIX+0
+            );
+            FirebaseIO.getInstance().resaveImageByKey(
+                    Consts.CHORES_KEY, 1,"resultImg"
+            );
+           // saveChoreImageInDB(context);
             Crashlytics.log("Receiver log");
             Crashlytics.logException(new Throwable("Receiver non-fatal"));
         }

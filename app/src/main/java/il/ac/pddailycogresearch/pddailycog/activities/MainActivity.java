@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.activities.simple.AirplaneModeRequestActivity;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainButtonOk)

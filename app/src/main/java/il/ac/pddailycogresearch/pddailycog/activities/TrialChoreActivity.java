@@ -318,7 +318,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
 //        }
     }
 
-    //takePictureFragment callback
+    //PhotographFragment callback
 
     @Override
     public void onPictureBeenTaken(String imgPath) {
