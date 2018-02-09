@@ -1,6 +1,7 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,7 +18,9 @@ import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
 
 public class DrinkChoreActivity extends AppCompatActivity implements
@@ -31,11 +34,15 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     Button buttonNextDrinkActivity;
     @BindView(R.id.buttonSoundDrinkActivity)
     FloatingActionButton buttonSoundDrinkActivity;
+    @BindView(R.id.buttonExit)
+    FloatingActionButton buttonExit;
 
     private ViewPagerAdapter adapter;
-    private MediaPlayer mpori;
+    //private MediaPlayer mpori;
     private int backPressNum;
     private int soundPressNum;
+    private int exitPressNum;
+
     private long currentSessionStartTime;
 
     @Override
@@ -54,7 +61,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         currentSessionStartTime = System.currentTimeMillis();
     }
 
-    @OnClick({R.id.buttonNextDrinkActivity, R.id.buttonSoundDrinkActivity})
+    @OnClick({R.id.buttonNextDrinkActivity, R.id.buttonSoundDrinkActivity, R.id.buttonExit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonNextDrinkActivity:
@@ -76,7 +83,26 @@ public class DrinkChoreActivity extends AppCompatActivity implements
                     soundPressNum++;
                 }
                 break;
+            case R.id.buttonExit:
+                exitPressNum++;
+                showExitAlertDialog();
+                break;
         }
+    }
+
+    private void showExitAlertDialog() {
+        DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
+                android.R.string.ok, android.R.string.cancel,
+                new IOnAlertDialogResultListener() {
+                    @Override
+                    public void onResult(boolean result) {
+                        if (result) {
+                            DialogUtils.createTurnOffAirplaneModeAlertDialog(DrinkChoreActivity.this);
+                            // finish();
+                            // CommonUtils.closeApp(TrialChoreActivity.this);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -116,6 +142,15 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     public void enableNext() {
         if (!buttonNextDrinkActivity.isEnabled()) {
             buttonNextDrinkActivity.setEnabled(true);
+            buttonNextDrinkActivity.setBackgroundColor(Color.parseColor("#4656AC"));
+        }
+    }
+
+    @Override
+    public void unenableNext() {
+        if (buttonNextDrinkActivity.isEnabled()) {
+            buttonNextDrinkActivity.setEnabled(false);
+            buttonNextDrinkActivity.setBackgroundColor(Color.parseColor("#979797"));
         }
     }
     //endregion

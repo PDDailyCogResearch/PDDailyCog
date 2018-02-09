@@ -142,6 +142,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void enableNext();
+        void unenableNext();
     }
 
 }

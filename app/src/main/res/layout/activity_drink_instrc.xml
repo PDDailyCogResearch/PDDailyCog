@@ -45,6 +45,7 @@
         android:layout_height="match_parent"
         android:text="@string/instruction_drink_instrc_activity"/>
     <Button
+        style="@style/StyleButton"
         android:id="@+id/buttonYesDrinkIstrcActivity"
         android:layout_above="@+id/buttonNoDrinkIstrcActivity"
         android:layout_width="match_parent"
@@ -52,6 +53,7 @@
         android:text="@string/yes"/>
 
     <Button
+        style="@style/StyleButton"
         android:layout_alignParentBottom="true"
         android:id="@+id/buttonNoDrinkIstrcActivity"
         android:layout_width="match_parent"
