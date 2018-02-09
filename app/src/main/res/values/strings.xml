@@ -59,6 +59,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="header_drink_instrc_activity">הנחיה</string>
+    <string name="instruction_drink_instrc_activity">לפניך משימה. יש לבצע אותה</string>
+    <string name="drink_instrc_dialog_explantion">באפשרותך לחזור אחורה על ידי לחיצה על החץ וכן ניתן לשמוע את ההוראה על ידי לחיצה על אייקון השמע -  \uD83D\uDD0A \nיש לשים לב שכל חזרה נרשמת. יש לנסות לבצע את המשימה עם כמה שפחות עזרה.</string>
+    <string name="yes">כן</string>
+    <string name="no"> לא</string>
 
 
 </resources>

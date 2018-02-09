@@ -12,7 +12,7 @@ import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFrag
  */
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private static final int COUNT = 15;
+    private static final int COUNT = 3;//TODO
     private int activityChoreNum;
 
     public ViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
@@ -23,7 +23,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment currentFragment = null;
-        if (position == 0) {
+        if (position == 0) { //TODO move to right position; in 0 just for development convience
             currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
         } else {
             currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);

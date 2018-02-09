@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainButtonOk:
                 //TODO fix before sending
                 // startActivity(new Intent(MainActivity.this, AirplaneModeRequestActivity.class));
-                startActivity(new Intent(MainActivity.this, DrinkChoreActivity.class));
+               // startActivity(new Intent(MainActivity.this, DrinkChoreActivity.class));
+                startActivity(new Intent(MainActivity.this, DrinkInstrcActivity.class));
                 break;
             case R.id.buttonMainOpenQuestionnaire:
                 startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class));

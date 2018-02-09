@@ -1,5 +1,5 @@
 package il.ac.pddailycogresearch.pddailycog.fragments.viewpager;
-//hi rotem:)
+//shabat shalom rotem!!
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -83,7 +83,8 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     }
 
     private void initViews() {
-        question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + position);
+        int positionPlus=position+1;//TODO better sulotion
+        question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + positionPlus);
         if (question == null) {
             textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
          //   mListener.enableNext();
@@ -138,7 +139,6 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
                 mListener.enableNext();
             }
         }
-
     }
 
 

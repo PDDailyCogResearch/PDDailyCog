@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.DrinkInstrcActivity">
+    <RelativeLayout
+        android:id="@+id/relativeLayoutUpDrink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        android:orientation="horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonSoundDrinkInstrcActivity"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:src="@drawable/sound_icon"
+            app:backgroundTint="@color/colorButtons"
+            app:fabSize="normal" />
+    </RelativeLayout>
+    <TextView
+        style="@style/StyleTextView"
+        android:textColor="@color/red_dark"
+        android:layout_below="@+id/relativeLayoutUpDrink"
+        android:id="@+id/textViewHeaderDrinkInstrcActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/header_drink_instrc_activity"/>
+    <TextView
+        style="@style/StyleTextView"
+
+        android:id="@+id/textViewInstrcDrinkInstrcActivity"
+        android:layout_below="@+id/textViewHeaderDrinkInstrcActivity"
+        android:layout_above="@+id/buttonYesDrinkIstrcActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/instruction_drink_instrc_activity"/>
+    <Button
+        android:id="@+id/buttonYesDrinkIstrcActivity"
+        android:layout_above="@+id/buttonNoDrinkIstrcActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/yes"/>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttonNoDrinkIstrcActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no"/>
+
+</RelativeLayout>
