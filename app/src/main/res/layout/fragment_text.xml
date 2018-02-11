@@ -5,14 +5,44 @@
     android:layout_height="wrap_content"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment">
 
+    <TextView
+        style="@style/StyleTextView"
+        android:id="@+id/textViewInstrc"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/drink_instr"
+        />
+
+    <RelativeLayout
+        style="@style/StyleLayuot"
+        android:layout_below="@+id/textViewInstrc"
+      >
     <EditText
         style="@style/StyleEditText"
         android:id="@+id/EditTextInputFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_text_input_hint"
-        android:inputType="number"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/textViewMinutes"
+        android:layout_toStartOf="@+id/textViewMinutes"
+        android:gravity="start"
+        android:inputType="number"/>
+
+        <TextView
+            style="@style/StyleTextView"
+            android:id="@+id/textViewMinutes"
+            android:gravity="end"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/drink_minutes"
+
+            />
+    </RelativeLayout>
 
 </RelativeLayout>

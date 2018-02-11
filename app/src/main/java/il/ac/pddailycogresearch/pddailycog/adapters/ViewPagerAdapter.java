@@ -13,7 +13,7 @@ import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
  */
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private static final int COUNT = 4;//TODO
+    private static final int COUNT = 13;//TODO
     private int activityChoreNum;
 
     public ViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
@@ -25,19 +25,29 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment currentFragment = null;
 
-         switch (position) {
-            case 1:
-                currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
-                break;
+        switch (position) {
             case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 8:
+            case 9:
+            case 11:
                 currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
                 break;
-            case 2:
+            case 6:
+            case 12:
                 currentFragment = TextFragment.newInstance(position, activityChoreNum);
                 break;
-             case 3:
-                 currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
-                 break;
+            case 7:
+            case 10:
+                currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
+                break;
+            case 5:
+                currentFragment = TextFragment.newInstance(position, activityChoreNum);
+
+
         }
         return currentFragment;
     }

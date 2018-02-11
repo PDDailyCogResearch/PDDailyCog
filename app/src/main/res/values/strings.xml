@@ -56,6 +56,12 @@
     <string name="stop">הפסק</string>
     <string name="answers_xml_error">אירעה שגיאה בתצורת התשובות לשאלון</string>
     <string name="wrong_username">שם המשתמש אינו תקין</string>
+    
+    <string name="drink_instr">הוצא/י בבקשה והנח/י על השיש: ספל, כפית, קפה או תה, סוכר או ממתיק, חלב או נענע או כל תוספת אחרת למשקה. כמה פריטים יש לך?</string>
+<string name="drink_time_valuate">כמה זמן אתה מעריך שלקח לך?</string>
+    <string name="drink_minutes">דקות</string>
+    <string name="dring_photo_instr">כעת צלם את כל הפריטים יחד</string>
+    <string name="dring_photo_dring_done">צלם את המשקה המוכן</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

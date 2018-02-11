@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -47,6 +48,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
     ImageView imageViewPhotographFragment;
     @BindView(R.id.buttonPhotographFragment)
     Button buttonPhotographFragment;
+    @BindView(R.id.textViewInstrcPhotographFragment)
+    TextView textViewInstrcPhotographFragment;
+
     Unbinder unbinder;
     private int takePicturesClickNum = 0;
 
@@ -77,6 +81,11 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
         //     mListener.enableNext();//TODO delete this, but aint power to take pictures all the timee
         setPictureToImageView();
+        if (secondPhoto) {
+            textViewInstrcPhotographFragment.setText(R.string.dring_photo_dring_done);
+        } else {
+            textViewInstrcPhotographFragment.setText(R.string.dring_photo_instr);
+        }
 
         return view;
     }

@@ -26,6 +26,9 @@ public abstract class BaseViewPagerFragment extends Fragment {
     protected int position;
     protected int choreNum;
 
+    protected boolean secondPhoto = false;
+    protected boolean secondText = false;
+
     protected OnFragmentInteractionListener mListener;
 
     private long currentSessionStartTime;
@@ -66,6 +69,9 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
         position = getArguments().getInt(ARG_POSITION);
         choreNum = getArguments().getInt(ARG_CHORE_NUM);
+
+        secondPhoto = position == 10;
+        secondText = position == 12;
 
         if (savedInstanceState != null) {
             restoreFromSavedInstanceState(savedInstanceState);
@@ -111,7 +117,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
         if (isResumed()) {
             if (isVisibleToUser) {
                 currentSessionStartTime = System.currentTimeMillis();
-                if(hasResult()){
+                if (hasResult()) {
                     mListener.enableNext();
                 }
             } else {
@@ -147,6 +153,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void enableNext();
+
         void unenableNext();
     }
 

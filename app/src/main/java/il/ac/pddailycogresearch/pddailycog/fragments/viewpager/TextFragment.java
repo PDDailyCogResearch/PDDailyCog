@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +18,8 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListene
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 
+
+
 /**
  * Created by ggrot on 09/02/2018.
  */
@@ -25,6 +28,10 @@ public class TextFragment extends BaseViewPagerFragment {
     private static final String PREVIOUS_TEXT_INPUT_LENGTH = "previous_text_input_length";
     @BindView(R.id.EditTextInputFragment)
     EditText EditTextInputFragment;
+    @BindView(R.id.textViewInstrc)
+    TextView textViewInstrc;
+    @BindView(R.id.textViewMinutes)
+    TextView textViewMinutes;
     Unbinder unbinder;
 
     public TextFragment() {
@@ -45,6 +52,14 @@ public class TextFragment extends BaseViewPagerFragment {
         unbinder = ButterKnife.bind(this, view);
         if(savedInstanceState==null){
             retreiveFromDb();
+        }
+        if(secondText){
+            textViewInstrc.setText(R.string.drink_time_valuate);
+            textViewMinutes.setVisibility(View.VISIBLE);
+        }
+        else {
+            textViewInstrc.setText(R.string.drink_instr);
+            textViewMinutes.setVisibility(View.INVISIBLE);
         }
         return view;
     }
