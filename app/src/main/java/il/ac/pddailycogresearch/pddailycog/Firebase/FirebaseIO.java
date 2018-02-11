@@ -2,6 +2,7 @@ package il.ac.pddailycogresearch.pddailycog.Firebase;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,15 +21,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
@@ -162,6 +167,98 @@ public class FirebaseIO {
         );
     }
 
+    public void retreieveStringValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnStringValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            String value = dataSnapshot.getValue(String.class);
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void retreieveIntValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnIntValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            Integer value = dataSnapshot.getValue(Integer.class);
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void retreieveLongValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnLongValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            Long value = dataSnapshot.getValue(Long.class);
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void downloadImg(final String url, final IOnFirebaseKeyValueListeners.OnStringValueListener listener) {
+        StorageReference islandRef = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+
+        File localFile = null;
+
+        try {
+            localFile = File.createTempFile("images", "jpg");
+            final String absolutePath = localFile.getAbsolutePath();
+
+            islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    listener.onValueRetrieved(absolutePath);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    listener.onError(exception);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void saveImage(Uri imageUri, final IOnFirebaseSaveImageListener onFirebaseSaveImageListener) {
         UploadTask uploadTask = mStorageReference.child(imageUri.getLastPathSegment()).putFile(imageUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -180,6 +277,7 @@ public class FirebaseIO {
         });
     }
 
+
     public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(imageDbKey).addListenerForSingleValueEvent(
@@ -187,7 +285,7 @@ public class FirebaseIO {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            String path = (String) dataSnapshot.getValue();
+                            String path = dataSnapshot.getValue(String.class);
                             if (path != null && path.split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
                                 saveImage(Uri.parse(path),
                                         new IOnFirebaseSaveImageListener() {

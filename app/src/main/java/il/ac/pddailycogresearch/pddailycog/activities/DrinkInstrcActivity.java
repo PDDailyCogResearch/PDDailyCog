@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 
 import butterknife.BindView;
@@ -47,7 +48,9 @@ public class DrinkInstrcActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.buttonYesDrinkIstrcActivity:
-                DialogUtils.createAlertDialog(this, R.string.reminder, R.string.drink_instrc_dialog_explantion, R.string.ok, android.R.string.cancel,
+
+                String explantionWithSpeaker = getString(R.string.drink_instrc_dialog_explantion, Consts.SPEAKER_EMOJI);
+                DialogUtils.createAlertDialog(this, R.string.reminder, explantionWithSpeaker, R.string.ok, android.R.string.cancel,
                         new IOnAlertDialogResultListener() {
                             @Override
                             public void onResult(boolean result) {

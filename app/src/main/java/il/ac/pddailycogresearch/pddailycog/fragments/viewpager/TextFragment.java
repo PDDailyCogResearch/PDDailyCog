@@ -13,6 +13,8 @@ import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
+import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 
 /**
@@ -41,16 +43,36 @@ public class TextFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_text, container, false);
         unbinder = ButterKnife.bind(this, view);
+        if(savedInstanceState==null){
+            retreiveFromDb();
+        }
         return view;
     }
 
-//TODO: after changing- if deleted unenableText
+    private void retreiveFromDb() {
+        firebaseIO.retreieveStringValueByKey(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+            @Override
+            public void onValueRetrieved(String value) {
+                if (value != null) {
+                    EditTextInputFragment.setText(value);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    //TODO: after changing- if deleted unenableText
     @OnTextChanged(value = R.id.EditTextInputFragment,
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
      void onTextChanged(CharSequence text) {
-        mListener.enableNext();
-        if(text.equals("")){
+        if(text.toString().isEmpty()){
             mListener.unenableNext();
+        }else {
+            mListener.enableNext();
         }
     }
 
@@ -63,6 +85,15 @@ public class TextFragment extends BaseViewPagerFragment {
 
 
     @Override
+    protected boolean hasResult() {
+        if(!EditTextInputFragment.getText().toString().isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     protected void saveToDb() {
+        firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, EditTextInputFragment.getText().toString());
     }
 }

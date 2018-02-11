@@ -7,12 +7,10 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        style="@style/StyleTextView"
         android:id="@+id/textViewQuestionRadioFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
-        style="@style/StyleTextView"
         android:id="@+id/textViewInstructionRadioFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

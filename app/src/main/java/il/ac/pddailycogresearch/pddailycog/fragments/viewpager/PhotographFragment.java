@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +21,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
@@ -72,7 +75,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
         View view = inflater.inflate(R.layout.fragment_photograph, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        mListener.enableNext();//TODO delete this, but aint power to take pictures all the timee
+        //     mListener.enableNext();//TODO delete this, but aint power to take pictures all the timee
         setPictureToImageView();
 
         return view;
@@ -86,6 +89,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
             public void run() {
                 imageViewHeight = imageViewPhotographFragment.getHeight();
                 imageViewWidth = imageViewPhotographFragment.getWidth();
+                retrieveAndSetImageFromDb();
             }
         });
     }
@@ -123,16 +127,93 @@ public class PhotographFragment extends BaseViewPagerFragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == RESULT_OK) {
                 setPictureToImageView();
+                onHasPicture();
             }
         }
     }
 
     private void setPictureToImageView() {
-        if(imgAbsolutePath!=null) {
+        if (imgAbsolutePath != null && mListener != null) {//TODO prevent bug when download img. need to rethink this anyway because of flight mode
             ImageUtils.setPic(imageViewPhotographFragment, imgAbsolutePath, imageViewHeight, imageViewWidth);
-            buttonPhotographFragment.setText(R.string.re_take_picture);
-            mListener.enableNext();
+        } else if (imgUri != null) {
+            ImageUtils.setPicFromContentUri(getContext(), imageViewPhotographFragment, imgUri, imageViewHeight, imageViewWidth);
+
         }
+    }
+
+    protected void retrieveAndSetImageFromDb() {
+        firebaseIO.retreieveStringValueByKey(Consts.CHORES_KEY, choreNum, Consts.ABSOLUTE_PATH_KEY + position, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+            @Override
+            public void onValueRetrieved(String value) {
+                if (value != null) {
+                    imgAbsolutePath = value;
+                    setPictureToImageView();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+//            protected void retrieveAndSetImageFromDb() {
+//        firebaseIO.retreieveStringValueByKey(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+//            @Override
+//            public void onValueRetrieved(String value) {
+//                if(value==null){
+//                    return;
+//                }
+//                if (value.split(":")[0].equals(Consts.LOCAL_URI_PREFIX)) {
+//                    imgUri = Uri.parse(value);
+//                    setPictureToImageView();
+//                } else {
+//                    firebaseIO.downloadImg(value, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+//                        @Override
+//                        public void onValueRetrieved(String value) {
+//                            imgAbsolutePath = value;
+//                            setPictureToImageView();
+//                        }
+//
+//                        @Override
+//                        public void onError(Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isResumed()) {
+            if (imgUri != null || imgAbsolutePath != null) {
+                onHasPicture();
+            }
+        }
+    }
+
+    @Override
+    protected boolean hasResult() {
+        if (imgUri != null || imgAbsolutePath != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private void onHasPicture() {
+        buttonPhotographFragment.setText(R.string.re_take_picture);
+        mListener.enableNext();
     }
 
     @Override
@@ -140,8 +221,11 @@ public class PhotographFragment extends BaseViewPagerFragment {
         firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, CLICK_NUM_TAG, takePicturesClickNum);
         takePicturesClickNum = 0;
 
-        if(imgUri!=null) {
+        if (imgUri != null) {
             firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, imgUri.toString());
+        }
+        if (imgAbsolutePath != null) {
+            firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.ABSOLUTE_PATH_KEY + position, imgAbsolutePath);
         }
     }
 

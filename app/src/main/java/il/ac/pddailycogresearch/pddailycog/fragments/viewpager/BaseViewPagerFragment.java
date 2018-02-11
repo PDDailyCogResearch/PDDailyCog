@@ -111,11 +111,16 @@ public abstract class BaseViewPagerFragment extends Fragment {
         if (isResumed()) {
             if (isVisibleToUser) {
                 currentSessionStartTime = System.currentTimeMillis();
+                if(hasResult()){
+                    mListener.enableNext();
+                }
             } else {
                 addTimeToDb();
             }
         }
     }
+
+    protected abstract boolean hasResult();
 
 
     private void addTimeToDb() {

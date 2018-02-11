@@ -19,6 +19,7 @@ import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
@@ -53,6 +54,24 @@ public class DrinkChoreActivity extends AppCompatActivity implements
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM);
         viewPagerDrinkActivity.setAdapter(adapter);
+
+        if(savedInstanceState==null){ //retrieve only if there isn't a saved state
+            FirebaseIO.getInstance().retreieveIntValueByKey(Consts.CHORES_KEY, CHORE_NUM, "position",
+                    new IOnFirebaseKeyValueListeners.OnIntValueListener() {
+                        @Override
+                        public void onValueRetrieved(Integer value) {
+                            if(value==null){
+                                return;
+                            }
+                            viewPagerDrinkActivity.setCurrentItem(value);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -66,7 +85,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.buttonNextDrinkActivity:
                 MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
-                buttonNextDrinkActivity.setEnabled(false);
+                unenableNext();
                 int nextPage = viewPagerDrinkActivity.getCurrentItem() + 1;
                 if (nextPage == adapter.getCount()) {
                     startActivity(new Intent(this, GoodByeActivity.class));
@@ -135,6 +154,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         backPressNum = 0;
         FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "soundPressNum", soundPressNum);
         soundPressNum = 0;
+        FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "position", viewPagerDrinkActivity.getCurrentItem());
     }
 
     //region fragment callbacks

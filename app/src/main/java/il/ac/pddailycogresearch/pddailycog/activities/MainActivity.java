@@ -11,11 +11,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.activities.simple.AirplaneModeRequestActivity;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainButtonOk)
     Button mainButtonOk;
+    @BindView(R.id.buttonMainOpenQuestionnaire)
+    Button buttonMainOpenQuestionnaire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainButtonOk:
                 //TODO fix before sending
                 // startActivity(new Intent(MainActivity.this, AirplaneModeRequestActivity.class));
-               // startActivity(new Intent(MainActivity.this, DrinkChoreActivity.class));
-                startActivity(new Intent(MainActivity.this, DrinkInstrcActivity.class));
+                startActivity(new Intent(MainActivity.this, DrinkChoreActivity.class));
+                // startActivity(new Intent(MainActivity.this, DrinkInstrcActivity.class));
+                // Crashlytics.getInstance().crash();
                 break;
             case R.id.buttonMainOpenQuestionnaire:
-                startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class));
+                //  startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class)); TODO fix before sending
+                FirebaseIO.getInstance().logout();
+                buttonMainOpenQuestionnaire.setText("logout");
                 break;
         }
     }

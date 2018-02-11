@@ -29,9 +29,10 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
     public void onReceive(Context context, Intent intent) {
         //act only if there is internet connection and if it is the first instance to react
         //needed because in airplane toggle happens few connectivity changes
-        if(isNetworkAvailable(context)&&++race==1) {
+
+        if(isNetworkAvailable(context)/*&&++race==1*/) {//TODO solve
             FirebaseIO.getInstance().resaveImageByKey(
-                    Consts.CHORES_KEY, 0,Consts.RESULT_KEY_PREFIX+0
+                    Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+1
             );
             FirebaseIO.getInstance().resaveImageByKey(
                     Consts.CHORES_KEY, 1,"resultImg"

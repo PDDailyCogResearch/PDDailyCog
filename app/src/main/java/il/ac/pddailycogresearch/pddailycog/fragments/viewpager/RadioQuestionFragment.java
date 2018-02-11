@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
@@ -75,19 +75,22 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_radio_question, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (selection != -1) {
-            mListener.enableNext();
+        if (savedInstanceState == null) {
+            initFromDb();
+        } else {
+            initViews();
         }
-        initViews();
         return view;
     }
 
     private void initViews() {
-        int positionPlus=position+1;//TODO better sulotion
+        if (selection != -1) {
+            mListener.enableNext();
+        }
+        int positionPlus = position + 1;//TODO better sulotion
         question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + positionPlus);
         if (question == null) {
             textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
-         //   mListener.enableNext();
             return;
         }
         textViewQuestionRadioFragment.setText(question.getQuestion());
@@ -131,16 +134,32 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
 
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if(isVisibleToUser&&isResumed()) {
-            if (mListener != null && (selection != -1 || question == null)) {
-                mListener.enableNext();
-            }
+    protected boolean hasResult() {
+        if (mListener != null && (selection != -1 || question == null)) {
+            return true;
         }
+        return false;
     }
 
+
+    protected void initFromDb() {
+        firebaseIO.retreieveIntValueByKey(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, new IOnFirebaseKeyValueListeners.OnIntValueListener() {
+            @Override
+            public void onValueRetrieved(Integer value) {
+                if (value == null) {
+                    initViews();
+                } else {
+                    selection = value;
+                    initViews();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     @Override
     protected void saveToDb() {
