@@ -20,6 +20,7 @@ import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
@@ -56,22 +57,26 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         viewPagerDrinkActivity.setAdapter(adapter);
 
         if(savedInstanceState==null){ //retrieve only if there isn't a saved state
-            FirebaseIO.getInstance().retreieveIntValueByKey(Consts.CHORES_KEY, CHORE_NUM, "position",
-                    new IOnFirebaseKeyValueListeners.OnIntValueListener() {
-                        @Override
-                        public void onValueRetrieved(Integer value) {
-                            if(value==null){
-                                return;
-                            }
-                            viewPagerDrinkActivity.setCurrentItem(value);
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
+            initFromDb();
         }
+    }
+
+    private void initFromDb() {
+        FirebaseIO.getInstance().retreieveIntValueByKey(Consts.CHORES_KEY, CHORE_NUM, "position",
+                new IOnFirebaseKeyValueListeners.OnIntValueListener() {
+                    @Override
+                    public void onValueRetrieved(Integer value) {
+                        if(value==null){
+                            return;
+                        }
+                        viewPagerDrinkActivity.setCurrentItem(value);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     @Override
@@ -85,17 +90,15 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.buttonNextDrinkActivity:
                 MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
-                unenableNext();
-                int nextPage = viewPagerDrinkActivity.getCurrentItem() + 1;
-                if (nextPage == adapter.getCount()) {
-                    startActivity(new Intent(this, GoodByeActivity.class));
-                } else {
-                    viewPagerDrinkActivity.setCurrentItem(viewPagerDrinkActivity.getCurrentItem() + 1);
+                CommonUtils.hideKeyboard(this);
+                int currentPage = viewPagerDrinkActivity.getCurrentItem();
+                if(!moveWithDialogIfNeed(currentPage)) {
+                    moveNext(currentPage);
                 }
                 break;
             case R.id.buttonSoundDrinkActivity:
                 int soundId = getResources().getIdentifier(
-                        "cog_drink_" + String.valueOf(viewPagerDrinkActivity.getCurrentItem() + 2),//TODO adjust better
+                        "cog_drink_" + String.valueOf(viewPagerDrinkActivity.getCurrentItem() + 3),//TODO adjust better
                         "raw", getPackageName());//TODO cut the files and correct the texts
                 MediaUtils.toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
                 if (MediaUtils.isPlaying()) {
@@ -107,6 +110,44 @@ public class DrinkChoreActivity extends AppCompatActivity implements
                 showExitAlertDialog();
                 break;
         }
+    }
+
+    private boolean moveWithDialogIfNeed(final int currentPage) {
+        IOnAlertDialogResultListener resultListener =  new IOnAlertDialogResultListener() {
+            @Override
+            public void onResult(boolean result) {
+                if(result){
+                    moveNext(currentPage);
+                }
+            }
+        };
+        if(currentPage==3){
+            DialogUtils.createAlertDialog(this, R.string.empty_string, R.string.drink_first_dialog_msg,
+                    R.string.ok, android.R.string.cancel,resultListener);
+            return true;
+        }
+        if(currentPage==9) {
+            DialogUtils.createAlertDialog(this, R.string.empty_string, R.string.drink_second_dialog_msg,
+                    R.string.finish,resultListener);
+            return true;
+        }
+        return false;
+    }
+
+    private void moveNext(int currentPage) {
+        int nextPage=currentPage+1;
+        unenableNext();
+        if (nextPage == adapter.getCount()) {
+            startActivity(new Intent(this, GoodByeActivity.class));
+            completeChore();
+        } else {
+            viewPagerDrinkActivity.setCurrentItem(viewPagerDrinkActivity.getCurrentItem() + 1);
+        }
+    }
+
+    private void completeChore() {
+        FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, CHORE_NUM,
+                Consts.IS_COMPLETED_KEY, true);
     }
 
     private void showExitAlertDialog() {

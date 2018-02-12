@@ -115,6 +115,28 @@ public class FirebaseIO {
         };
     }
 
+    public void retrieveLastChoreNum(final IOnFirebaseKeyValueListeners.OnIntValueListener listener) {
+        Query lastChoreQuery = mUserReference.child(Consts.CHORES_KEY).orderByKey().limitToLast(1);
+        lastChoreQuery.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getChildren().iterator().hasNext()) {
+                            DataSnapshot ds = dataSnapshot.getChildren().iterator().next();
+                            listener.onValueRetrieved(Integer.valueOf(ds.getKey()));
+                        }
+                        else {
+                            listener.onValueRetrieved(-1);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
 
     public void saveChore(Chore chore) {
         mUserReference.child(Consts.CHORES_KEY)
@@ -161,6 +183,31 @@ public class FirebaseIO {
                     public void onCancelled(DatabaseError databaseError) {
                         firebaseQuestionnaireListener.onError(databaseError.toException());
 
+                    }
+                }
+        );
+    }
+
+    public void retreieveBooleanValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnBooleanListValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            Boolean value = false;
+                            if(dataSnapshot.exists()) {
+                                 value = dataSnapshot.getValue(Boolean.class);
+                            }
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
                     }
                 }
         );
@@ -301,7 +348,6 @@ public class FirebaseIO {
         });
     }
 
-
     public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(imageDbKey).addListenerForSingleValueEvent(
@@ -344,6 +390,11 @@ public class FirebaseIO {
                 .child(key).setValue(value);
     }
 
+    public void saveKeyValuePair(String collection, int choreNum, String key, Boolean value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
     public void saveKeyValuePair(String collection, int choreNum, String key, List<String> value) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(key).setValue(value);
@@ -370,7 +421,6 @@ public class FirebaseIO {
                 }
         );
     }
-
 
     public void saveQuestionnaireAnswer(List<Integer> answers) {
         mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);

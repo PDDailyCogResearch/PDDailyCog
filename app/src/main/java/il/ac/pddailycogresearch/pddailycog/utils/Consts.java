@@ -24,4 +24,5 @@ public class Consts {
     public static final String SPEAKER_EMOJI = "\uD83D\uDD0A";
     public static final String ABSOLUTE_PATH_KEY = "abs-path-" ;
 
+    public static final String IS_COMPLETED_KEY = "completed";
 }

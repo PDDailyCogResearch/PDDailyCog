@@ -57,11 +57,12 @@
     <string name="answers_xml_error">אירעה שגיאה בתצורת התשובות לשאלון</string>
     <string name="wrong_username">שם המשתמש אינו תקין</string>
 
-    <string name="drink_instr">הוצא/י בבקשה והנח/י על השיש: ספל, כפית, קפה או תה, סוכר או ממתיק, חלב או נענע או כל תוספת אחרת למשקה. כמה פריטים יש לך?</string>
-    <string name="drink_time_valuate">כמה זמן אתה מעריך שלקח לך?</string>
+    <string name="drink_first_text_instr">הוצא/י בבקשה והנח/י על השיש: ספל, כפית, קפה או תה, סוכר או ממתיק, חלב או נענע או כל תוספת אחרת למשקה. כמה פריטים יש לך?</string>
+    <string name="drink_time_valuat_text_instrc">כמה זמן אתה מעריך שלקח לך?</string>
     <string name="drink_minutes">דקות</string>
     <string name="dring_photo_instr">כעת צלם את כל הפריטים יחד</string>
     <string name="dring_photo_dring_done">צלם את המשקה המוכן</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -71,6 +72,12 @@
     <string name="yes">כן</string>
     <string name="no"> לא</string>
     <string name="drag_drink_instr">מהו סדר הפעולות שעלייך לבצע על מנת להכין לעצמך שתייה חמה?</string>
+    <string name="check_box_instrc">נא הרתח/י מים להכנת השתיה החמה. סמן √ לאחר תחילת ההרתחה</string>
+    <string name="check_box_text">בוצע</string>
+    <string name="empty_string" />
+    <string name="drink_first_dialog_msg">כעת תתבקש להכין לעצמך את השתייה החמה שאתה מעדיף. יש לפעול לפי ההוראות.</string>
+    <string name="finish">סיימתי</string>
+    <string name="drink_second_dialog_msg">הכן/י את השתייה החמה ובסיום לחץ על "סיימתי"</string>
 
 
 </resources>

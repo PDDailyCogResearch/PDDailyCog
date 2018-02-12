@@ -2,7 +2,7 @@ package il.ac.pddailycogresearch.pddailycog.fragments.viewpager;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.Editable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
  */
 
 public class TextFragment extends BaseViewPagerFragment {
-    private static final String PREVIOUS_TEXT_INPUT_LENGTH = "previous_text_input_length";
+    private static final String ARG_INSTRC_KEY = "instruction_id";
     @BindView(R.id.EditTextInputFragment)
     EditText EditTextInputFragment;
     @BindView(R.id.textViewInstrc)
@@ -33,15 +33,25 @@ public class TextFragment extends BaseViewPagerFragment {
     @BindView(R.id.textViewMinutes)
     TextView textViewMinutes;
     Unbinder unbinder;
+    private int instrctionTextId;
 
     public TextFragment() {
         // Required empty public constructor
     }
 
-    public static TextFragment newInstance(int position, int choreNum) {
+    public static TextFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         TextFragment fragment = new TextFragment();
-        fragment.setArguments(putBaseArguments(new Bundle(), position, choreNum));
+        Bundle args = new Bundle();
+        args.putInt(ARG_INSTRC_KEY,instrcId);
+        fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
     @Override
@@ -53,12 +63,13 @@ public class TextFragment extends BaseViewPagerFragment {
         if(savedInstanceState==null){
             retreiveFromDb();
         }
-        if(secondText){
-            textViewInstrc.setText(R.string.drink_time_valuate);
+
+        textViewInstrc.setText(instrctionTextId);
+
+        if(instrctionTextId==R.string.drink_time_valuat_text_instrc){
             textViewMinutes.setVisibility(View.VISIBLE);
         }
         else {
-            textViewInstrc.setText(R.string.drink_instr);
             textViewMinutes.setVisibility(View.INVISIBLE);
         }
         return view;

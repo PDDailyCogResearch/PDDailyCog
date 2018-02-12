@@ -24,4 +24,9 @@ public interface IOnFirebaseKeyValueListeners {
          void onValueRetrieved(List<String> value);
          void onError(Exception e);
      }
+
+    interface OnBooleanListValueListener {
+        void onValueRetrieved(Boolean value);
+        void onError(Exception e);
+    }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
     private static final String IMG_ABSOLUTE_PATH_TAG = "img_absolute_path";
     private static final String IMG_URI_TAG = "img_uri";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String ARG_INSTRC_KEY = "instrc_id";
 
     private String imgAbsolutePath;
     private Uri imgUri;
@@ -53,6 +55,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
     Unbinder unbinder;
     private int takePicturesClickNum = 0;
+    private int instrctionTextId;
 
     public PhotographFragment() {
         // Required empty public constructor
@@ -66,10 +69,19 @@ public class PhotographFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment RadioQuestionFragment.
      */
-    public static PhotographFragment newInstance(int position, int choreNum) {
+    public static PhotographFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         PhotographFragment fragment = new PhotographFragment();
-        fragment.setArguments(putBaseArguments(new Bundle(), position, choreNum));
+        Bundle args = new Bundle();
+        args.putInt(ARG_INSTRC_KEY,instrcId);
+        fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
     @Override
@@ -81,11 +93,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
         //     mListener.enableNext();//TODO delete this, but aint power to take pictures all the timee
         setPictureToImageView();
-        if (secondPhoto) {
-            textViewInstrcPhotographFragment.setText(R.string.dring_photo_dring_done);
-        } else {
-            textViewInstrcPhotographFragment.setText(R.string.dring_photo_instr);
-        }
+        textViewInstrcPhotographFragment.setText(instrctionTextId);
 
         return view;
     }
@@ -217,6 +225,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
         if (imgUri != null || imgAbsolutePath != null) {
             return true;
         }
+        if(instrctionTextId==R.string.dring_photo_dring_done){
+            return true; //if this is the second, result is not required
+        }
         return false;
     }
 
@@ -227,7 +238,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
     @Override
     protected void saveToDb() {
-        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, CLICK_NUM_TAG, takePicturesClickNum);
+        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, CLICK_NUM_TAG+position, takePicturesClickNum);
         takePicturesClickNum = 0;
 
         if (imgUri != null) {

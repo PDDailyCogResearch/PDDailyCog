@@ -87,8 +87,8 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
         if (selection != -1) {
             mListener.enableNext();
         }
-        int positionPlus = position + 1;//TODO better sulotion
-        question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + positionPlus);
+      //  int positionPlus = position + 1;//TODO better sulotion
+        question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + position);
         if (question == null) {
             textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
             return;
