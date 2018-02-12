@@ -2,7 +2,6 @@ package il.ac.pddailycogresearch.pddailycog.Firebase;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -233,6 +232,31 @@ public class FirebaseIO {
         );
     }
 
+    public void retreieveStringListValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnStringListValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            List<String> items = new ArrayList<String>();
+                            for (DataSnapshot valSnapshot : dataSnapshot.getChildren()) {
+                                items.add(valSnapshot.getValue(String.class));
+                            }
+                            listener.onValueRetrieved(items);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
     public void downloadImg(final String url, final IOnFirebaseKeyValueListeners.OnStringValueListener listener) {
         StorageReference islandRef = FirebaseStorage.getInstance().getReferenceFromUrl(url);
 
@@ -316,6 +340,11 @@ public class FirebaseIO {
     }
 
     public void saveKeyValuePair(String collection, int choreNum, String key, String value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
+    public void saveKeyValuePair(String collection, int choreNum, String key, List<String> value) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(key).setValue(value);
     }
@@ -415,4 +444,5 @@ public class FirebaseIO {
     public void logout() {
         mAuth.signOut();
     }
+
 }

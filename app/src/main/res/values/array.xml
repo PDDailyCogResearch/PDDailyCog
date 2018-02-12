@@ -8,6 +8,16 @@
         <item>@array/answers_5</item>
         <item>@array/answers_6</item>
     </array>-->
+    <string-array name="drag_tasks_drink">
+        <item>הרתחת מים</item>
+        <item>הוצאת ספל וכפית מהארון</item>
+        <item>הכנסת קפה/תה לספל </item>
+        <item>הוספת סוכר/ממתיק </item>
+        <item>מזיגת מים לספל</item>
+        <item>ערבוב </item>
+        <item>הוספת חלב/נענע/כלום</item>
+    </string-array>
+
     <string-array name="answers_1">
         <item>מצוינת</item>
         <item>טובה מאוד</item>

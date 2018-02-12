@@ -70,7 +70,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
         position = getArguments().getInt(ARG_POSITION);
         choreNum = getArguments().getInt(ARG_CHORE_NUM);
 
-        secondPhoto = position == 10;
+        secondPhoto = position == 10; //TODO replace with factory argument in the fragments
         secondText = position == 12;
 
         if (savedInstanceState != null) {

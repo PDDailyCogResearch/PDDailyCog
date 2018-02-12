@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
@@ -26,8 +27,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         Fragment currentFragment = null;
 
         switch (position) {
-            case 0:
             case 1:
+                currentFragment = DragListFragment.newInstance(position,activityChoreNum);
+                break;
+            case 0:
             case 2:
             case 3:
             case 4:
