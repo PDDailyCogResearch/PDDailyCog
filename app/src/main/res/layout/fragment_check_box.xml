@@ -6,6 +6,7 @@
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.CheckBoxFragment">
 
     <TextView
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/check_box_instrc" />
@@ -13,6 +14,7 @@
         android:id="@+id/check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/check_box_text"/>
 
 </LinearLayout>

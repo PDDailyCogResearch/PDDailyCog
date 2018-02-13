@@ -37,27 +37,32 @@
         android:text="@string/header_drink_instrc_activity"/>
     <TextView
         style="@style/StyleTextView"
-
         android:id="@+id/textViewInstrcDrinkInstrcActivity"
         android:layout_below="@+id/textViewHeaderDrinkInstrcActivity"
-        android:layout_above="@+id/buttonYesDrinkIstrcActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/instruction_drink_instrc_activity"/>
+    <LinearLayout
+        android:id="@+id/linearButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/textViewInstrcDrinkInstrcActivity">
     <Button
         style="@style/StyleButton"
         android:id="@+id/buttonYesDrinkIstrcActivity"
-        android:layout_above="@+id/buttonNoDrinkIstrcActivity"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/yes"/>
 
     <Button
         style="@style/StyleButton"
-        android:layout_alignParentBottom="true"
         android:id="@+id/buttonNoDrinkIstrcActivity"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="@string/no"/>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -43,10 +43,15 @@ android:layout_alignParentStart="true"
         app:fabSize="normal" />
     <il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager
         android:layout_below="@+id/relativeLayoutUpDrink"
-        android:layout_above="@+id/buttonNextDrinkActivity"
+        android:layout_above="@+id/relativeLayoutButtom"
         android:id="@+id/viewPagerDrinkActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:id="@+id/relativeLayoutButtom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
     <Button
         android:layout_alignParentBottom="true"
         android:id="@+id/buttonNextDrinkActivity"
@@ -56,6 +61,6 @@ android:layout_alignParentStart="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ok" />
-
+</RelativeLayout>
 
 </RelativeLayout>
