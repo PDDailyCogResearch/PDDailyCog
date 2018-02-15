@@ -40,13 +40,11 @@ public class TakePictureFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String imgAbsolutePath;
     private Uri imgUri;
     private static int imageViewHeight;
     private static int imageViewWidth;
-
 
     public TakePictureFragment() {
         // Required empty public constructor
@@ -77,11 +75,7 @@ public class TakePictureFragment extends Fragment {
                 imageViewWidth = imageViewTakePictureFragment.getWidth();
             }
         });
-
-
     }
-
-
 
     @Override
     public void onAttach(Context context) {
