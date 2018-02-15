@@ -80,6 +80,7 @@
     <string name="drink_first_dialog_msg">כעת תתבקש להכין לעצמך את השתייה החמה שאתה מעדיף. יש לפעול לפי ההוראות.</string>
     <string name="finish">סיימתי</string>
     <string name="drink_second_dialog_msg">הכן/י את השתייה החמה ובסיום לחץ על "סיימתי"</string>
+    <string name="text_input_instrc">כעת השלם את משימת הכתיבה</string>
 
 
 </resources>

@@ -5,11 +5,20 @@
     android:layout_height="wrap_content"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.TextInputFragment">
 
+    <TextView
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTextInput"
+        android:text="@string/text_input_instrc"
+        />
+
     <EditText
         style="@style/StyleEditText"
         android:id="@+id/EditTextInputFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+android:layout_below="@+id/textViewTextInput"
         android:hint="@string/enter_text_input_hint" />
 
 </RelativeLayout>
