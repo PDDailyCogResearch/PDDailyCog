@@ -62,7 +62,23 @@
         <item name="android:background">@drawable/rounded_corner</item>
     </style>
 
-    <!-- TextView -->
+    <!-- SimpleTextView -->
+    <style  name="StyleSimpleTextView" parent="android:Theme">
+        <item name="android:textColor">@color/black</item><!--
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMaxTextSize">30sp</item>
+        <item name="autoSizeMinTextSize">12sp</item>-->
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:radius">100dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <!-- TextViewRadioButton -->
     <style name="StyleTextRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:padding">10dp</item>

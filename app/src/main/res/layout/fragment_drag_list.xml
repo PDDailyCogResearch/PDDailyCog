@@ -6,6 +6,7 @@
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment">
 
     <TextView
+        style="@style/StyleSimpleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drag_drink_instr" />
@@ -13,6 +14,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        android:layout_gravity="center"
         android:layout_height="match_parent" />
 
 </LinearLayout>

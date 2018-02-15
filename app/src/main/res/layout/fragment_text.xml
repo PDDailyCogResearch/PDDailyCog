@@ -14,35 +14,31 @@
         android:text="@string/drink_first_text_instr"
         />
 
-    <RelativeLayout
-        style="@style/StyleLayuot"
-        android:layout_below="@+id/textViewInstrc"
-      >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewInstrc"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/StyleSimpleTextView"
+                android:id="@+id/textViewMinutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drink_minutes"
+
+                />
     <EditText
         style="@style/StyleEditText"
         android:id="@+id/EditTextInputFragment"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/enter_text_input_hint"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/textViewMinutes"
-        android:layout_toStartOf="@+id/textViewMinutes"
-        android:gravity="start"
+
         android:inputType="number"/>
 
-        <TextView
-            style="@style/StyleTextView"
-            android:id="@+id/textViewMinutes"
-            android:gravity="end"
-            android:layout_alignParentTop="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="@string/drink_minutes"
 
-            />
-    </RelativeLayout>
+        </LinearLayout>
 
 </RelativeLayout>
