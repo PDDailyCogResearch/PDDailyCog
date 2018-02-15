@@ -26,7 +26,7 @@ public class RatingFragment extends Fragment {
     RadioGroup radioGroupRatingFragment;
     Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
-    private int selection;
+    private int selection=-1;
 
     public RatingFragment() {
         // Required empty public constructor
@@ -55,19 +55,23 @@ public class RatingFragment extends Fragment {
             }
         };
 
-        for (int i = 1; i <= 5; i++) {
+        String[] answers = getResources().getStringArray(R.array.rating_answers);
+        for (int i = 0; i <5/*answers.length*/; i++) {
            // RadioButton rb = new RadioButton(getContext(),null,R.style.tryRadioButton);
             RadioButton rb = (RadioButton) getLayoutInflater().inflate(R.layout.template_radiobutton, null);
 
-            rb.setText(String.valueOf(i));
+            rb.setText(answers[i]);
+            //rb.setText(String.valueOf(i));
             rb.setOnClickListener(radioButtonsListener);
-            radioGroupRatingFragment.setId(radioGroupRatingFragment.getChildCount());
+         //   radioGroupRatingFragment.setId(radioGroupRatingFragment.getChildCount());
 
             radioGroupRatingFragment.addView(rb);
             if (i == selection)
                 radioGroupRatingFragment.check(rb.getId());
         }
+/*
         radioGroupRatingFragment.setOrientation(LinearLayout.HORIZONTAL);
+*/
 
     }
 

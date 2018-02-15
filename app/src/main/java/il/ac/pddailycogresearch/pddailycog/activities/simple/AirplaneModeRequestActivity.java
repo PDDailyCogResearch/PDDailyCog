@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.activities.DrinkChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.DrinkInstrcActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.MainActivity;
@@ -50,10 +51,11 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-                if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+               /* if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
                     retreiveNextChoreNum();
                else
-                   CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
+                   CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);*/
+               startActivity(new Intent(this, DrinkChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();

@@ -5,9 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment">
-    <!--
-            style="@style/StyleTextView"
-    -->
+ 
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewHowWell"
@@ -42,42 +40,7 @@
 
             android:layout_margin="15sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewRadioButtonNotWell"
-                style="@style/StyleTextRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMaxTextSize="20sp"
-                app:autoSizeMinTextSize="15sp"
-                android:layout_gravity="start"
-                android:text="@string/not_well"
-               />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <TextView
-                style="@style/StyleTextRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMaxTextSize="20sp"
-                app:autoSizeMinTextSize="15sp"
-
-                android:layout_gravity="end"
-                android:text="@string/extremely_well"
-                />
-        </LinearLayout>
-    </LinearLayout>
+?    </LinearLayout>
     <!--<LinearLayout-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->

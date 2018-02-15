@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +42,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonSoundDrinkInstrcActivity:
-                MediaUtils.toggleMediaPlayer(getApplicationContext(), R.raw.cog_drink_1, buttonSoundDrinkInstrcActivity);
+                MediaUtils.toggleMediaPlayer(getApplicationContext(), R.raw.drink_dialog_instrc, buttonSoundDrinkInstrcActivity);
                 if (MediaUtils.isPlaying()) {
                     soundPressNum++;
                 }
@@ -50,15 +50,24 @@ public class DrinkInstrcActivity extends AppCompatActivity {
             case R.id.buttonYesDrinkIstrcActivity:
 
                 String explantionWithSpeaker = getString(R.string.drink_instrc_dialog_explantion, Consts.SPEAKER_EMOJI);
-                DialogUtils.createAlertDialog(this, R.string.reminder, explantionWithSpeaker, R.string.ok, android.R.string.cancel,
-                        new IOnAlertDialogResultListener() {
+                DialogUtils.createAlertWithSoundDialog(this, R.string.reminder, explantionWithSpeaker,
+                        R.string.ok,  R.string.sound, android.R.string.cancel,
+                        new IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener() {
                             @Override
-                            public void onResult(boolean result) {
-                                if(result){
-                                    startActivity(new Intent(DrinkInstrcActivity.this,DrinkChoreActivity.class));
-                                } else {
-                                    //finish(); or do nothing?...
+                            public void onResult(int result, Button soundButton) {
+
+                                switch (result){
+                                    case -1:
+                                        //finish(); or do nothing?...
+                                        break;
+                                    case 0:
+                                        MediaUtils.toggleMediaPlayer(DrinkInstrcActivity.this,R.raw.drink_dialog_instrc,soundButton);
+                                        break;
+                                    case 1:
+                                        startActivity(new Intent(DrinkInstrcActivity.this,DrinkChoreActivity.class));
+                                        break;
                                 }
+
                             }
                         }
                 );
@@ -66,7 +75,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
             case R.id.buttonNoDrinkIstrcActivity:
                 DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
                         android.R.string.ok, android.R.string.cancel,
-                        new IOnAlertDialogResultListener() {
+                        new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
                             @Override
                             public void onResult(boolean result) {
                                 if (result) {

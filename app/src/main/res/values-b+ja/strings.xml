@@ -7,7 +7,7 @@
     <string name="password">Password</string>
 
     <string name="ok">OK</string>
-    <string name="welcome_text">welcome</string>
+    <string name="trial_pre_instrc">welcome</string>
     <string name="open_settings">Open Airplane Mode Settings</string>
     <string name="airplane_mode_request">Please Set Airplane Mode</string>
     <string name="error_not_in_airplane_mode">You are not in Airplane Mode</string>

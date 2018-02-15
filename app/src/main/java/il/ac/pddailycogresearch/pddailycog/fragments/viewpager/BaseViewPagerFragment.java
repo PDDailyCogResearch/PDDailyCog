@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 
@@ -93,7 +94,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if (getUserVisibleHint()) {
-            currentSessionStartTime = System.currentTimeMillis();
+            onPageChanged(true);
         }
     }
 
@@ -101,12 +102,12 @@ public abstract class BaseViewPagerFragment extends Fragment {
     public void onStop() {
         super.onStop();
         if (getUserVisibleHint() && !isResumed()) {
-            addTimeToDb();
+            onPageChanged(false);
         }
         saveToDb();
     }
 
-    @Override
+/*    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isResumed()) {
@@ -115,11 +116,31 @@ public abstract class BaseViewPagerFragment extends Fragment {
                 if (hasResult()) {
                     mListener.enableNext();
                 }
+                else {
+                    mListener.unenableNext();
+                }
             } else {
                 addTimeToDb();
             }
         }
+    }*/
+
+    public void onPageChanged(boolean isVisible) {
+
+       // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);
+            if (isVisible) {
+                currentSessionStartTime = System.currentTimeMillis();
+                if (hasResult()) {
+                    mListener.enableNext();
+                } else {
+                    mListener.unenableNext();
+                }
+            } else {
+                addTimeToDb();
+            }
+
     }
+
 
     protected abstract boolean hasResult();
 

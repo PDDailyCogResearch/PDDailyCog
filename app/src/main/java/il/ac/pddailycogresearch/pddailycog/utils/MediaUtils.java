@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.annotation.RawRes;
 import android.support.design.widget.FloatingActionButton;
+import android.widget.Button;
 
 import il.ac.pddailycogresearch.pddailycog.R;
 
@@ -20,7 +21,18 @@ public class MediaUtils {
             mpori.stop();
             mpori.release();
             mpori = null;
-            soundButton.setImageResource(R.drawable.sound_icon);
+            if(soundButton!=null){
+            soundButton.setImageResource(R.drawable.sound_icon);}
+        }
+    }
+
+    public static void stopMediaPlayer(Button soundButton) {
+        if(mpori!=null) {
+            mpori.stop();
+            mpori.release();
+            mpori = null;
+            if(soundButton!=null){
+                soundButton.setText(R.string.stop);}
         }
     }
 
@@ -31,9 +43,12 @@ public class MediaUtils {
         }
         if (mpori.isPlaying()) {
             mpori.pause();
-            soundButton.setImageResource(R.drawable.sound_icon);
+            if(soundButton!=null){
+            soundButton.setImageResource(R.drawable.sound_icon);}
         } else {
-            soundButton.setImageResource(R.drawable.stop_ic);
+            if(soundButton!=null) {
+                soundButton.setImageResource(R.drawable.stop_ic);
+            }
             mpori.start();
             mpori.setOnCompletionListener(
                     new MediaPlayer.OnCompletionListener() {
@@ -46,6 +61,32 @@ public class MediaUtils {
         }
     }
 
+    public static void toggleMediaPlayer(Context context, @RawRes int soundId, final Button soundButton) {
+
+        if (mpori == null) {
+            mpori = MediaPlayer.create(context, soundId);
+        }
+        if (mpori.isPlaying()) {
+            mpori.pause();
+            if(soundButton!=null){
+                soundButton.setText(R.string.sound);}
+        } else {
+            if(soundButton!=null) {
+                soundButton.setText(R.string.stop);
+            }
+            mpori.start();
+            mpori.setOnCompletionListener(
+                    new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            stopMediaPlayer(soundButton);
+                        }
+                    }
+            );
+        }
+    }
+
+
     public static boolean isPlaying(){
         if(mpori!=null&&mpori.isPlaying()) {
             return true;
@@ -53,4 +94,10 @@ public class MediaUtils {
             return false;
         }
     }
+
+  /*  private static void setButtonViewStop(Button button){
+        if(button instanceof FloatingActionButton){
+
+        }
+    }*/
 }

@@ -2,9 +2,9 @@ package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -55,8 +55,15 @@ public class DrinkChoreActivity extends AppCompatActivity implements
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM);
         viewPagerDrinkActivity.setAdapter(adapter);
+        viewPagerDrinkActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                adapter.getPreviousFragment().onPageChanged(false);
+                adapter.getCurrentFragment().onPageChanged(true);
+            }
+        });
 
-        if(savedInstanceState==null){ //retrieve only if there isn't a saved state
+        if (savedInstanceState == null) { //retrieve only if there isn't a saved state
             initFromDb();
         }
     }
@@ -66,7 +73,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
                 new IOnFirebaseKeyValueListeners.OnIntValueListener() {
                     @Override
                     public void onValueRetrieved(Integer value) {
-                        if(value==null){
+                        if (value == null) {
                             return;
                         }
                         viewPagerDrinkActivity.setCurrentItem(value);
@@ -92,13 +99,13 @@ public class DrinkChoreActivity extends AppCompatActivity implements
                 MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
                 CommonUtils.hideKeyboard(this);
                 int currentPage = viewPagerDrinkActivity.getCurrentItem();
-                if(!moveWithDialogIfNeed(currentPage)) {
+                if (!moveWithDialogIfNeed(currentPage)) {
                     moveNext(currentPage);
                 }
                 break;
             case R.id.buttonSoundDrinkActivity:
                 int soundId = getResources().getIdentifier(
-                        "cog_drink_" + String.valueOf(viewPagerDrinkActivity.getCurrentItem() + 3),//TODO adjust better
+                        Consts.DRINK_CHORE_RAW_PREFIX + String.valueOf(viewPagerDrinkActivity.getCurrentItem()),//TODO adjust better
                         "raw", getPackageName());//TODO cut the files and correct the texts
                 MediaUtils.toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
                 if (MediaUtils.isPlaying()) {
@@ -113,29 +120,29 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     }
 
     private boolean moveWithDialogIfNeed(final int currentPage) {
-        IOnAlertDialogResultListener resultListener =  new IOnAlertDialogResultListener() {
+        IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener resultListener = new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
             @Override
             public void onResult(boolean result) {
-                if(result){
+                if (result) {
                     moveNext(currentPage);
                 }
             }
         };
-        if(currentPage==3){
+        if (currentPage == 3) {
             DialogUtils.createAlertDialog(this, R.string.empty_string, R.string.drink_first_dialog_msg,
-                    R.string.ok, android.R.string.cancel,resultListener);
+                    R.string.ok, android.R.string.cancel, resultListener);
             return true;
         }
-        if(currentPage==9) {
+        if (currentPage == 9) {
             DialogUtils.createAlertDialog(this, R.string.empty_string, R.string.drink_second_dialog_msg,
-                    R.string.finish,resultListener);
+                    R.string.finish, resultListener);
             return true;
         }
         return false;
     }
 
     private void moveNext(int currentPage) {
-        int nextPage=currentPage+1;
+        int nextPage = currentPage + 1;
         unenableNext();
         if (nextPage == adapter.getCount()) {
             startActivity(new Intent(this, GoodByeActivity.class));
@@ -153,7 +160,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     private void showExitAlertDialog() {
         DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
                 android.R.string.ok, android.R.string.cancel,
-                new IOnAlertDialogResultListener() {
+                new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
                     @Override
                     public void onResult(boolean result) {
                         if (result) {

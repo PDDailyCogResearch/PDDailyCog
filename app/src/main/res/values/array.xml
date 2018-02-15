@@ -18,6 +18,14 @@
         <item>הוספת חלב/נענע/כלום</item>
     </string-array>
 
+    <string-array name="rating_answers">
+        <item>מצוין</item>
+        <item>טוב מאוד</item>
+        <item>טוב</item>
+        <item>לא טוב</item>
+        <item>גרוע</item>
+    </string-array>
+
     <string-array name="answers_1">
         <item>מצוינת</item>
         <item>טובה מאוד</item>

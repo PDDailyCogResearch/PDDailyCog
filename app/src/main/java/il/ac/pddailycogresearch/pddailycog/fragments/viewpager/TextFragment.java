@@ -61,7 +61,7 @@ public class TextFragment extends BaseViewPagerFragment {
         View view = inflater.inflate(R.layout.fragment_text, container, false);
         unbinder = ButterKnife.bind(this, view);
         if(savedInstanceState==null){
-            retreiveFromDb();
+            retrieveFromDb();
         }
 
         textViewInstrc.setText(instrctionTextId);
@@ -75,7 +75,7 @@ public class TextFragment extends BaseViewPagerFragment {
         return view;
     }
 
-    private void retreiveFromDb() {
+    private void retrieveFromDb() {
         firebaseIO.retreieveStringValueByKey(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
             @Override
             public void onValueRetrieved(String value) {

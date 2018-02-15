@@ -18,11 +18,13 @@ public class Consts {
     public static final String QUESTIONNAIRE_KEY = "questionnaire";
     public static final String EMAIL_SUFFIX = "@pddaily.ac.il";
 
-    public static final String DRINK_CHORE_QUESTION_ASSETS_PREFIX = "drink-chore/question-";
+    public static final String DRINK_CHORE_ASSETS_PREFIX = "drink-chore";
     public static final String RESULT_KEY_PREFIX = "result-";
     public static final String TIME_KEY_PREFIX = "time-";
     public static final String SPEAKER_EMOJI = "\uD83D\uDD0A";
     public static final String ABSOLUTE_PATH_KEY = "abs-path-" ;
 
     public static final String IS_COMPLETED_KEY = "completed";
+    public static final String QUESTION_ASSETS_PREFIX = "/question-";
+    public static final String DRINK_CHORE_RAW_PREFIX = "drink_chore_";
 }

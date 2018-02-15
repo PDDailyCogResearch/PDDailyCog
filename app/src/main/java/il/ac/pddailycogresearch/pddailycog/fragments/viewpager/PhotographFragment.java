@@ -91,7 +91,6 @@ public class PhotographFragment extends BaseViewPagerFragment {
         View view = inflater.inflate(R.layout.fragment_photograph, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        //     mListener.enableNext();//TODO delete this, but aint power to take pictures all the timee
         setPictureToImageView();
         textViewInstrcPhotographFragment.setText(instrctionTextId);
 

@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/mainButtonOk"
         app:autoSizeTextType="uniform"
-        android:text="@string/welcome_text" />
+        android:text="@string/trial_pre_instrc" />
 
 
     <Button style="@style/StyleButton"

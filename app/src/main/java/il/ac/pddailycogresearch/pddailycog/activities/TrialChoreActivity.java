@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -231,7 +230,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     private void showExitAlertDialog() {
         DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
                 android.R.string.ok, android.R.string.cancel,
-                new IOnAlertDialogResultListener() {
+                new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
                     @Override
                     public void onResult(boolean result) {
                         if (result) {
@@ -396,7 +395,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onRatingFragmentCraeteView() {
         if (currentChore.getResultRating() == 0) {
             ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))
-                    .setRatingSelection(0);
+                    .setRatingSelection(-1);
             unableOkButton();
         } else {
             ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))

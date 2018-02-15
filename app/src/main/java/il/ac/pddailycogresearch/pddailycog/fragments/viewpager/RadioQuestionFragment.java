@@ -33,6 +33,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 public class RadioQuestionFragment extends BaseViewPagerFragment {
 
     private static final String SELECTION_TAG = "selection";
+    private static final String ARG_ASSET_FOLDER_KEY = "assets_folder";
 
     @BindView(R.id.textViewQuestionRadioFragment)
     TextView textViewQuestionRadioFragment;
@@ -44,6 +45,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
 
     private int selection = -1;
     private JsonRadioButton question;
+    private String assetsFolder;
 
     public RadioQuestionFragment() {
         // Required empty public constructor
@@ -57,10 +59,19 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment RadioQuestionFragment.
      */
-    public static RadioQuestionFragment newInstance(int position, int choreNum) {
+    public static RadioQuestionFragment newInstance(int position, int choreNum, String assetFolder) {
         RadioQuestionFragment fragment = new RadioQuestionFragment();
-        fragment.setArguments(putBaseArguments(new Bundle(), position, choreNum));
+        Bundle args = new Bundle();
+        args.putString(ARG_ASSET_FOLDER_KEY,assetFolder);
+        fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        assetsFolder = getArguments().getString(ARG_ASSET_FOLDER_KEY);
     }
 
     @Override
@@ -84,11 +95,11 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     }
 
     private void initViews() {
-        if (selection != -1) {
-            mListener.enableNext();
-        }
+//        if (selection != -1) {
+//            mListener.enableNext();
+//        }
       //  int positionPlus = position + 1;//TODO better sulotion
-        question = ReadJsonUtil.readRadioJsonFile(getActivity(), Consts.DRINK_CHORE_QUESTION_ASSETS_PREFIX + position);
+        question = ReadJsonUtil.readRadioJsonFile(getActivity(), assetsFolder+ Consts.QUESTION_ASSETS_PREFIX + position);
         if (question == null) {
             textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
             return;

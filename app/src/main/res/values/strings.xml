@@ -3,69 +3,72 @@
     <string name="app_name">PDDailyCog</string>
 
 
-    <!--Sign in -->
-    <string name="sign_in">היכנס</string>
-
+    <!--General -->
+    <string name="empty_string" />
     <string name="ok">אישור</string>
-    <string name="welcome_text">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות, באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על \"אישור\", ההנחיה תעלם מהמסך אך תוכל לחזור ולהקשיב להוראות שוב</string>
-    <string name="open_settings">פתח הגדרות מצב טיסה</string>
-    <string name="airplane_mode_request">אנא הכנס את המכשיר למצב טיסה</string>
-    <string name="error_not_in_airplane_mode">המכשיר אינו במצב טיסה</string>
+    <string name="continue_">המשך</string>
+    <string name="take_picture">צלם תמונה</string>
+    <string name="instructions">הוראות</string>
+    <string name="re_take_picture">צלם מחדש</string>
+    <string name="enter_text_input_hint">הכנס משימת טקסט</string>
+    <string name="sound">השמע</string>
+    <string name="stop">הפסק</string>
+    <string name="close">סגור</string>
+    <string name="goodbye_title">תודה</string>
+    <string name="exit">יציאה</string>
+
+    <!--Dialogs-->
     <string name="exit_alert_header">אזהרה</string>
-    <string name="exit_alert_message">אתה יוצא מבלי לסיים את המשימה. האם אתה בטוח?</string>
-    <!--Error messages-->
+    <string name="reminder">תזכורת</string>
+
+    <!--Messages-->
     <string name="some_error">התרחשה שגיאה</string>
     <string name="error_no_more_chores">אין עוד משימות</string>
+    <string name="exit_alert_message">אתה יוצא מבלי לסיים את המשימה. האם אתה בטוח?</string>
 
     <!--Sign Up-->
+    <string name="sign_in">היכנס</string>
     <string name="signup">הרשמה</string>
     <string name="username">שם משתמש</string>
     <string name="password">סיסמה</string>
     <string name="confirm_password">אשר סיסמה</string>
-
     <!--Login Validation-->
     <string name="empty_username">אנא ספק שם משתמש</string>
     <string name="short_password">על הסיסמה להיות באורך 6 תווים לפחות</string>
     <string name="no_confirm_password">אנא הכנס את סיסמתך שוב לצורך אישור</string>
     <string name="login_failed">התחברות נכשלה</string>
     <string name="unmatch_passwords">הסיסמאות אינן תואמות</string>
-    <string name="take_picture">צלם תמונה</string>
-    <string name="instructions">הוראות</string>
-    <string name="re_take_picture">צלם מחדש</string>
-    <string name="enter_text_input_hint">הכנס משימת טקסט</string>
-    <string name="sound">השמע</string>
-    <string name="trail_chore_instruction">
-קח בידך את הטלפון שלך, מצא את המפתח של הבית, ולך לחדר השינה שלך. שים את המפתח של הבית על הכרית,  קרב את השמיכה אל הכרית, וצלם. שב על המיטה והקלד את התאריך והשעה, ואת שמך המלא, שם ושם משפחה, בטלפון שלך.
-</string>
-    <string name="reminder">תזכורת</string>
-    <string name="turn_off_airplane_mode_alert_msg">מומלץ לכבות את מצב הטיסה בעת עזיבת האפליקציה</string>
-    <string name="close">סגור</string>
-    <string name="rating_question">עד כמה טוב אתה חושב שביצעת את המשימה?</string>
-    <string name="not_well">לא טוב</string>
-    <string name="extremely_well">מצוין</string>
-    <string name="goodbye_title">תודה</string>
-    <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
-    <string name="exit">יציאה</string>
-    <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
-    <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
-    <string name="open_questionnaire">פתח שאלון</string>
-    <string name="continue_">המשך</string>
-
-
-    <string name="before_instr">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות. באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על "בצע", ההנחיה תעלם מהמסך אך תוכל לחזור לקרוא אותה שוב.</string>
-    <string name="stop">הפסק</string>
-    <string name="answers_xml_error">אירעה שגיאה בתצורת התשובות לשאלון</string>
     <string name="wrong_username">שם המשתמש אינו תקין</string>
 
+    <!--Airplane-->
+    <string name="open_settings">פתח הגדרות מצב טיסה</string>
+    <string name="airplane_mode_request">אנא הכנס את המכשיר למצב טיסה. לאחר הלחיצה על כפתור "פתח הגדרות מצב טיסה" תועבר להגדרות של הטלפון שלך לשם ביצוע העברת המצב. לאחר בחירת מצב טיסה יש לבצע חזרה למסך הקודם על מנת לחזור לכאן</string>
+    <string name="error_not_in_airplane_mode">המכשיר אינו במצב טיסה</string>
+    <string name="turn_off_airplane_mode_alert_msg">מומלץ לכבות את מצב הטיסה בעת עזיבת האפליקציה</string>
+    <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
+    <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
+
+    <!--Trial Chore-->
+    <string name="trial_pre_instrc">במסך הבא תהיה הנחיה לביצוע משימה בביתך וכתיבה על מסך הטלפון.
+אנא עקוב אחר ההנחיה. תוכל גם לשמוע אותה על ידי לחיצה על סימן הרמקול.
+תוכל תמיד לחזור ולראות או לשמוע את ההנחיה
+</string>
+    <string name="trail_chore_instruction">
+קח בידך את הטלפון שלך, מצא את המפתח של הבית ולך לחדר השינה שלך, שים את המפתח של הבית על הכרית וקרב השמיכה אל הכרית (צלם). שב על המיטה והקלד התאריך והשעה, את שמך המלא (שם ושם משפחה) בטלפון שלך</string>
+    <string name="rating_question">עד כמה טוב אתה חושב שביצעת את המשימה?</string>
+
+    <!--Goodbye-->
+    <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
+
+  <!--Questionnaire-->
+    <string name="open_questionnaire">פתח שאלון</string>
+
+<!--Drink chore-->
     <string name="drink_first_text_instr">הוצא/י בבקשה והנח/י על השיש: ספל, כפית, קפה או תה, סוכר או ממתיק, חלב או נענע או כל תוספת אחרת למשקה. כמה פריטים יש לך?</string>
     <string name="drink_time_valuat_text_instrc">כמה זמן אתה מעריך שלקח לך?</string>
     <string name="drink_minutes">דקות</string>
     <string name="dring_photo_instr">כעת צלם את כל הפריטים יחד</string>
     <string name="dring_photo_dring_done">צלם את המשקה המוכן</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="header_drink_instrc_activity">הנחיה</string>
     <string name="instruction_drink_instrc_activity">לפניך משימה. יש לבצע אותה</string>
     <string name="drink_instrc_dialog_explantion">באפשרותך לחזור אחורה על ידי לחיצה על החץ וכן ניתן לשמוע את ההוראה על ידי לחיצה על אייקון השמע -  %1$s \nיש לשים לב שכל חזרה נרשמת. יש לנסות לבצע את המשימה עם כמה שפחות עזרה.</string>
@@ -74,7 +77,6 @@
     <string name="drag_drink_instr">מהו סדר הפעולות שעלייך לבצע על מנת להכין לעצמך שתייה חמה?</string>
     <string name="check_box_instrc">נא הרתח/י מים להכנת השתיה החמה. סמן √ לאחר תחילת ההרתחה</string>
     <string name="check_box_text">בוצע</string>
-    <string name="empty_string" />
     <string name="drink_first_dialog_msg">כעת תתבקש להכין לעצמך את השתייה החמה שאתה מעדיף. יש לפעול לפי ההוראות.</string>
     <string name="finish">סיימתי</string>
     <string name="drink_second_dialog_msg">הכן/י את השתייה החמה ובסיום לחץ על "סיימתי"</string>
