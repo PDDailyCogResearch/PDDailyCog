@@ -95,9 +95,4 @@ public class MediaUtils {
         }
     }
 
-  /*  private static void setButtonViewStop(Button button){
-        if(button instanceof FloatingActionButton){
-
-        }
-    }*/
 }

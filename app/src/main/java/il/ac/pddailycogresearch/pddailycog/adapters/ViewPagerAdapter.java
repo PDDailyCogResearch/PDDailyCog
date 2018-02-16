@@ -19,7 +19,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
  */
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private static final int COUNT = 14;//TODO
+    private static final int COUNT = 14;
     private int activityChoreNum;
     private BaseViewPagerFragment currentFragment;
     private BaseViewPagerFragment previousFragment;
@@ -29,16 +29,20 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         this.activityChoreNum = activityChoreNum;
     }
 
+
     @Override
     public Fragment getItem(int position) {
         Fragment currentFragment;
 
         switch (position) {
+           /* case 0:
+                currentFragment = DragListFragment.newInstance(position, activityChoreNum);
+                break;*/
             case 5:
                 currentFragment = DragListFragment.newInstance(position, activityChoreNum);
                 break;
             case 6:
-                currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum);
+                currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum, R.string.drink_check_box_instrc);
                 break;
             case 7:
                 currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.drink_first_text_instr);

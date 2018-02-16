@@ -1,14 +1,12 @@
 package il.ac.pddailycogresearch.pddailycog.activities.simple;
 
-import android.annotation.TargetApi;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,13 +18,12 @@ import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.MainActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
-import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
-import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 public class AirplaneModeRequestActivity extends AppCompatActivity {
 
+    private static final String TAG = AirplaneModeRequestActivity.class.getSimpleName();
 
     private int nextChoreNum=1;
 
@@ -51,11 +48,11 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-//                if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
-//                    retreiveNextChoreNum();
-//               else
-//                   CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
-               startActivity(new Intent(this, DrinkChoreActivity.class));
+                if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+                    retreiveNextChoreNum();
+               else
+                   CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
+             //  startActivity(new Intent(this, DrinkChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();
@@ -89,7 +86,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onError(Exception e) {
-                                            e.printStackTrace();
+                                            CommonUtils.onGeneralError(e,TAG);
                                         }
                                     }
                             );
@@ -98,7 +95,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        e.printStackTrace();
+                        CommonUtils.onGeneralError(e,TAG);
                         //TODO start first activity?
                     }
                 }

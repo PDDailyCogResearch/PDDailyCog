@@ -49,9 +49,7 @@ public final class ImageUtils {
             try {
                 photoFile = createImageFile(context);
             } catch (IOException ex) {
-                // Error occurred while creating the File
-                ex.printStackTrace();
-                //TODO error handling
+                CommonUtils.onGeneralError(ex,TAG);
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -113,7 +111,7 @@ public final class ImageUtils {
             bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
             mImageView.setImageBitmap(bitmap);
         } catch (IOException e) {
-            e.printStackTrace();
+            CommonUtils.onGeneralError(e,TAG);
         }
     }
 

@@ -2,11 +2,13 @@ package il.ac.pddailycogresearch.pddailycog.fragments.viewpager;
 
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +23,13 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 public class CheckBoxFragment extends BaseViewPagerFragment {
 
 
+    private static final String ARG_INSTRC_KEY = "instruction_id";
     @BindView(R.id.check_box)
     CheckBox checkBox;
     Unbinder unbinder;
+    @BindView(R.id.textViewCheckBox)
+    TextView textViewCheckBox;
+    private int instrctionTextId;
 
     public CheckBoxFragment() {
         // Required empty public constructor
@@ -37,11 +43,19 @@ public class CheckBoxFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment DragListFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static CheckBoxFragment newInstance(int position, int choreNum) {
+    public static CheckBoxFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         CheckBoxFragment fragment = new CheckBoxFragment();
-        fragment.setArguments(putBaseArguments(new Bundle(), position, choreNum));
+        Bundle args = new Bundle();
+        args.putInt(ARG_INSTRC_KEY, instrcId);
+        fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
 
@@ -51,7 +65,8 @@ public class CheckBoxFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_box, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if(savedInstanceState==null){
+        textViewCheckBox.setText(instrctionTextId);
+        if (savedInstanceState == null) {
             initFromDb();
         }
         return view;
@@ -62,7 +77,7 @@ public class CheckBoxFragment extends BaseViewPagerFragment {
                 new IOnFirebaseKeyValueListeners.OnStringValueListener() {
                     @Override
                     public void onValueRetrieved(String value) {
-                        if(value!=null&&value.equals(String .valueOf(true))){
+                        if (value != null && value.equals(String.valueOf(true))) {
                             checkBox.setChecked(true);
                         } else {
                             checkBox.setChecked(false);
@@ -83,7 +98,7 @@ public class CheckBoxFragment extends BaseViewPagerFragment {
 
     @Override
     protected void saveToDb() {
-        firebaseIO.saveKeyValuePair(Consts.CHORES_KEY,choreNum,Consts.RESULT_KEY_PREFIX+position,
+        firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position,
                 String.valueOf(checkBox.isChecked()));
     }
 

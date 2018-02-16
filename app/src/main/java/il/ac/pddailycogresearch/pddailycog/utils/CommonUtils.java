@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.support.annotation.StringRes;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -72,6 +73,10 @@ public final class CommonUtils {
             return Settings.System.getInt(context.getContentResolver(),Settings.System.AIRPLANE_MODE_ON,0)==1;
 
         }
+    }
+
+    public static void onGeneralError(Exception e, String tag){
+        Log.e(tag,e.getMessage(),e);
     }
 
    /* public static int[] getIdArrayFromResources(Activity activity,@ArrayRes int arrayId) {

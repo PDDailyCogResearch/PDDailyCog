@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,6 +29,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
 public class DrinkChoreActivity extends AppCompatActivity implements
         RadioQuestionFragment.OnFragmentInteractionListener {
 
+    private static final String TAG = DrinkChoreActivity.class.getSimpleName();
     private static final int CHORE_NUM = 2;
 
     @BindView(R.id.viewPagerDrinkActivity)
@@ -58,8 +60,12 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         viewPagerDrinkActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                adapter.getPreviousFragment().onPageChanged(false);
-                adapter.getCurrentFragment().onPageChanged(true);
+                if (adapter.getPreviousFragment() != null) {
+                    adapter.getPreviousFragment().onPageChanged(false);
+                }
+                if (adapter.getCurrentFragment() != null) {
+                    adapter.getCurrentFragment().onPageChanged(true);
+                }
             }
         });
 
@@ -81,7 +87,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
 
                     @Override
                     public void onError(Exception e) {
-                        e.printStackTrace();
+                        CommonUtils.onGeneralError(e,TAG);
                     }
                 });
     }
@@ -105,7 +111,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
                 break;
             case R.id.buttonSoundDrinkActivity:
                 int soundId = getResources().getIdentifier(
-                        Consts.DRINK_CHORE_RAW_PREFIX + String.valueOf(viewPagerDrinkActivity.getCurrentItem()),//TODO adjust better
+                        Consts.DRINK_CHORE_RAW_PREFIX + String.valueOf(viewPagerDrinkActivity.getCurrentItem()),
                         "raw", getPackageName());//TODO cut the files and correct the texts
                 MediaUtils.toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
                 if (MediaUtils.isPlaying()) {
@@ -188,6 +194,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     protected void onStop() {
         saveToDb();
         addTimeToDb();
+        MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
         super.onStop();
     }
 

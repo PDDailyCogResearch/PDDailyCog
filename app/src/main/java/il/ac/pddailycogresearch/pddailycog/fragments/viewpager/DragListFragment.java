@@ -4,6 +4,7 @@ package il.ac.pddailycogresearch.pddailycog.fragments.viewpager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -22,6 +23,7 @@ import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.adapters.RecyclerListAdapter;
 import il.ac.pddailycogresearch.pddailycog.adapters.draghelpers.SimpleItemTouchHelperCallback;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 /**
@@ -32,6 +34,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 public class DragListFragment extends BaseViewPagerFragment {
 
 
+    private static final String TAG = DragListFragment.class.getSimpleName();
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     Unbinder unbinder;
@@ -50,7 +53,6 @@ public class DragListFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment DragListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static DragListFragment newInstance(int position, int choreNum) {
         DragListFragment fragment = new DragListFragment();
         fragment.setArguments(putBaseArguments(new Bundle(), position, choreNum));
@@ -83,7 +85,9 @@ public class DragListFragment extends BaseViewPagerFragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+       // recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
@@ -111,7 +115,7 @@ public class DragListFragment extends BaseViewPagerFragment {
 
                     @Override
                     public void onError(Exception e) {
-                        e.printStackTrace();
+                        CommonUtils.onGeneralError(e,TAG);
                     }
                 });
     }

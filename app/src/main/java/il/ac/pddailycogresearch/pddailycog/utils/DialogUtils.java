@@ -51,32 +51,19 @@ public class DialogUtils {
         }
     }
 
-    public static void createAlertDialog(final Context context, @StringRes final int title, String message,
-                                         @StringRes final int positiveButton, @StringRes final int negativeButton,
-                                         final IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener alertDialogResultListener) {
-        final AlertDialog ad = new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(positiveButton,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialogResultListener.onResult(true);
-                            }
-                        })
-                .setNegativeButton(negativeButton,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialogResultListener.onResult(false);
-                            }
-                        })
-                .create();
-        ad.show();
-    }
-
     public static void createAlertDialog(final Context context, @StringRes final int title, @StringRes final int message,
                                          @StringRes final int positiveButton, @StringRes final int negativeButton,
+                                         final IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener alertDialogResultListener) {
+        createAlertDialog(context,
+                context.getResources().getString(title),
+                context.getResources().getString(message),
+                context.getResources().getString(positiveButton),
+                context.getResources().getString(negativeButton),
+                alertDialogResultListener);
+    }
+
+    public static void createAlertDialog(final Context context,String title, String message,
+                                         String positiveButton, String negativeButton,
                                          final IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener alertDialogResultListener) {
         final AlertDialog ad = new AlertDialog.Builder(context)
                 .setTitle(title)
@@ -131,7 +118,7 @@ public class DialogUtils {
         );
     }
 
-    public static void createAlertWithSoundDialog(final Context context, @StringRes final int title, String message,
+    public static void createAlertDialogWithSound(final Context context, @StringRes final int title, String message,
                                                   @StringRes final int positiveButton,
                                                   @StringRes final int neutralButton,
                                                   @StringRes final int negativeButton,

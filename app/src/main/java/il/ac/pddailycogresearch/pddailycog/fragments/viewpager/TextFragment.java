@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
-
-
 
 
 /**
@@ -25,7 +27,10 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
  */
 
 public class TextFragment extends BaseViewPagerFragment {
+    private static final String TAG = TextFragment.class.getSimpleName();
     private static final String ARG_INSTRC_KEY = "instruction_id";
+    private static List<Integer> MINUTES_VISIBLE_INSTRUCTIONS = Arrays.asList(R.string.drink_time_valuat_text_instrc);
+
     @BindView(R.id.EditTextInputFragment)
     EditText EditTextInputFragment;
     @BindView(R.id.textViewInstrc)
@@ -34,6 +39,7 @@ public class TextFragment extends BaseViewPagerFragment {
     TextView textViewMinutes;
     Unbinder unbinder;
     private int instrctionTextId;
+    private String inputText;
 
     public TextFragment() {
         // Required empty public constructor
@@ -42,7 +48,7 @@ public class TextFragment extends BaseViewPagerFragment {
     public static TextFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         TextFragment fragment = new TextFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY,instrcId);
+        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
@@ -60,16 +66,15 @@ public class TextFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_text, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             retrieveFromDb();
         }
 
         textViewInstrc.setText(instrctionTextId);
 
-        if(instrctionTextId==R.string.drink_time_valuat_text_instrc){
+        if (MINUTES_VISIBLE_INSTRUCTIONS.contains(instrctionTextId)) {
             textViewMinutes.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             textViewMinutes.setVisibility(View.INVISIBLE);
         }
         return view;
@@ -80,30 +85,32 @@ public class TextFragment extends BaseViewPagerFragment {
             @Override
             public void onValueRetrieved(String value) {
                 if (value != null) {
-                    EditTextInputFragment.setText(value);
+                    inputText = value;
+                    EditTextInputFragment.setText(inputText);
                 }
             }
 
             @Override
             public void onError(Exception e) {
-                e.printStackTrace();
+                CommonUtils.onGeneralError(e,TAG);
             }
         });
     }
 
-    //TODO: after changing- if deleted unenableText
     @OnTextChanged(value = R.id.EditTextInputFragment,
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-     void onTextChanged(CharSequence text) {
-        if(text.toString().isEmpty()){
+    void onTextChanged(CharSequence text) {
+        if (text.toString().isEmpty()) {
             mListener.unenableNext();
-        }else {
-            mListener.enableNext();
+        } else {
+            if (!text.toString().equals(inputText)) {//prevent enable when initilize
+                mListener.enableNext();
+            }
         }
     }
 
 
-      @Override
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -112,7 +119,7 @@ public class TextFragment extends BaseViewPagerFragment {
 
     @Override
     protected boolean hasResult() {
-        if(!EditTextInputFragment.getText().toString().isEmpty()){
+        if (!EditTextInputFragment.getText().toString().isEmpty()) {
             return true;
         }
         return false;
