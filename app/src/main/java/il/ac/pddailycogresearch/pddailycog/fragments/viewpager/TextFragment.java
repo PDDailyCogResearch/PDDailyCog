@@ -18,8 +18,6 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListene
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 
-
-
 /**
  * Created by ggrot on 09/02/2018.
  */
@@ -34,6 +32,7 @@ public class TextFragment extends BaseViewPagerFragment {
     TextView textViewMinutes;
     Unbinder unbinder;
     private int instrctionTextId;
+    private String inputText;
 
     public TextFragment() {
         // Required empty public constructor
@@ -42,7 +41,7 @@ public class TextFragment extends BaseViewPagerFragment {
     public static TextFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         TextFragment fragment = new TextFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY,instrcId);
+        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
@@ -60,16 +59,16 @@ public class TextFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_text, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             retrieveFromDb();
         }
 
         textViewInstrc.setText(instrctionTextId);
 
-        if(instrctionTextId==R.string.drink_time_valuat_text_instrc){
+
+        if (instrctionTextId == R.string.drink_time_valuat_text_instrc) {
             textViewMinutes.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             textViewMinutes.setVisibility(View.INVISIBLE);
         }
         return view;
@@ -80,7 +79,8 @@ public class TextFragment extends BaseViewPagerFragment {
             @Override
             public void onValueRetrieved(String value) {
                 if (value != null) {
-                    EditTextInputFragment.setText(value);
+                    inputText = value;
+                    EditTextInputFragment.setText(inputText);
                 }
             }
 
@@ -94,16 +94,18 @@ public class TextFragment extends BaseViewPagerFragment {
     //TODO: after changing- if deleted unenableText
     @OnTextChanged(value = R.id.EditTextInputFragment,
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-     void onTextChanged(CharSequence text) {
-        if(text.toString().isEmpty()){
+    void onTextChanged(CharSequence text) {
+        if (text.toString().isEmpty()) {
             mListener.unenableNext();
-        }else {
-            mListener.enableNext();
+        } else {
+            if (!text.toString().equals(inputText)) {//prevent enable when initilize
+                mListener.enableNext();
+            }
         }
     }
 
 
-      @Override
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -112,7 +114,7 @@ public class TextFragment extends BaseViewPagerFragment {
 
     @Override
     protected boolean hasResult() {
-        if(!EditTextInputFragment.getText().toString().isEmpty()){
+        if (!EditTextInputFragment.getText().toString().isEmpty()) {
             return true;
         }
         return false;

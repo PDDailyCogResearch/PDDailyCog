@@ -58,8 +58,12 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         viewPagerDrinkActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                adapter.getPreviousFragment().onPageChanged(false);
-                adapter.getCurrentFragment().onPageChanged(true);
+                if (adapter.getPreviousFragment() != null) {
+                    adapter.getPreviousFragment().onPageChanged(false);
+                }
+                if (adapter.getCurrentFragment() != null) {
+                    adapter.getCurrentFragment().onPageChanged(true);
+                }
             }
         });
 
