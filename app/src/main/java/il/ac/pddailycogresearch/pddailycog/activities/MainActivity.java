@@ -17,6 +17,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.mainButtonOk)
     Button mainButtonOk;
     @BindView(R.id.buttonMainOpenQuestionnaire)
@@ -45,14 +46,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainButtonOk:
                 retreiveNextChoreNum();
 
-                //TODO fix before sending
                 // startActivity(new Intent(MainActivity.this, AirplaneModeRequestActivity.class));
                 //startActivity(new Intent(MainActivity.this, DrinkChoreActivity.class));
                 // startActivity(new Intent(MainActivity.this, DrinkInstrcActivity.class));
                 // Crashlytics.getInstance().crash();
                 break;
             case R.id.buttonMainOpenQuestionnaire:
-                //  startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class)); TODO fix before sending
+                //  startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class));
                 FirebaseIO.getInstance().logout();
                 break;
         }
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onError(Exception e) {
-                                            e.printStackTrace();
+                                            CommonUtils.onGeneralError(e,TAG);
                                         }
                                     }
                             );
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        e.printStackTrace();
+                        CommonUtils.onGeneralError(e,TAG);
                         //TODO start first activity?
                     }
                 }

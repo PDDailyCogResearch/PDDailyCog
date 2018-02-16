@@ -7,9 +7,10 @@
 
     <TextView
         style="@style/StyleTextView"
+        android:id="@+id/textViewCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/check_box_instrc" />
+        />
     <CheckBox
         android:id="@+id/check_box"
         android:layout_width="wrap_content"

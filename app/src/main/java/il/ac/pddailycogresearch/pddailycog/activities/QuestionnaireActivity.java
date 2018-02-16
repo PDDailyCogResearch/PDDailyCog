@@ -67,7 +67,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
             @Override
             public void onError(DatabaseException e) {
-                e.printStackTrace();
+                CommonUtils.onGeneralError(e,TAG);
                 initEmptyAnswersArray();
                 setCurrentQuestion();
             }

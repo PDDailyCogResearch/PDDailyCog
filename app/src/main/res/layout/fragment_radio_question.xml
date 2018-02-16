@@ -5,7 +5,6 @@
     android:orientation="vertical"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewQuestionRadioFragment"

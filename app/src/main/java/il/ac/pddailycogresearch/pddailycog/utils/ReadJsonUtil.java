@@ -21,6 +21,8 @@ import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
 public class ReadJsonUtil {
 
 
+    private static final String TAG = ReadJsonUtil.class.getSimpleName();
+
     public static JsonRadioButton readRadioJsonFile(Activity activity, String filename) {
         Gson gson = new Gson();
 //        BufferedReader br = null;
@@ -28,7 +30,7 @@ public class ReadJsonUtil {
 //            br = new BufferedReader(
 //                    new FileReader(path));
 //        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
+//            CommonUtils.onGeneralError(e,TAG);
 //        }
         String json = loadJSONFromAsset(activity, filename + ".json");
         if (json != null) {
@@ -47,7 +49,7 @@ public class ReadJsonUtil {
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
-            ex.printStackTrace();
+            CommonUtils.onGeneralError(ex,TAG);
             return null;
         }
         return json;

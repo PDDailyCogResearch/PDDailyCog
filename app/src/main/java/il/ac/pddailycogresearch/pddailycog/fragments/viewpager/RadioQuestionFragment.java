@@ -19,6 +19,7 @@ import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
@@ -34,6 +35,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
 
     private static final String SELECTION_TAG = "selection";
     private static final String ARG_ASSET_FOLDER_KEY = "assets_folder";
+    private static final String TAG = RadioQuestionFragment.class.getSimpleName();
 
     @BindView(R.id.textViewQuestionRadioFragment)
     TextView textViewQuestionRadioFragment;
@@ -62,7 +64,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     public static RadioQuestionFragment newInstance(int position, int choreNum, String assetFolder) {
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_ASSET_FOLDER_KEY,assetFolder);
+        args.putString(ARG_ASSET_FOLDER_KEY, assetFolder);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
@@ -95,18 +97,18 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     }
 
     private void initViews() {
-//        if (selection != -1) {
-//            mListener.enableNext();
-//        }
-      //  int positionPlus = position + 1;//TODO better sulotion
-        question = ReadJsonUtil.readRadioJsonFile(getActivity(), assetsFolder+ Consts.QUESTION_ASSETS_PREFIX + position);
+        question = ReadJsonUtil.readRadioJsonFile(getActivity(), assetsFolder + Consts.QUESTION_ASSETS_PREFIX + position);
         if (question == null) {
-            selection=0;
+            selection = 0;
             textViewQuestionRadioFragment.setText("not availble"); //TODO put error msg
             return;
         }
         textViewQuestionRadioFragment.setText(question.getQuestion());
-        textViewInstructionRadioFragment.setText(question.getInstruction());
+        if (question.getInstruction().equals("")) {
+            textViewInstructionRadioFragment.setVisibility(View.GONE);
+        } else {
+            textViewInstructionRadioFragment.setText(question.getInstruction());
+        }
         initRadioGroup(question.getAnswer());
 
     }
@@ -168,7 +170,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
 
             @Override
             public void onError(Exception e) {
-                e.printStackTrace();
+                CommonUtils.onGeneralError(e,TAG);
             }
         });
     }

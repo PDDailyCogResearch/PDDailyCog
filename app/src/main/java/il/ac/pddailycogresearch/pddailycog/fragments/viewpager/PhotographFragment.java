@@ -17,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,6 +44,10 @@ public class PhotographFragment extends BaseViewPagerFragment {
     private static final String IMG_URI_TAG = "img_uri";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String ARG_INSTRC_KEY = "instrc_id";
+    private static final String TAG = PhotographFragment.class.getSimpleName();
+    private static final String START_CAMERA_TIME_TAG = "start_camera_time";
+    private static List<Integer> ENABLER_INSTRUCTIONS = Arrays.asList(R.string.dring_photo_dring_done);
+
 
     private String imgAbsolutePath;
     private Uri imgUri;
@@ -57,6 +66,8 @@ public class PhotographFragment extends BaseViewPagerFragment {
     private int takePicturesClickNum = 0;
     private int instrctionTextId;
 
+    private long startCameraActivityTime;
+
     public PhotographFragment() {
         // Required empty public constructor
     }
@@ -72,7 +83,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
     public static PhotographFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         PhotographFragment fragment = new PhotographFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY,instrcId);
+        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
@@ -116,6 +127,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
         imgAbsolutePath = savedInstanceState.getString(IMG_ABSOLUTE_PATH_TAG);
         imgUri = (Uri) savedInstanceState.getParcelable(IMG_URI_TAG);
         takePicturesClickNum = savedInstanceState.getInt(CLICK_NUM_TAG);
+        startCameraActivityTime = savedInstanceState.getLong(START_CAMERA_TIME_TAG);
     }
 
     @Override
@@ -123,6 +135,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
         outState.putString(IMG_ABSOLUTE_PATH_TAG, imgAbsolutePath);
         outState.putParcelable(IMG_URI_TAG, imgUri);
         outState.putInt(CLICK_NUM_TAG, takePicturesClickNum);
+        outState.putLong(START_CAMERA_TIME_TAG, startCameraActivityTime);
         super.onSaveInstanceState(outState);
     }
 
@@ -134,6 +147,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
         Bundle extras = takePictureIntent.getExtras();
         imgUri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startCameraActivityTime = System.currentTimeMillis();
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -141,15 +155,19 @@ public class PhotographFragment extends BaseViewPagerFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            super.addTimeToDb(System.currentTimeMillis() - startCameraActivityTime);
             if (resultCode == RESULT_OK) {
                 setPictureToImageView();
                 onHasPicture();
+            } else {
+                imgUri = null;
+                imgAbsolutePath = null;
             }
         }
     }
 
     private void setPictureToImageView() {
-        if (imgAbsolutePath != null && mListener != null) {//TODO prevent bug when download img. need to rethink this anyway because of flight mode
+        if (imgAbsolutePath != null && mListener != null) {
             ImageUtils.setPic(imageViewPhotographFragment, imgAbsolutePath, imageViewHeight, imageViewWidth);
         } else if (imgUri != null) {
             ImageUtils.setPicFromContentUri(getContext(), imageViewPhotographFragment, imgUri, imageViewHeight, imageViewWidth);
@@ -169,43 +187,10 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
             @Override
             public void onError(Exception e) {
-                e.printStackTrace();
+                CommonUtils.onGeneralError(e, TAG);
             }
         });
     }
-
-//            protected void retrieveAndSetImageFromDb() {
-//        firebaseIO.retreieveStringValueByKey(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
-//            @Override
-//            public void onValueRetrieved(String value) {
-//                if(value==null){
-//                    return;
-//                }
-//                if (value.split(":")[0].equals(Consts.LOCAL_URI_PREFIX)) {
-//                    imgUri = Uri.parse(value);
-//                    setPictureToImageView();
-//                } else {
-//                    firebaseIO.downloadImg(value, new IOnFirebaseKeyValueListeners.OnStringValueListener() {
-//                        @Override
-//                        public void onValueRetrieved(String value) {
-//                            imgAbsolutePath = value;
-//                            setPictureToImageView();
-//                        }
-//
-//                        @Override
-//                        public void onError(Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
-//    }
 
 
     @Override
@@ -224,8 +209,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
         if (imgUri != null || imgAbsolutePath != null) {
             return true;
         }
-        if(instrctionTextId==R.string.dring_photo_dring_done){
-            return true; //if this is the second, result is not required
+
+        if (ENABLER_INSTRUCTIONS.contains(instrctionTextId)) {
+            return true; //if its enabled fragment, result is not required
         }
         return false;
     }
@@ -237,7 +223,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
     @Override
     protected void saveToDb() {
-        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, CLICK_NUM_TAG+position, takePicturesClickNum);
+        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, CLICK_NUM_TAG + position, takePicturesClickNum);
         takePicturesClickNum = 0;
 
         if (imgUri != null) {

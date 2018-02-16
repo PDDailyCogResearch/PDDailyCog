@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewInstrcPhotographFragment"

@@ -31,24 +31,6 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     private long currentSessionStartTime;
 
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param position Parameter 1.
-//     * @param choreNum Parameter 2.
-//     * @return A new instance of fragment RadioQuestionFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-    // public abstract static  BaseViewPagerFragment newInstance(int position, int choreNum) {
-//        RadioQuestionFragment fragment = new RadioQuestionFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_POSITION, position);
-//        args.putInt(ARG_CHORE_NUM, choreNum);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     protected static Bundle putBaseArguments(Bundle args, int position, int choreNum) {
         if (args != null) {
             args.putInt(ARG_POSITION, position);
@@ -60,7 +42,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//throw runtim exeption if child didnt implement appropriate factory method
         if (getArguments() == null || !getArguments().containsKey(ARG_POSITION) || !getArguments().containsKey(ARG_CHORE_NUM)) {
             throw new RuntimeException("please implement factory method and call putBaseArguments");//TODO vomit
         }
@@ -127,17 +109,17 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     public void onPageChanged(boolean isVisible) {
 
-       // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);
-            if (isVisible) {
-                currentSessionStartTime = System.currentTimeMillis();
-                if (hasResult()) {
-                    mListener.enableNext();
-                } else {
-                    mListener.unenableNext();
-                }
+        // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);
+        if (isVisible) {
+            currentSessionStartTime = System.currentTimeMillis();
+            if (hasResult()) {
+                mListener.enableNext();
             } else {
-                addTimeToDb();
+                mListener.unenableNext();
             }
+        } else {
+            addTimeToDb();
+        }
 
     }
 
@@ -147,8 +129,12 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     private void addTimeToDb() {
         long elapsedTime = System.currentTimeMillis() - currentSessionStartTime;
-        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.TIME_KEY_PREFIX + position, elapsedTime);
+        addTimeToDb(elapsedTime);
         currentSessionStartTime = System.currentTimeMillis();
+    }
+
+    protected void addTimeToDb(long elapsedTime) {
+        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.TIME_KEY_PREFIX + position, elapsedTime);
     }
 
     @Override
@@ -167,7 +153,6 @@ public abstract class BaseViewPagerFragment extends Fragment {
      * activity.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void enableNext();
 
         void unenableNext();

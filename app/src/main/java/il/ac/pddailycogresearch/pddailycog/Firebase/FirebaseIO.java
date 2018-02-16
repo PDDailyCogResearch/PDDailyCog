@@ -37,6 +37,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireLi
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 import static il.ac.pddailycogresearch.pddailycog.utils.Consts.FIREBASE_LOGIN_STATE_IN;
@@ -160,7 +161,7 @@ public class FirebaseIO {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        databaseError.toException().printStackTrace();
+                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
                         onFirebaseRetrieveLastChoreListener.onError(databaseError.getMessage());
                     }
                 }
@@ -325,7 +326,7 @@ public class FirebaseIO {
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            CommonUtils.onGeneralError(e,TAG);
         }
 
     }
@@ -335,7 +336,7 @@ public class FirebaseIO {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                exception.printStackTrace();
+                CommonUtils.onGeneralError(exception,TAG);
                 onFirebaseSaveImageListener.onError(exception.getMessage());
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -416,7 +417,7 @@ public class FirebaseIO {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        //TODO error handle
+                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
                     }
                 }
         );

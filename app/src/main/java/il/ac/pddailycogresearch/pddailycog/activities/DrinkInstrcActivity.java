@@ -42,7 +42,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonSoundDrinkInstrcActivity:
-                MediaUtils.toggleMediaPlayer(getApplicationContext(), R.raw.drink_dialog_instrc, buttonSoundDrinkInstrcActivity);
+                MediaUtils.toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
                 if (MediaUtils.isPlaying()) {
                     soundPressNum++;
                 }
@@ -50,7 +50,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
             case R.id.buttonYesDrinkIstrcActivity:
 
                 String explantionWithSpeaker = getString(R.string.drink_instrc_dialog_explantion, Consts.SPEAKER_EMOJI);
-                DialogUtils.createAlertWithSoundDialog(this, R.string.reminder, explantionWithSpeaker,
+                DialogUtils.createAlertDialogWithSound(this, R.string.reminder, explantionWithSpeaker,
                         R.string.ok,  R.string.sound, android.R.string.cancel,
                         new IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener() {
                             @Override

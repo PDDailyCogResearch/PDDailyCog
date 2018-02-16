@@ -62,7 +62,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     private StepCounter stepCounter = StepCounter.getInstance();
     private long startCurrentViewedPartTime;
     private long startCurrentViewPartStepsNum = -1;
-    private boolean isInstructionClicked;//TODO put in save instance
+    private boolean isInstructionClicked;
 
 
     @Override
