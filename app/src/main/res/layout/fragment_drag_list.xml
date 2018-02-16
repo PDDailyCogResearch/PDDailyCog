@@ -7,10 +7,11 @@
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment">
 
     <TextView
-        style="@style/StyleSimpleTextView"
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drag_drink_instr" />
+
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recycler_view"

@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:text="@string/drink_first_text_instr" />
 
-    <LinearLayout
+    <RelativeLayout
         style="@style/StyleLayuot"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/textViewInstrc"
         android:orientation="horizontal">
 
@@ -25,6 +25,7 @@
             style="@style/StyleEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewMinutes"
             android:hint="@string/enter_text_input_hint"
             android:inputType="number" />
 
@@ -36,6 +37,6 @@
             android:text="@string/drink_minutes"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

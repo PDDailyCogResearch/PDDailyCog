@@ -20,15 +20,14 @@
     <style name="StyleButton" parent="android:Theme">
         <item name="android:background">@color/colorButtons</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
         <!--<item name="android:textStyle">italic</item>-->
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">fill</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
 
     </style>
 
@@ -36,10 +35,12 @@
     <style name="StyleEditText" parent="android:Theme">
         <item name="android:background">@drawable/rounded_corner</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_width">100dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
+
 
 
 
@@ -55,10 +56,8 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">fill</item>
         <item name="android:radius">100dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
         <item name="android:background">@drawable/rounded_corner</item>
     </style>
 
@@ -72,17 +71,15 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">fill</item>
         <item name="android:radius">100dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
     </style>
 
     <!-- TextViewRadioButton -->
     <style name="StyleTextRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">20sp</item>
         <!--<item name="android:textStyle">italic</item>-->
         <item name="android:layout_gravity">fill</item>
     </style>
@@ -99,7 +96,7 @@
     <!-- RadioButton -->
     <style name="StyleRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
     </style>
