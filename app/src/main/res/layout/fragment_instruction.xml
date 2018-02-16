@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/StyleLayuot"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.InstructionFragment">
 
@@ -9,12 +10,7 @@
         style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:autoSizeTextType="uniform"
-
         android:id="@+id/textViewInstructionFragment"
         android:text="@string/trail_chore_instruction" />
-
-
-
 
 </RelativeLayout>

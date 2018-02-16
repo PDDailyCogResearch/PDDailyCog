@@ -22,4 +22,5 @@
     android:layout_margin="5dp"
     android:background="@color/drag_item"
     android:paddingLeft="16dp"
+    android:gravity="center"
     android:textAppearance="?android:attr/textAppearanceMedium" />

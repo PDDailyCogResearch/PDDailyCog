@@ -1,44 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StyleLayuot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment">
 
     <TextView
-        style="@style/StyleTextView"
         android:id="@+id/textViewInstrc"
-        android:layout_alignParentTop="true"
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/drink_first_text_instr"
-        />
+        android:text="@string/drink_first_text_instr" />
 
+    <LinearLayout
+        style="@style/StyleLayuot"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/textViewInstrc"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/EditTextInputFragment"
+            style="@style/StyleEditText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewInstrc"
-            android:orientation="horizontal">
+            android:hint="@string/enter_text_input_hint"
+            android:inputType="number" />
 
-            <TextView
-                style="@style/StyleSimpleTextView"
-                android:id="@+id/textViewMinutes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/drink_minutes"
+        <TextView
+            android:id="@+id/textViewMinutes"
+            style="@style/StyleSimpleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drink_minutes"
+            />
 
-                />
-    <EditText
-        style="@style/StyleEditText"
-        android:id="@+id/EditTextInputFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_text_input_hint"
-
-        android:inputType="number"/>
-
-
-        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

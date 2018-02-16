@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment">
 
     <TextView
