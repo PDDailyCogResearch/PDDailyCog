@@ -1,11 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/StyleLayuot"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:fillViewport="true"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment">
-
+<RelativeLayout
+    style="@style/StyleLayuot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/textViewInstrc"
         style="@style/StyleTextView"
@@ -38,5 +42,5 @@
             />
 
     </RelativeLayout>
-
 </RelativeLayout>
+</ScrollView>

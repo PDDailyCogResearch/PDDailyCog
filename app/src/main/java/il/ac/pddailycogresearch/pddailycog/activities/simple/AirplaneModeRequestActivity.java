@@ -1,11 +1,13 @@
 package il.ac.pddailycogresearch.pddailycog.activities.simple;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 
 
 import butterknife.ButterKnife;
@@ -30,6 +32,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_airplane_mode_request);
         ButterKnife.bind(this);
     }

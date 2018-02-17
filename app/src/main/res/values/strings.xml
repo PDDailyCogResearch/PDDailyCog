@@ -73,7 +73,7 @@
     <string name="dring_photo_instr">כעת צלם את כל הפריטים יחד</string>
     <string name="drink_second_dialog_msg">אם המים רתחו, הכן/י את השתיה החמה ובסיום לחץ על "סיימתי"</string>
     <string name="dring_photo_dring_done">צלם את המשקה המוכן</string>
-    <string name="drink_time_valuat_text_instrc">כמה זמן את מעריך שלקח לך לבצע המשימה?</string>
+    <string name="drink_time_valuat_text_instrc">כמה זמן אתה מעריך שלקח לך לבצע המשימה?</string>
 
     <string name="drink_minutes">דקות</string>
     <string name="header_drink_instrc_activity">הנחיה</string>

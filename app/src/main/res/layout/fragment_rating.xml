@@ -1,12 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:fillViewport="true"
     android:orientation="vertical"
     style="@style/StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment">
- 
+    <RelativeLayout
+        style="@style/StyleLayuot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewHowWell"
@@ -120,3 +124,4 @@
         </RelativeLayout>
     -->
 </RelativeLayout>
+</ScrollView>
