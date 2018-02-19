@@ -107,6 +107,16 @@ public abstract class BaseViewPagerFragment extends Fragment {
         }
     }*/
 
+    protected void onGotResult() {
+        if(getUserVisibleHint()&&isResumed()){
+            if(hasResult()) {
+                mListener.enableNext();
+            } else {
+                mListener.unenableNext();
+            }
+        }
+    }
+
     public void onPageChanged(boolean isVisible) {
 
         // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);

@@ -27,7 +27,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
     private static final String TAG = AirplaneModeRequestActivity.class.getSimpleName();
 
-    private int nextChoreNum=1;
+    private int nextChoreNum = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +37,25 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!FirebaseIO.getInstance().isUserLogged())
-            startActivity(new Intent(AirplaneModeRequestActivity.this, LoginActivity.class));
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (!FirebaseIO.getInstance().isUserLogged())
+//            startActivity(new Intent(AirplaneModeRequestActivity.this, LoginActivity.class));
+//    }
 
-    @OnClick({R.id.buttonOpenAirplaneModeSettings, R.id.buttonAirplaneOk,R.id.logout})
+    @OnClick({R.id.buttonOpenAirplaneModeSettings, R.id.buttonAirplaneOk, R.id.logout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonOpenAirplaneModeSettings:
-               startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
+                startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-                if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+                if (CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
                     retreiveNextChoreNum();
-               else
-                   CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
-             //  startActivity(new Intent(this, DrinkChoreActivity.class));
+                else
+                    CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
+                //startActivity(new Intent(this, DrinkChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();
@@ -70,11 +70,10 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 new IOnFirebaseKeyValueListeners.OnIntValueListener() {
                     @Override
                     public void onValueRetrieved(Integer value) {
-                        if(value<0) {
-                            nextChoreNum=1;
+                        if (value < 0) {
+                            nextChoreNum = 1;
                             chooseNextActivity();
-                        }
-                        else {
+                        } else {
                             nextChoreNum = value;
                             FirebaseIO.getInstance().retreieveBooleanValueByKey(
                                     Consts.CHORES_KEY, value, Consts.IS_COMPLETED_KEY,
@@ -89,7 +88,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onError(Exception e) {
-                                            CommonUtils.onGeneralError(e,TAG);
+                                            CommonUtils.onGeneralError(e, TAG);
                                         }
                                     }
                             );
@@ -98,7 +97,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        CommonUtils.onGeneralError(e,TAG);
+                        CommonUtils.onGeneralError(e, TAG);
                         //TODO start first activity?
                     }
                 }
@@ -106,8 +105,8 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
     }
 
     private void chooseNextActivity() {
-        Intent nextActivity=null;
-        switch (nextChoreNum){
+        Intent nextActivity = null;
+        switch (nextChoreNum) {
             case 1:
                 nextActivity = new Intent(AirplaneModeRequestActivity.this,
                         TrialInstrcActivity.class);
@@ -117,9 +116,9 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                         DrinkInstrcActivity.class);
                 break;
             default:
-                CommonUtils.showMessage(this,R.string.error_no_more_chores);
+                CommonUtils.showMessage(this, R.string.error_no_more_chores);
         }
-        if(nextActivity!=null) {
+        if (nextActivity != null) {
             startActivity(nextActivity);
         }
 

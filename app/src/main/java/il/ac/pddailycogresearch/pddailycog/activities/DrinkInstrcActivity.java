@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,13 +16,15 @@ import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
-import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 public class DrinkInstrcActivity extends AppCompatActivity {
     private static final int CHORE_NUM = 2;
 
     @BindView(R.id.buttonSoundDrinkInstrcActivity)
     FloatingActionButton buttonSoundDrinkInstrcActivity;
+    @BindView(R.id.textViewHeaderDrinkInstrcActivity)
+    TextView textViewHeaderDrinkInstrcActivity;
     private int soundPressNum;
     private long currentSessionStartTime;
 
@@ -42,32 +45,27 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonSoundDrinkInstrcActivity:
-                MediaUtils.toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
-                if (MediaUtils.isPlaying()) {
+                SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
+                if (SoundManager.getInstance().isPlaying()) {
                     soundPressNum++;
                 }
                 break;
             case R.id.buttonYesDrinkIstrcActivity:
-
-                String explantionWithSpeaker = getString(R.string.drink_instrc_dialog_explantion, Consts.SPEAKER_EMOJI);
-                DialogUtils.createAlertDialogWithSound(this, R.string.reminder, explantionWithSpeaker,
-                        R.string.ok,  R.string.sound, android.R.string.cancel,
+                SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkInstrcActivity);
+                String explantionWithSpeaker = getString(R.string.drink_instrc_dialog_explantion, "");//Consts.SPEAKER_EMOJI);
+                DialogUtils.createAlertDialogWithSound(this, explantionWithSpeaker,
+                        R.string.ok, android.R.string.cancel, R.raw.drink_dialog_instrc,
                         new IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener() {
                             @Override
-                            public void onResult(int result, Button soundButton) {
-
-                                switch (result){
-                                    case -1:
-                                        //finish(); or do nothing?...
-                                        break;
-                                    case 0:
-                                        MediaUtils.toggleMediaPlayer(DrinkInstrcActivity.this,R.raw.drink_dialog_instrc,soundButton);
-                                        break;
-                                    case 1:
-                                        startActivity(new Intent(DrinkInstrcActivity.this,DrinkChoreActivity.class));
-                                        break;
+                            public void onResult(boolean result) {
+                                if (result) {
+                                    startActivity(new Intent(DrinkInstrcActivity.this, DrinkChoreActivity.class));
                                 }
+                            }
 
+                            @Override
+                            public void onSoundClick() {
+                                soundPressNum++;
                             }
                         }
                 );
@@ -91,7 +89,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        MediaUtils.stopMediaPlayer(buttonSoundDrinkInstrcActivity);
+        SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkInstrcActivity);
         saveToDb();
         addTimeToDb();
         super.onStop();

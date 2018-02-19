@@ -162,6 +162,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
             } else {
                 imgUri = null;
                 imgAbsolutePath = null;
+                ImageUtils.deleteFiles(getContext());//delete created but not filled file
             }
         }
     }
@@ -182,6 +183,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
                 if (value != null) {
                     imgAbsolutePath = value;
                     setPictureToImageView();
+                    onGotResult();
                 }
             }
 
@@ -229,9 +231,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
         if (imgUri != null) {
             firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, imgUri.toString());
         }
-        if (imgAbsolutePath != null) {
+        //if (imgAbsolutePath != null) {
             firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.ABSOLUTE_PATH_KEY + position, imgAbsolutePath);
-        }
+       // }
     }
 
     @Override

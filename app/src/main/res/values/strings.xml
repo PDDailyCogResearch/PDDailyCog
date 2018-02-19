@@ -60,12 +60,12 @@
     <!--Goodbye-->
     <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
 
-  <!--Questionnaire-->
+    <!--Questionnaire-->
     <string name="open_questionnaire">פתח שאלון</string>
 
-<!--Drink chore-->
-    <string name="instruction_drink_instrc_activity">לפניך משימה. יש לבצע אותה ברציפות במטבח. משך המשימה כחמש עד עשר דקות. אין לעסוק בפעילות אחרת, לשוחח או לענות לטלפון בזמן ביצוע המשימה. האם יש לך אתה זמן הדרוש לביצוע המשימה במלואה?</string>
-    <string name="drink_instrc_dialog_explantion">יש לך אפשרות לקבל עזרה על ידי חזרה אחורה למסך הקודם או השמעת ההוראה -  %1$s \nיש לשים לב שכל בקשת עזרה נרשמת. יש לנסות לבצע את המשימה תוך שימוש בכמה שפחות עזרה. לפנייך שאלת ניסיון</string>
+    <!--Drink chore-->
+    <string name="instruction_drink_instrc_activity">לפניך משימה. יש לבצע אותה ברציפות במטבח. משך המשימה כחמש עד עשר דקות. אין לעסוק בפעילות אחרת, לשוחח או לענות לטלפון בזמן ביצוע המשימה. האם יש לך אתה זמן הדרוש לביצוע  המשימה במלואה?</string>
+    <string name="drink_instrc_dialog_explantion">יש לך אפשרות לקבל עזרה על ידי חזרה אחורה למסך הקודם או השמעת ההוראה   %1$s \nיש לשים לב שכל בקשת עזרה נרשמת. יש לנסות לבצע את המשימה תוך שימוש בכמה שפחות עזרה. לפניך שאלת ניסיון</string>
     <string name="drink_first_dialog_msg">כעת תתבקש/י להכין לעצמך את השתייה החמה שאתה מעדיף. יש לפעול לפי ההוראות. </string>
     <string name="drink_check_box_instrc">כעת, נא הרתח/י מים להכנת השתיה החמה. סמן √ לאחר תחילת ההרתחה</string>
     <string name="drag_drink_instr">מהו סדר הפעולות שעלייך לבצע על מנת להכין לעצמך שתייה חמה?</string>
@@ -82,6 +82,10 @@
     <string name="check_box_text">בוצע</string>
     <string name="finish">סיימתי</string>
     <string name="text_input_instrc">כעת השלם את משימת הכתיבה</string>
+    <string name="open_questionnaire_text">כעת ענה על השאלות הבאות</string>
+    <string name="thanks">תודה רבה!</string>
+    <string name="finish_drink">סיימת את המשימה להיום. שתיה נעימה!</string>
+    <string name="welcome">ברוכים הבאים בלה בלה</string>
 
 
 </resources>

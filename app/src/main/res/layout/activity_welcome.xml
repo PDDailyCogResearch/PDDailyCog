@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.WelcomeActivity">
+    <RelativeLayout
+        style="@style/StyleLayuot">
+        <TextView
+            android:id="@+id/logoImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:foregroundGravity="center"
+            android:background="@drawable/logo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            style="@style/StyleTextView"
+            android:id="@+id/textViewAppname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_below="@id/logoImage"
+            android:gravity="center"
+            android:layout_marginTop="45dp"/>
+
+        <TextView
+            style="@style/StyleTextView"
+            android:id="@+id/textViewWelcome"
+            android:layout_below="@id/textViewAppname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:layout_marginTop="20dp"
+            android:gravity="center" />
+
+
+        <Button style="@style/StyleButton"
+            android:layout_height="wrap_content"
+            android:id="@+id/BtnOk"
+            android:layout_width="100dp"
+            android:layout_below="@id/textViewWelcome"
+            android:text="@string/ok" />
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -34,6 +34,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 
 public class TrialChoreActivity extends AppCompatActivity implements
@@ -72,11 +73,11 @@ public class TrialChoreActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         stepCounter.registerSensors(this);
 
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             currentChore = (Chore) savedInstanceState.getSerializable(CURRENT_CHORE_KEY);
             initMembers();
 
-           // replaceFragment(currentChore.getCurrentPartNum());
+            // replaceFragment(currentChore.getCurrentPartNum());
         } else {
             initMembers();
             initChore();
@@ -94,27 +95,27 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        if(!CommonUtils.isAirplaneMode(this)) { //TODO think if useful
+        if (!CommonUtils.isAirplaneMode(this)) { //TODO think if useful
             DialogUtils.createTurnOnAirPlaneModeDialog(this);
         }
-        button_sound.setVisibility(View.GONE);
+        if (currentChore==null||!(currentChore.getCurrentPartNum() == 1 || isInstructionClicked)) {
+            button_sound.setVisibility(View.GONE);
+        }
         stepCounter.registerSensors(this);
         startCurrentViewedPartTime = System.currentTimeMillis();
         startCurrentViewPartStepsNum = stepCounter.getStepsNum();
-       /* InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);*/
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CURRENT_CHORE_KEY,currentChore);
+        outState.putSerializable(CURRENT_CHORE_KEY, currentChore);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onStop() {
         terminateChore();
-        MediaUtils.stopMediaPlayer(button_sound);
+        SoundManager.getInstance().stopMediaPlayer(button_sound);
         super.onStop();
     }
 
@@ -185,8 +186,8 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void toggleMediaPlayer() {
-        MediaUtils.toggleMediaPlayer(getApplicationContext(),R.raw.trial_instrc_male_sound,button_sound);
-        if(MediaUtils.isPlaying()){
+        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.trial_instrc_male_sound, button_sound);
+        if (SoundManager.getInstance().isPlaying()) {
             onSoundButtonClick();
         }
 /*        if(mpori==null) {
@@ -237,7 +238,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
                             terminateChore();
                             DialogUtils.createTurnOffAirplaneModeAlertDialog(TrialChoreActivity.this);
                             // finish();
-                           // CommonUtils.closeApp(TrialChoreActivity.this);
+                            // CommonUtils.closeApp(TrialChoreActivity.this);
                         }
                     }
                 });
@@ -311,7 +312,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onInstructionFragmentDetach() {
         buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
         button_sound.setVisibility(View.GONE);
-        MediaUtils.stopMediaPlayer(button_sound);
+        SoundManager.getInstance().stopMediaPlayer(button_sound);
 //        if (mpori!=null){
 //            mpori.stop();
 //        }
@@ -330,8 +331,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onTakePictureFragmentViewCreated(TakePictureFragment context) {
         if (ImageUtils.lastTakenImageAbsolutePath == null) {
             unableOkButton();
-        }
-        else
+        } else
             context.setLastTakenImageToView();
     }
 

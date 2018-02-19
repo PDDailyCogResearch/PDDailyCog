@@ -22,9 +22,12 @@ public class Consts {
     public static final String RESULT_KEY_PREFIX = "result-";
     public static final String TIME_KEY_PREFIX = "time-";
     public static final String SPEAKER_EMOJI = "\uD83D\uDD0A";
+    public static final String PAUSE_EMOJI0 = 	"\uD83D\uDD07";
+    public static final String PAUSE_EMOJI = 	"\uAB7C";
     public static final String ABSOLUTE_PATH_KEY = "abs-path-" ;
 
     public static final String IS_COMPLETED_KEY = "completed";
     public static final String QUESTION_ASSETS_PREFIX = "/question-";
     public static final String DRINK_CHORE_RAW_PREFIX = "drink_chore_";
+    public static final String DRINK_CHORE_DIALOG_RAW_PREFIX = "drink_dialog_";
 }

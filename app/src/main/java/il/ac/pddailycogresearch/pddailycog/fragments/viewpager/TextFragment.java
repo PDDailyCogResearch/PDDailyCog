@@ -87,6 +87,7 @@ public class TextFragment extends BaseViewPagerFragment {
                 if (value != null) {
                     inputText = value;
                     EditTextInputFragment.setText(inputText);
+                    onGotResult();
                 }
             }
 

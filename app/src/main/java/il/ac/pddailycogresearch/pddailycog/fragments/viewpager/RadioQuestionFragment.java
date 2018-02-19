@@ -164,6 +164,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
                     initViews();
                 } else {
                     selection = value;
+                    onGotResult();
                     initViews();
                 }
             }

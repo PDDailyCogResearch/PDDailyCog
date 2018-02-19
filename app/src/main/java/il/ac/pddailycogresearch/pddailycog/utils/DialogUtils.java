@@ -8,10 +8,13 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
+import android.support.annotation.RawRes;
 import android.support.annotation.StringRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
@@ -62,7 +65,7 @@ public class DialogUtils {
                 alertDialogResultListener);
     }
 
-    public static void createAlertDialog(final Context context,String title, String message,
+    public static void createAlertDialog(final Context context, String title, String message,
                                          String positiveButton, String negativeButton,
                                          final IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener alertDialogResultListener) {
         final AlertDialog ad = new AlertDialog.Builder(context)
@@ -103,83 +106,85 @@ public class DialogUtils {
         ad.show();
     }
 
-    public static void createAlertDialogWithSound(final Context context, @StringRes final int title, @StringRes final int message,
+    public static void createAlertDialogWithSound(final Context context, @StringRes final int message,
                                                   @StringRes final int positiveButton,
-                                                  @StringRes final int neutralButton,
                                                   @StringRes final int negativeButton,
+                                                  @RawRes final int soundID,
                                                   final IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener alertDialogResultListener) {
         createAlertDialogWithSound(context,
-                context.getResources().getString(title),
                 context.getResources().getString(message),
                 context.getResources().getString(positiveButton),
-                context.getResources().getString(neutralButton),
                 context.getResources().getString(negativeButton),
+                soundID,
                 alertDialogResultListener
         );
     }
 
-    public static void createAlertDialogWithSound(final Context context, @StringRes final int title, String message,
+    public static void createAlertDialogWithSound(final Context context, String message,
                                                   @StringRes final int positiveButton,
-                                                  @StringRes final int neutralButton,
                                                   @StringRes final int negativeButton,
+                                                  @RawRes final int soundID,
                                                   final IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener alertDialogResultListener) {
         createAlertDialogWithSound(context,
-                context.getResources().getString(title),
                 message,
                 context.getResources().getString(positiveButton),
-                context.getResources().getString(neutralButton),
                 context.getResources().getString(negativeButton),
+                soundID,
                 alertDialogResultListener
         );
     }
 
-    public static void createAlertDialogWithSound(final Context context, final String title, final String message,
+    public static void createAlertDialogWithSound(final Context context,  final String message,
                                                   final String positiveButton,
-                                                  final String neutralButton,
                                                   final String negativeButton,
+                                                  @RawRes final int soundID,
                                                   final IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener alertDialogResultListener) {
-        final AlertDialog ad = new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.sound_dialog, null);
+        builder.setView(dialogView);
+        TextView textView =  dialogView.findViewById(R.id.textViewSoundDialog);
+        textView.setText(message);
+        final FloatingActionButton b = dialogView.findViewById(R.id.buttonSoundDialog);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SoundManager.getInstance().toggleMediaPlayer(context,soundID,b);
+                if (SoundManager.getInstance().isPlaying()) {
+                    alertDialogResultListener.onSoundClick();
+                }
+            }
+        });
+        if(!negativeButton.equals("")){
+            builder.setNegativeButton(negativeButton,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alertDialogResultListener.onResult(false);
+                        }
+                    });
+        }
+        final AlertDialog ad = builder
                 .setPositiveButton(positiveButton,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                alertDialogResultListener.onResult(1, null);
+                                alertDialogResultListener.onResult(true);
                             }
                         })
-                .setNeutralButton(neutralButton, null /*new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialogResultListener.onResult(0);
-                    }
-                }*/)
-                .setNegativeButton(negativeButton,
-                        new DialogInterface.OnClickListener() {
+                .setOnDismissListener(
+                        new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialogResultListener.onResult(-1, null);
+                            public void onDismiss(DialogInterface dialog) {
+                                SoundManager.getInstance().stopMediaPlayer(b);
                             }
-                        })
+                        }
+                )
                 .create();
-        ad.setOnShowListener(new DialogInterface.OnShowListener() {
-
-            @Override
-            public void onShow(DialogInterface dialog) {
-
-                final Button b = ad.getButton(AlertDialog.BUTTON_NEUTRAL);
-                b.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        alertDialogResultListener.onResult(0, b);
-                    }
-                });
-            }
-        });
-
         ad.show();
     }
+
 
     public static void createTurnOffAirplaneModeAlertDialog(final Activity activity) {
         createAlertDialog(activity, R.string.reminder, R.string.turn_off_airplane_mode_alert_msg,

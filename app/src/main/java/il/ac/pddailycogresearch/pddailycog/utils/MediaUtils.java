@@ -32,7 +32,7 @@ public class MediaUtils {
             mpori.release();
             mpori = null;
             if(soundButton!=null){
-                soundButton.setText(R.string.stop);}
+                soundButton.setText(R.string.sound);}
         }
     }
 

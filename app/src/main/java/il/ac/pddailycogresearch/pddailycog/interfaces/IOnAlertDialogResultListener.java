@@ -19,6 +19,8 @@ public class IOnAlertDialogResultListener {
     }
 
     public  interface IOnAlertDialogWithSoundResultListener {
-        void onResult(int result, Button soundButton);
+        void onResult(boolean result);
+        void onSoundClick();
+
     }
 }

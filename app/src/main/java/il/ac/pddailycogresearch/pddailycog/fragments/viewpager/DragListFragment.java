@@ -85,8 +85,8 @@ public class DragListFragment extends BaseViewPagerFragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-       // recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+      //  recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);

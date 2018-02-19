@@ -3,6 +3,7 @@ package il.ac.pddailycogresearch.pddailycog.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.RawRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.simple.OpenQuestionnaireActivity;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
@@ -25,6 +27,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.MediaUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 public class DrinkChoreActivity extends AppCompatActivity implements
         RadioQuestionFragment.OnFragmentInteractionListener {
@@ -102,7 +105,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonNextDrinkActivity:
-                MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
+                SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
                 CommonUtils.hideKeyboard(this);
                 int currentPage = viewPagerDrinkActivity.getCurrentItem();
                 if (!moveWithDialogIfNeed(currentPage)) {
@@ -113,8 +116,8 @@ public class DrinkChoreActivity extends AppCompatActivity implements
                 int soundId = getResources().getIdentifier(
                         Consts.DRINK_CHORE_RAW_PREFIX + String.valueOf(viewPagerDrinkActivity.getCurrentItem()),
                         "raw", getPackageName());//TODO cut the files and correct the texts
-                MediaUtils.toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
-                if (MediaUtils.isPlaying()) {
+                SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
+                if (SoundManager.getInstance().isPlaying()) {
                     soundPressNum++;
                 }
                 break;
@@ -126,22 +129,30 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     }
 
     private boolean moveWithDialogIfNeed(final int currentPage) {
-        IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener resultListener = new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
+        IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener resultListener = new IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener() {
             @Override
             public void onResult(boolean result) {
                 if (result) {
                     moveNext(currentPage);
                 }
             }
+
+            @Override
+            public void onSoundClick() {
+                soundPressNum++;
+            }
         };
+        int soundId = getResources().getIdentifier(
+                Consts.DRINK_CHORE_DIALOG_RAW_PREFIX + String.valueOf(currentPage),
+                "raw", getPackageName());
         if (currentPage == 3) {
-            DialogUtils.createAlertDialog(this, R.string.empty_string, R.string.drink_first_dialog_msg,
-                    R.string.ok, android.R.string.cancel, resultListener);
+            DialogUtils.createAlertDialogWithSound(this, R.string.drink_first_dialog_msg,
+                    R.string.ok, android.R.string.cancel,soundId, resultListener);
             return true;
         }
         if (currentPage == 9) {
-            DialogUtils.createAlertDialog(this, R.string.empty_string, R.string.drink_second_dialog_msg,
-                    R.string.finish, resultListener);
+            DialogUtils.createAlertDialogWithSound(this, R.string.drink_second_dialog_msg,
+                    R.string.finish,R.string.empty_string,soundId, resultListener);
             return true;
         }
         return false;
@@ -151,7 +162,19 @@ public class DrinkChoreActivity extends AppCompatActivity implements
         int nextPage = currentPage + 1;
         unenableNext();
         if (nextPage == adapter.getCount()) {
-            startActivity(new Intent(this, GoodByeActivity.class));
+            DialogUtils.createAlertDialogWithSound(this, R.string.finish_drink, R.string.continue_,R.string.empty_string,
+                    R.raw.drink_dialog_finish,
+                    new IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener() {
+                        @Override
+                        public void onResult(boolean result) {
+                            startActivity(new Intent(DrinkChoreActivity.this, OpenQuestionnaireActivity.class));
+                        }
+
+                        @Override
+                        public void onSoundClick() {
+                            soundPressNum++;
+                        }
+                    });
             completeChore();
         } else {
             viewPagerDrinkActivity.setCurrentItem(viewPagerDrinkActivity.getCurrentItem() + 1);
@@ -181,7 +204,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         backPressNum++;
-        MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
+        SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
         int prevItem = viewPagerDrinkActivity.getCurrentItem() - 1;
         if (prevItem < 0) {
             super.onBackPressed();
@@ -194,7 +217,7 @@ public class DrinkChoreActivity extends AppCompatActivity implements
     protected void onStop() {
         saveToDb();
         addTimeToDb();
-        MediaUtils.stopMediaPlayer(buttonSoundDrinkActivity);
+        SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
         super.onStop();
     }
 
