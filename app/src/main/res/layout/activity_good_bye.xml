@@ -12,8 +12,6 @@
         <TextView
             android:id="@+id/textViewGoodBye"
             style="@style/StyleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_above="@+id/buttonGoodByeOK"
             android:text="@string/goodbye_msg" />
 

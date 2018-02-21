@@ -8,8 +8,6 @@
 
     <TextView
         style="@style/StyleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/drag_drink_instr" />
 
     <android.support.v7.widget.RecyclerView

@@ -13,8 +13,6 @@
     <TextView
         android:id="@+id/textViewInstrc"
         style="@style/StyleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/drink_first_text_instr" />
 
     <RelativeLayout

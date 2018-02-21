@@ -37,15 +37,12 @@
         android:textColor="@color/red_dark"
         android:layout_below="@+id/relativeLayoutUpDrink"
         android:id="@+id/textViewHeaderDrinkInstrcActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/header_drink_instrc_activity"/>
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewInstrcDrinkInstrcActivity"
         android:layout_below="@+id/textViewHeaderDrinkInstrcActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
         android:text="@string/instruction_drink_instrc_activity"/>
     <LinearLayout
         android:id="@+id/linearButtons"

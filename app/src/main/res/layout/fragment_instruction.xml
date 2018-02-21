@@ -12,8 +12,6 @@
         android:layout_height="wrap_content">
     <TextView
         style="@style/StyleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/textViewInstructionFragment"
         android:text="@string/trail_chore_instruction" />
 </RelativeLayout>

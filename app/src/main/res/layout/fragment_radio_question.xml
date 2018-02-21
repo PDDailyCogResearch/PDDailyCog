@@ -1,12 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_centerInParent="true"
     style="@style/StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment">
-    <LinearLayout
+    <RelativeLayout
         style="@style/StyleLayuot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,8 +14,6 @@
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewQuestionRadioFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_gravity="center"
         />
     <TextView
@@ -23,12 +21,14 @@
         android:id="@+id/textViewInstructionRadioFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewQuestionRadioFragment"
         android:layout_gravity="center"/>
     <RadioGroup
         style="@style/StyleRadioButton"
         android:id="@+id/radioGroupRadioFragment"
         android:layout_width="match_parent"
         android:layout_gravity="center"
+        android:layout_below="@+id/textViewInstructionRadioFragment"
         android:layout_height="wrap_content"/>
-</LinearLayout>
+</RelativeLayout>
 </ScrollView>

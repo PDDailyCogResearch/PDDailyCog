@@ -9,9 +9,6 @@
 
     <TextView
         style="@style/StyleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:id="@+id/textViewExit"
         android:text="@string/close_airplane_mode"/>
     <Button

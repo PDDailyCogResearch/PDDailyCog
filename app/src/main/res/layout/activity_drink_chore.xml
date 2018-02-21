@@ -45,27 +45,17 @@
 
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayoutUpDrink"
-        android:fillViewport="true">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       >
 
     <il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager
         android:id="@+id/viewPagerDrinkActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttonNextDrinkActivity"/>
-    <!--    <RelativeLayout
-            android:id="@+id/relativeLayoutButtom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">-->
+        android:layout_below="@+id/relativeLayoutUpDrink"
+        android:layout_above="@+id/buttonNextDrinkActivity"
+        />
+
+
     <Button
         android:id="@+id/buttonNextDrinkActivity"
         style="@style/StyleButton"
@@ -77,5 +67,4 @@
         android:text="@string/ok" />
     <!--</RelativeLayout>-->
    </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+

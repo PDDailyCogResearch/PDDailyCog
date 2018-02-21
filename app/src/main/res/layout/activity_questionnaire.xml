@@ -13,10 +13,8 @@
         <TextView
             android:id="@+id/textViewQuestionnaireQuest"
             style="@style/StyleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_above="@+id/radioGroupQuestionnaireAns"
-            android:layout_alignParentTop="true" />
+            android:layout_gravity="center" />
 
         <RadioGroup
             android:id="@+id/radioGroupQuestionnaireAns"

@@ -13,8 +13,6 @@
     <TextView
         android:id="@+id/textViewTextInput"
         style="@style/StyleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="@string/text_input_instrc" />
 
