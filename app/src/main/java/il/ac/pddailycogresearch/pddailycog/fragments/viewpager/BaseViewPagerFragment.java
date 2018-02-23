@@ -119,6 +119,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     public void onPageChanged(boolean isVisible) {
 
+        CommonUtils.hideKeyboard(getActivity());
         // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);
         if (isVisible) {
             currentSessionStartTime = System.currentTimeMillis();

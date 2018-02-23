@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.Window;
 
 
+import com.google.firebase.database.DatabaseException;
+
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
@@ -18,8 +22,10 @@ import il.ac.pddailycogresearch.pddailycog.activities.DrinkChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.DrinkInstrcActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.MainActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.QuestionnaireActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
@@ -104,6 +110,25 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         );
     }
 
+    private void chooseNextActivity6() {
+        FirebaseIO.getInstance().retrieveQuestionnaire(new IOnFirebaseQuestionnaireListener() {
+            @Override
+            public void onAnswersRetreived(List<Integer> answers) {
+                if(answers.size()>0){
+                    startActivity(new Intent(AirplaneModeRequestActivity.this, QuestionnaireActivity.class));
+                } else {
+                    //chooseNextChore();
+                }
+            }
+
+            @Override
+            public void onError(DatabaseException e) {
+                CommonUtils.onGeneralError(e,TAG);
+            }
+        });
+
+    }
+
     private void chooseNextActivity() {
         Intent nextActivity = null;
         switch (nextChoreNum) {
@@ -116,12 +141,12 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                         DrinkInstrcActivity.class);
                 break;
             default:
-                CommonUtils.showMessage(this, R.string.error_no_more_chores);
+               // CommonUtils.showMessage(this, R.string.error_no_more_chores);
+                nextActivity=new Intent(AirplaneModeRequestActivity.this, QuestionnaireActivity.class);
         }
         if (nextActivity != null) {
             startActivity(nextActivity);
         }
-
     }
 
 
