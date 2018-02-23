@@ -8,7 +8,16 @@
         <item>@array/answers_5</item>
         <item>@array/answers_6</item>
     </array>-->
-    <string-array name="drag_tasks_drink">
+    <string-array name="drag_tasks_chore_1">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6 </item>
+        <item>7</item>
+    </string-array>
+    <string-array name="drag_tasks_chore_2">
         <item>הרתחת מים</item>
         <item>הוצאת ספל וכפית מהארון</item>
         <item>הכנסת קפה/תה לספל </item>

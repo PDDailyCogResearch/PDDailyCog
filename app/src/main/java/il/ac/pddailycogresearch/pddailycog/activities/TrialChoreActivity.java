@@ -186,7 +186,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void toggleMediaPlayer() {
-        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.trial_instrc_male_sound, button_sound);
+        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.trial_instrc_0, button_sound);
         if (SoundManager.getInstance().isPlaying()) {
             onSoundButtonClick();
         }

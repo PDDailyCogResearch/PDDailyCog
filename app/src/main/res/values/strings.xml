@@ -87,5 +87,8 @@
     <string name="finish_drink">סיימת את המשימה להיום. שתיה נעימה!</string>
     <string name="welcome">ברוכים הבאים בלה בלה</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

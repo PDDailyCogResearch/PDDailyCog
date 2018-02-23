@@ -1,0 +1,17 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.InstructionFragment">
+
+    <RelativeLayout
+        style="@style/StyleLayuot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/StyleTextView"
+            android:id="@+id/textViewInstructionFragment"
+            android:text="@string/trail_chore_instruction" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -74,6 +74,8 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
     private void initImgKeys() {
         imgKeysToSave = new ArrayList<>();
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 1,"resultImg"));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 1,Consts.RESULT_KEY_PREFIX+1));
+
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+8));
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+11));
     }

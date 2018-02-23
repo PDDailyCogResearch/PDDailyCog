@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.TryChoreActivity;
 
 public class TrialInstrcActivity extends AppCompatActivity {
 
@@ -20,6 +21,6 @@ public class TrialInstrcActivity extends AppCompatActivity {
 
     @OnClick(R.id.mainButtonOk)
     public void onViewClicked() {
-        startActivity(new Intent(this, TrialChoreActivity.class));
+        startActivity(new Intent(this, TryChoreActivity.class));
     }
 }

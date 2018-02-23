@@ -4,7 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import java.util.Arrays;
+import java.util.List;
+
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
+import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
@@ -21,6 +25,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     protected static final String ARG_POSITION = "position";
     protected static final String ARG_CHORE_NUM = "chore_num";
+    protected static List<Integer> DETECT_STEPS_CHORES = Arrays.asList(1);
 
     protected final FirebaseIO firebaseIO = FirebaseIO.getInstance();
 
@@ -30,6 +35,9 @@ public abstract class BaseViewPagerFragment extends Fragment {
     protected OnFragmentInteractionListener mListener;
 
     private long currentSessionStartTime;
+
+    protected StepCounter stepCounter = StepCounter.getInstance();
+    private long currentSessionStartSteps = -1;
 
     protected static Bundle putBaseArguments(Bundle args, int position, int choreNum) {
         if (args != null) {
@@ -49,7 +57,6 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
         position = getArguments().getInt(ARG_POSITION);
         choreNum = getArguments().getInt(ARG_CHORE_NUM);
-
 
         if (savedInstanceState != null) {
             restoreFromSavedInstanceState(savedInstanceState);
@@ -75,6 +82,10 @@ public abstract class BaseViewPagerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if(DETECT_STEPS_CHORES.contains(choreNum)){
+            stepCounter.registerSensors(getContext());
+        }
+
         if (getUserVisibleHint()) {
             onPageChanged(true);
         }
@@ -89,23 +100,6 @@ public abstract class BaseViewPagerFragment extends Fragment {
         saveToDb();
     }
 
-/*    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isResumed()) {
-            if (isVisibleToUser) {
-                currentSessionStartTime = System.currentTimeMillis();
-                if (hasResult()) {
-                    mListener.enableNext();
-                }
-                else {
-                    mListener.unenableNext();
-                }
-            } else {
-                addTimeToDb();
-            }
-        }
-    }*/
 
     protected void onGotResult() {
         if(getUserVisibleHint()&&isResumed()){
@@ -123,6 +117,9 @@ public abstract class BaseViewPagerFragment extends Fragment {
         // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);
         if (isVisible) {
             currentSessionStartTime = System.currentTimeMillis();
+            if(DETECT_STEPS_CHORES.contains(choreNum)) {
+                currentSessionStartSteps = stepCounter.getStepsNum();
+            }
             if (hasResult()) {
                 mListener.enableNext();
             } else {
@@ -130,6 +127,9 @@ public abstract class BaseViewPagerFragment extends Fragment {
             }
         } else {
             addTimeToDb();
+            if(DETECT_STEPS_CHORES.contains(choreNum)){
+                addStepsToDb();
+            }
         }
 
     }
@@ -137,6 +137,15 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     protected abstract boolean hasResult();
 
+    private void addStepsToDb() {
+        long elapsedSteps = stepCounter.getStepsNum() - currentSessionStartSteps;
+        addStepsToDb(elapsedSteps);
+        currentSessionStartSteps = stepCounter.getStepsNum();
+    }
+
+    protected void addStepsToDb(long elapsedSteps) {
+        firebaseIO.saveIncrementalKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.STEPS_KEY_PREFIX + position, elapsedSteps);
+    }
 
     private void addTimeToDb() {
         long elapsedTime = System.currentTimeMillis() - currentSessionStartTime;
@@ -152,6 +161,14 @@ public abstract class BaseViewPagerFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(DETECT_STEPS_CHORES.contains(choreNum)) {
+            stepCounter.unregisterSensors();
+        }
     }
 
     protected abstract void saveToDb();

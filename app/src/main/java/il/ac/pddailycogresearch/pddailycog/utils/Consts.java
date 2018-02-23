@@ -19,6 +19,7 @@ public class Consts {
     public static final String EMAIL_SUFFIX = "@pddaily.ac.il";
 
     public static final String DRINK_CHORE_ASSETS_PREFIX = "drink-chore";
+    public static final String DRAG_TASKS_LIST_PREFIX = "drag_tasks_chore_";
     public static final String RESULT_KEY_PREFIX = "result-";
     public static final String TIME_KEY_PREFIX = "time-";
     public static final String SPEAKER_EMOJI = "\uD83D\uDD0A";
@@ -30,4 +31,7 @@ public class Consts {
     public static final String QUESTION_ASSETS_PREFIX = "/question-";
     public static final String DRINK_CHORE_RAW_PREFIX = "drink_chore_";
     public static final String DRINK_CHORE_DIALOG_RAW_PREFIX = "drink_dialog_";
+    public static final String TRIAL_CHORE_ASSETS_PREFIX = "trial-chore";
+    public static final String TRIAL_CHORE_RAW_PREFIX = "trial_instrc_";
+    public static final String STEPS_KEY_PREFIX = "steps-";
 }

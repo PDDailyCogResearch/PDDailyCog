@@ -3,6 +3,7 @@ package il.ac.pddailycogresearch.pddailycog.fragments.viewpager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,10 @@ public class TextFragment extends BaseViewPagerFragment {
     private static final String TAG = TextFragment.class.getSimpleName();
     private static final String ARG_INSTRC_KEY = "instruction_id";
     private static List<Integer> MINUTES_VISIBLE_INSTRUCTIONS = Arrays.asList(R.string.drink_time_valuat_text_instrc);
+    private static List<Integer> INPUT_TYPE_TEXT_INSTRUCTIONS = Arrays.asList(R.string.text_input_instrc);
 
     @BindView(R.id.EditTextInputFragment)
-    EditText EditTextInputFragment;
+    EditText editTextInputFragment;
     @BindView(R.id.textViewInstrc)
     TextView textViewInstrc;
     @BindView(R.id.textViewMinutes)
@@ -72,12 +74,21 @@ public class TextFragment extends BaseViewPagerFragment {
 
         textViewInstrc.setText(instrctionTextId);
 
+        initViews();
+        return view;
+    }
+
+    private void initViews() {
         if (MINUTES_VISIBLE_INSTRUCTIONS.contains(instrctionTextId)) {
             textViewMinutes.setVisibility(View.VISIBLE);
         } else {
             textViewMinutes.setVisibility(View.INVISIBLE);
         }
-        return view;
+        if (INPUT_TYPE_TEXT_INSTRUCTIONS.contains(instrctionTextId)) {
+            editTextInputFragment.setInputType(InputType.TYPE_CLASS_TEXT);
+        } else {
+            editTextInputFragment.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
     }
 
     private void retrieveFromDb() {
@@ -86,7 +97,7 @@ public class TextFragment extends BaseViewPagerFragment {
             public void onValueRetrieved(String value) {
                 if (value != null) {
                     inputText = value;
-                    EditTextInputFragment.setText(inputText);
+                    editTextInputFragment.setText(inputText);
                     onGotResult();
                 }
             }
@@ -120,7 +131,7 @@ public class TextFragment extends BaseViewPagerFragment {
 
     @Override
     protected boolean hasResult() {
-        if (!EditTextInputFragment.getText().toString().isEmpty()) {
+        if (!editTextInputFragment.getText().toString().isEmpty()) {
             return true;
         }
         return false;
@@ -128,6 +139,6 @@ public class TextFragment extends BaseViewPagerFragment {
 
     @Override
     protected void saveToDb() {
-        firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, EditTextInputFragment.getText().toString());
+        firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, editTextInputFragment.getText().toString());
     }
 }

@@ -19,19 +19,21 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
  */
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private static final int COUNT = 14;
-    private int activityChoreNum;
+    protected   int count;
+    protected int activityChoreNum;
     private BaseViewPagerFragment currentFragment;
     private BaseViewPagerFragment previousFragment;
 
     public ViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
         super(fm);
         this.activityChoreNum = activityChoreNum;
+        count=14;
     }
 
 
     @Override
     public Fragment getItem(int position) {
+
         Fragment currentFragment;
 
         switch (position) {
@@ -65,7 +67,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return COUNT;
+        return count;
     }
 
     @Override

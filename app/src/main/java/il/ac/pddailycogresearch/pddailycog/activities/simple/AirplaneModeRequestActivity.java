@@ -24,6 +24,7 @@ import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.MainActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.QuestionnaireActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.TryChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
@@ -61,7 +62,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                     retreiveNextChoreNum();
                 else
                     CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
-                //startActivity(new Intent(this, DrinkChoreActivity.class));
+         //       startActivity(new Intent(this, TryChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();

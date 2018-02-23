@@ -85,8 +85,8 @@ public class DragListFragment extends BaseViewPagerFragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-       // recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-       recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+      // recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
@@ -107,8 +107,7 @@ public class DragListFragment extends BaseViewPagerFragment {
                         if (value != null && value.size() != 0) {
                             tasksList = value;
                         } else {
-                            tasksList = Arrays.asList(getResources().getStringArray(R.array.drag_tasks_drink));
-                            Collections.shuffle(tasksList);
+                            initListFromResources();
                         }
                         initRecyclerAdapter();
                     }
@@ -118,6 +117,13 @@ public class DragListFragment extends BaseViewPagerFragment {
                         CommonUtils.onGeneralError(e,TAG);
                     }
                 });
+    }
+
+    private void initListFromResources() {
+        String[] tasksArray = getResources().getStringArray(
+                getResources().getIdentifier(Consts.DRAG_TASKS_LIST_PREFIX+String.valueOf(choreNum), "array",getActivity().getPackageName()));
+        tasksList = Arrays.asList(tasksArray);
+        Collections.shuffle(tasksList);
     }
 
     @Override

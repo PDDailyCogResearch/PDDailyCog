@@ -46,6 +46,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
     private static final String ARG_INSTRC_KEY = "instrc_id";
     private static final String TAG = PhotographFragment.class.getSimpleName();
     private static final String START_CAMERA_TIME_TAG = "start_camera_time";
+    private static final String START_CAMERA_STEP_TAG = "start_camera_step";
     private static List<Integer> ENABLER_INSTRUCTIONS = Arrays.asList(R.string.dring_photo_dring_done);
 
 
@@ -67,6 +68,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
     private int instrctionTextId;
 
     private long startCameraActivityTime;
+    private long startCameraActivitySteps=-1;
 
     public PhotographFragment() {
         // Required empty public constructor
@@ -128,6 +130,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
         imgUri = (Uri) savedInstanceState.getParcelable(IMG_URI_TAG);
         takePicturesClickNum = savedInstanceState.getInt(CLICK_NUM_TAG);
         startCameraActivityTime = savedInstanceState.getLong(START_CAMERA_TIME_TAG);
+        startCameraActivitySteps = savedInstanceState.getLong(START_CAMERA_STEP_TAG);
     }
 
     @Override
@@ -136,6 +139,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
         outState.putParcelable(IMG_URI_TAG, imgUri);
         outState.putInt(CLICK_NUM_TAG, takePicturesClickNum);
         outState.putLong(START_CAMERA_TIME_TAG, startCameraActivityTime);
+        outState.putLong(START_CAMERA_STEP_TAG,startCameraActivitySteps);
         super.onSaveInstanceState(outState);
     }
 
@@ -148,6 +152,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
         imgUri = (Uri) extras.get(MediaStore.EXTRA_OUTPUT);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startCameraActivityTime = System.currentTimeMillis();
+            if(DETECT_STEPS_CHORES.contains(choreNum)){
+                startCameraActivitySteps = stepCounter.getStepsNum();
+            }
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -156,6 +163,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             super.addTimeToDb(System.currentTimeMillis() - startCameraActivityTime);
+            if(DETECT_STEPS_CHORES.contains(choreNum)){
+                super.addStepsToDb(stepCounter.getStepsNum() - startCameraActivitySteps);
+            }
             if (resultCode == RESULT_OK) {
                 setPictureToImageView();
                 onHasPicture();
