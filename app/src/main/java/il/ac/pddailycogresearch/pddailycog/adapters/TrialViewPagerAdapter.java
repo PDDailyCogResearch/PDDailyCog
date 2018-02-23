@@ -32,7 +32,7 @@ public class TrialViewPagerAdapter extends ViewPagerAdapter {
                 currentFragment = InstructionFragment.newInstance(position, activityChoreNum, R.string.trail_chore_instruction);//TODO creae new text frahment
                 break;
             case 1:
-                currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.empty_string);
+                currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.now_take_photo);
                 break;
             case 2:
                 currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
