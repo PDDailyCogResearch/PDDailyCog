@@ -43,7 +43,6 @@
         <Button style="@style/StyleButton"
             android:layout_height="wrap_content"
             android:id="@+id/BtnOk"
-            android:layout_width="100dp"
             android:layout_below="@id/textViewWelcome"
             android:text="@string/ok" />
     </RelativeLayout>

@@ -45,7 +45,6 @@
 
     <Button style="@style/StyleButton"
         android:id="@+id/BtnSignIn"
-        android:layout_width="100dp"
         android:layout_below="@id/EditTextPassword"
         android:layout_alignParentBottom="true"
         android:text="@string/sign_in" />
