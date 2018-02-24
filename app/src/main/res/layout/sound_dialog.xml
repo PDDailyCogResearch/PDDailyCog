@@ -24,9 +24,14 @@
             app:backgroundTint="@color/colorButtons"
             app:fabSize="normal" />
     </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <TextView
         style="@style/StyleSimpleTextView"
         android:id="@+id/textViewSoundDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    </ScrollView>
 </LinearLayout>

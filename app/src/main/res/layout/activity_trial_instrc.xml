@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     style="@style/StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.TrialInstrcActivity">
-
+ <RelativeLayout
+     style="@style/StyleLayuot">
 
         <TextView
             style="@style/StyleTextView"
@@ -22,3 +24,4 @@
             android:text="@string/ok" />
 
 </RelativeLayout>
+</ScrollView>

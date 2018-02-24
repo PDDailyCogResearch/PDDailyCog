@@ -15,6 +15,7 @@
         android:layout_above="@+id/check_box"
         android:text="@string/drink_check_box_instrc" />
     <CheckBox
+        style="@style/StyleSimpleTextView"
         android:id="@+id/check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
