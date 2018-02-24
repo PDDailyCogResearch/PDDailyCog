@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/StyleLayuot"
@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.QuestionnaireActivity">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layout_above="@+id/buttonQuestionnaireOK">
 
     <RelativeLayout style="@style/StyleLayuot">
 
@@ -20,9 +25,9 @@
             android:id="@+id/radioGroupQuestionnaireAns"
             style="@style/StyleRadioButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/buttonQuestionnaireOK" />
-
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</ScrollView>
         <Button
             android:id="@+id/buttonQuestionnaireOK"
             style="@style/StyleButton"
@@ -31,4 +36,4 @@
             android:layout_alignParentBottom="true"
             android:text="@string/ok" />
     </RelativeLayout>
-</ScrollView>
+
