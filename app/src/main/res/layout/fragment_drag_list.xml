@@ -8,7 +8,7 @@
 
     <TextView
         style="@style/StyleTextView"
-        android:text="@string/drag_drink_instr" />
+        android:id="@+id/textViewDragFragment" />
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"

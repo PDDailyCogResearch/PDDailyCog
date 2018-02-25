@@ -41,7 +41,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 currentFragment = DragListFragment.newInstance(position, activityChoreNum);
                 break;*/
             case 5:
-                currentFragment = DragListFragment.newInstance(position, activityChoreNum);
+                currentFragment = DragListFragment.newInstance(position, activityChoreNum,R.string.drag_drink_instr);
                 break;
             case 6:
                 currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum, R.string.drink_check_box_instrc);

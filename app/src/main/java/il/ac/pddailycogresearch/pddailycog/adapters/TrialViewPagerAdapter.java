@@ -38,7 +38,7 @@ public class TrialViewPagerAdapter extends ViewPagerAdapter {
                 currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
                 break;
             case 3:
-                currentFragment = DragListFragment.newInstance(position, activityChoreNum);
+                currentFragment = DragListFragment.newInstance(position, activityChoreNum, R.string.order_numbers_instrc);
                 break;
             case 4:
                 currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.TRIAL_CHORE_ASSETS_PREFIX);
