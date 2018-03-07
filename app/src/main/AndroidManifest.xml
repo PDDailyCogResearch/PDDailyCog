@@ -23,11 +23,9 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".activities.StepActivity">
-        </activity>
+        <activity android:name=".activities.StepActivity"></activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.simple.AirplaneModeRequestActivity">
-        </activity>
+        <activity android:name=".activities.simple.AirplaneModeRequestActivity"></activity>
         <activity android:name=".activities.TrialChoreActivity" />
         <activity android:name=".activities.simple.ExitActivity" />
         <activity android:name=".activities.simple.GoodByeActivity" />
@@ -64,12 +62,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.TryChoreActivity">
-          <!--  <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
+        <activity android:name=".activities.simple.TrialNoticeActivity"></activity>
     </application>
 
 </manifest>

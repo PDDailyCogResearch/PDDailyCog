@@ -34,4 +34,5 @@ public class Consts {
     public static final String TRIAL_CHORE_ASSETS_PREFIX = "trial-chore";
     public static final String TRIAL_CHORE_RAW_PREFIX = "trial_instrc_";
     public static final String STEPS_KEY_PREFIX = "steps-";
+    public static final String FREE_RESULT_KEY_PREFIX = "freetext-result-";
 }

@@ -1,35 +1,46 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StyleLayuot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
     android:fillViewport="true"
     android:orientation="vertical"
-    android:layout_centerInParent="true"
-    style="@style/StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment">
+
     <RelativeLayout
         style="@style/StyleLayuot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <TextView
-        style="@style/StyleTextView"
-        android:id="@+id/textViewQuestionRadioFragment"
-        android:layout_gravity="center"
-        />
-    <TextView
-        style="@style/StyleSimpleTextView"
-        android:id="@+id/textViewInstructionRadioFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewQuestionRadioFragment"
-        android:layout_gravity="center"/>
-    <RadioGroup
-        style="@style/StyleRadioButton"
-        android:id="@+id/radioGroupRadioFragment"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_below="@+id/textViewInstructionRadioFragment"
-        android:layout_height="wrap_content"/>
-</RelativeLayout>
+
+        <TextView
+            android:id="@+id/textViewQuestionRadioFragment"
+            style="@style/StyleTextView"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/textViewInstructionRadioFragment"
+            style="@style/StyleSimpleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewQuestionRadioFragment"
+            android:layout_gravity="center" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupRadioFragment"
+            style="@style/StyleRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewInstructionRadioFragment"
+            android:layout_gravity="center" />
+
+        <EditText
+            android:id="@+id/edit_text_radio"
+            style="@style/StyleEditText"
+            android:layout_below="@id/radioGroupRadioFragment"
+            android:layout_gravity="center"
+            android:hint="@string/enter_text_input_hint"
+            android:visibility="gone" />
+    </RelativeLayout>
 </ScrollView>

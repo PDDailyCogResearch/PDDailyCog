@@ -112,13 +112,14 @@ public class TextFragment extends BaseViewPagerFragment {
     @OnTextChanged(value = R.id.EditTextInputFragment,
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onTextChanged(CharSequence text) {
-        if (text.toString().isEmpty()) {
-            mListener.unenableNext();
-        } else {
-            if (!text.toString().equals(inputText)) {//prevent enable when initilize
-                mListener.enableNext();
-            }
-        }
+//        if (text.toString().isEmpty()) {
+//            mListener.unenableNext();
+//        } else {
+//            if (!text.toString().equals(inputText)) {//prevent enable when initilize
+//                mListener.enableNext();
+//            }
+//        }
+        onGotResult();
     }
 
 

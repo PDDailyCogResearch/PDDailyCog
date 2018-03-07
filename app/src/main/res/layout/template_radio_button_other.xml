@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation= "horizontal"
+     >
+<RadioButton style="@style/StyleRadioButton"
+    android:id="@+id/radio_button"
+    android:layout_width="@dimen/standard_21"
+    android:layout_height="wrap_content"
+    />
+    <EditText
+        style="@style/StyleEditText"
+        android:id="@+id/edit_text_radio_other"
+        android:layout_width="@dimen/standard_21"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_text_input_hint"/>
+</LinearLayout>

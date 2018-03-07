@@ -135,7 +135,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         switch (nextChoreNum) {
             case 1:
                 nextActivity = new Intent(AirplaneModeRequestActivity.this,
-                        TrialInstrcActivity.class);
+                        TrialNoticeActivity.class);
                 break;
             case 2:
                 nextActivity = new Intent(AirplaneModeRequestActivity.this,

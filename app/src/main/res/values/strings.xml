@@ -88,6 +88,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="now_take_photo">כעת צלם:</string>
+    <string name="trial_notice">לפנייך משימת התנסות שמטרתה לאפשר לך לקרוא הוראות בטלפון ולבצע את ההוראות השונות</string>
     <string name="order_numbers_instrc">סדר את הספרות בסדר עולה מ-1 עד 7</string>
 
 

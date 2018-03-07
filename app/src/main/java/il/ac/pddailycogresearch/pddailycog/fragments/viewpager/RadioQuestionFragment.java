@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     private static final String SELECTION_TAG = "selection";
     private static final String ARG_ASSET_FOLDER_KEY = "assets_folder";
     private static final String TAG = RadioQuestionFragment.class.getSimpleName();
+    private static final java.lang.String FREETEXT_TAG = "freetext";
 
     @BindView(R.id.textViewQuestionRadioFragment)
     TextView textViewQuestionRadioFragment;
@@ -44,8 +46,11 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     TextView textViewInstructionRadioFragment;
     @BindView(R.id.radioGroupRadioFragment)
     RadioGroup radioGroupRadioFragment;
+    @BindView(R.id.edit_text_radio)
+    EditText editTextRadio;
 
     private int selection = -1;
+    private String freetext = "";
     private JsonRadioButton question;
     private String assetsFolder;
 
@@ -80,6 +85,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     protected void restoreFromSavedInstanceState(Bundle savedInstanceState) {
         super.restoreFromSavedInstanceState(savedInstanceState);
         selection = savedInstanceState.getInt(SELECTION_TAG);
+        freetext = savedInstanceState.getString(FREETEXT_TAG);
     }
 
     @Override
@@ -120,6 +126,9 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
                 int radioButtonID = radioGroupRatingFragment.getCheckedRadioButtonId();
                 View radioButton = radioGroupRatingFragment.findViewById(radioButtonID);*/
                 selection = radioGroupRadioFragment.indexOfChild(v);
+                if(isFreeTextExist()) {
+                    freetext = editTextRadio.getText().toString();
+                }
                 mListener.enableNext();
                 //  mListener.onRatingChanged(idx + 1);
             }
@@ -129,6 +138,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
             // RadioButton rb = new RadioButton(getContext(),null,R.style.tryRadioButton);
             RadioButton rb = (RadioButton) getLayoutInflater().inflate(R.layout.template_radiobutton, null);
 
+
             rb.setText(answer);
             rb.setOnClickListener(radioButtonsListener);
             //  radioGroupRadioFragment.setId(radioGroupRadioFragment.getChildCount());
@@ -137,12 +147,26 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
             if (radioGroupRadioFragment.indexOfChild(rb) == selection)
                 radioGroupRadioFragment.check(rb.getId());
         }
+        if(isFreeTextExist()){
+            editTextRadio.setVisibility(View.VISIBLE);
+            if(!freetext.isEmpty()){
+                editTextRadio.setText(freetext);
+            }
+        }
         //    radioGroupRadioFragment.setOrientation(LinearLayout.HORIZONTAL);
+    }
+
+    private boolean isFreeTextExist() {
+        return (question.getAnswer().get(question.getAnswer().size()-1).equals("אחר:"));
+    }
+    private boolean isFreeTextSelected() {
+        return (isFreeTextExist()&&question.getAnswer().indexOf("אחר:")==selection);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt(SELECTION_TAG, selection);
+        outState.putString(FREETEXT_TAG,freetext);
         super.onSaveInstanceState(outState);
     }
 
@@ -164,8 +188,20 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
                     initViews();
                 } else {
                     selection = value;
-                    onGotResult();
-                    initViews();
+                    firebaseIO.retreieveStringValueByKey(Consts.CHORES_KEY, choreNum, Consts.FREE_RESULT_KEY_PREFIX + position
+                            , new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+                                @Override
+                                public void onValueRetrieved(String value) {
+                                    freetext=value;
+                                    onGotResult();
+                                    initViews();
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    CommonUtils.onGeneralError(e,TAG);
+                                }
+                            });
                 }
             }
 
@@ -180,6 +216,9 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     protected void saveToDb() {
         if (selection >= 0) {
             firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, selection);
+        }
+        if(isFreeTextSelected()){
+            firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.FREE_RESULT_KEY_PREFIX + position, freetext);
         }
     }
 
