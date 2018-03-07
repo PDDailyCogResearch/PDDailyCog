@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:orientation="vertical"
+    style="StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.WelcomeActivity">
     <RelativeLayout
-        style="@style/StyleLayuot">
+        style="@style/StyleActivityLayuot">
         <TextView
             android:id="@+id/logoImage"
             android:layout_width="wrap_content"
@@ -23,26 +24,18 @@
         <TextView
             style="@style/StyleTextView"
             android:id="@+id/textViewAppname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:layout_below="@id/logoImage"
-            android:gravity="center"
-            android:layout_marginTop="45dp"/>
+            android:layout_below="@id/logoImage"/>
 
         <TextView
             style="@style/StyleTextView"
             android:id="@+id/textViewWelcome"
             android:layout_below="@id/textViewAppname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:layout_marginTop="20dp"
-            android:gravity="center" />
+             />
 
 
         <Button style="@style/StyleButton"
-            android:layout_height="wrap_content"
             android:id="@+id/BtnOk"
             android:layout_below="@id/textViewWelcome"
             android:text="@string/ok" />

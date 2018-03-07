@@ -6,15 +6,15 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/StyleLayuot"
-
+    android:orientation="vertical"
+    style="StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.LoginActivity">
 <RelativeLayout
-    style="@style/StyleLayuot">
+    style="@style/StyleActivityLayuot">
     <TextView
         android:id="@+id/logoImage"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:foregroundGravity="center"
         android:background="@drawable/logo"
@@ -24,22 +24,14 @@
 
       <EditText style="@style/StyleEditText"
         android:id="@+id/EditTextUserName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@id/logoImage"
-        android:gravity="center"
           android:imeOptions="flagForceAscii"
-        android:layout_marginTop="45dp"
         android:hint="@string/username" />
 
     <EditText style="@style/StyleEditText"
         android:id="@+id/EditTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@id/EditTextUserName"
         android:inputType="textPassword"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
         android:hint="@string/password" />
 
 

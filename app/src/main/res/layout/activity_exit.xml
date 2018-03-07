@@ -8,7 +8,7 @@
     style="@style/StyleLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.ExitActivity">
 <RelativeLayout
-    style="@style/StyleLayuot">
+    style="@style/StyleActivityLayuot">
     <TextView
         style="@style/StyleTextView"
         android:id="@+id/textViewExit"

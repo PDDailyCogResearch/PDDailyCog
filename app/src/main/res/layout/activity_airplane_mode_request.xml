@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/StyleLayuot"
     android:fillViewport="true"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.AirplaneModeRequestActivity">
 <RelativeLayout
-    style="@style/StyleLayuot"
+    style="@style/StyleActivityLayuot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <Button

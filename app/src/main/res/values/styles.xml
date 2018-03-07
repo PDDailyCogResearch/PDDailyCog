@@ -37,15 +37,15 @@
     <style name="StyleEditText" parent="android:Theme">
         <item name="android:background">@drawable/rounded_corner</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:radius">100dp</item>
         <item name="android:padding">10dp</item>
-
-
-
-
     </style>
 
     <!-- TextView -->
@@ -56,7 +56,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">fill</item>
         <item name="android:radius">100dp</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/rounded_corner</item>
         <item name="android:layout_width">match_parent</item>
@@ -93,12 +93,23 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!--ActivityLayout -->
+    <style name="StyleActivityLayuot" parent="android:Theme">
+        <item name="android:gravity">center</item>
+        <item name="android:layoutDirection"  tools:targetApi="17" >rtl</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <!-- RadioButton -->
     <style name="StyleRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:layout_marginRight">20dp</item>
     </style>
 
 </resources>

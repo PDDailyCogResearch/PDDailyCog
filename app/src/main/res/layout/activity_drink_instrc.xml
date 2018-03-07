@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    style="@style/StyleLayuot"
+    style="@style/StyleActivityLayuot"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.DrinkInstrcActivity">
   <RelativeLayout
       android:layout_width="match_parent"
@@ -50,20 +50,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_below="@+id/textViewInstrcDrinkInstrcActivity">
+        android:layout_alignParentBottom="true"
+      >
     <Button
         style="@style/StyleButton"
         android:id="@+id/buttonYesDrinkIstrcActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/yes"/>
 
     <Button
         style="@style/StyleButton"
         android:id="@+id/buttonNoDrinkIstrcActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
         android:text="@string/no"/>
     </LinearLayout>
 
