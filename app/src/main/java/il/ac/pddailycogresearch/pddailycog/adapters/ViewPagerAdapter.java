@@ -18,8 +18,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
  * Created by User on 07/02/2018.
  */
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    protected   int count;
+public abstract class ViewPagerAdapter extends FragmentStatePagerAdapter {
     protected int activityChoreNum;
     private BaseViewPagerFragment currentFragment;
     private BaseViewPagerFragment previousFragment;
@@ -27,48 +26,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public ViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
         super(fm);
         this.activityChoreNum = activityChoreNum;
-        count=14;
     }
 
 
     @Override
-    public Fragment getItem(int position) {
-
-        Fragment currentFragment;
-
-        switch (position) {
-           /* case 0:
-                currentFragment = DragListFragment.newInstance(position, activityChoreNum);
-                break;*/
-            case 5:
-                currentFragment = DragListFragment.newInstance(position, activityChoreNum,R.string.drag_drink_instr);
-                break;
-            case 6:
-                currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum, R.string.drink_check_box_instrc);
-                break;
-            case 7:
-                currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.drink_first_text_instr);
-                break;
-            case 8:
-                currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_instr);
-                break;
-            case 11:
-                currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_dring_done);
-                break;
-            case 13:
-                currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.drink_time_valuat_text_instrc);
-                break;
-            default:
-                currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.DRINK_CHORE_ASSETS_PREFIX);
-
-        }
-        return currentFragment;
-    }
+    public abstract Fragment getItem(int position);
 
     @Override
-    public int getCount() {
-        return count;
-    }
+    public abstract int getCount();
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {

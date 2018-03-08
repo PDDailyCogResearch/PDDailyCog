@@ -43,14 +43,13 @@
                 android:id="@+id/edit_text_radio"
                 style="@style/StyleEditText"
                 android:layout_toLeftOf="@+id/radioGroupRadioFragment"
-                android:background="@drawable/rounded_corner"
+                android:layout_alignBottom="@id/radioGroupRadioFragment"
                 android:gravity="center"
                 android:hint="@string/enter_text_input_hint"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="normal"
-                android:visibility="gone" />
+                android:padding="2dp"
+                android:layout_margin="2dp"
+                android:visibility="gone"
+                android:enabled="false"/>
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

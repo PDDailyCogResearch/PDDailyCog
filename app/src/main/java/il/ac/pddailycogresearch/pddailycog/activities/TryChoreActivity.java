@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,10 +16,14 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
-import il.ac.pddailycogresearch.pddailycog.adapters.TrialViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.BaseViewPagerFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.InstructionFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
@@ -33,7 +38,7 @@ public class TryChoreActivity extends AppCompatActivity implements
     private static final String TAG = TryChoreActivity.class.getSimpleName();
     private static final String POSITION_KEY = "position";
 
-    @BindView(R.id.viewPagerDrinkActivity)
+    @BindView(R.id.viewPagerActivity)
     NonSwipeableViewPager viewPagerDrinkActivity;
     @BindView(R.id.buttonNextDrinkActivity)
     Button buttonNextDrinkActivity;
@@ -59,7 +64,39 @@ public class TryChoreActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_try_chore);
         ButterKnife.bind(this);
 
-        adapter = new TrialViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM){
+
+            @Override
+            public Fragment getItem(int position) {
+                Fragment currentFragment;
+
+                switch (position) {
+                    case 0:
+                        currentFragment = InstructionFragment.newInstance(position, activityChoreNum, R.string.trail_chore_instruction);//TODO creae new text frahment
+                        break;
+                    case 1:
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.now_take_photo);
+                        break;
+                    case 2:
+                        currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
+                        break;
+                    case 3:
+                        currentFragment = DragListFragment.newInstance(position, activityChoreNum, R.string.order_numbers_instrc);
+                        break;
+                    case 4:
+                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.TRIAL_CHORE_ASSETS_PREFIX);
+                        break;
+                    default:
+                        currentFragment = null;
+                }
+                return currentFragment;
+            }
+
+            @Override
+            public int getCount() {
+                return 5;
+            }
+        };
         viewPagerDrinkActivity.setAdapter(adapter);
         viewPagerDrinkActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

@@ -38,6 +38,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     protected StepCounter stepCounter = StepCounter.getInstance();
     private long currentSessionStartSteps = -1;
+    private boolean isVisible;
 
     protected static Bundle putBaseArguments(Bundle args, int position, int choreNum) {
         if (args != null) {
@@ -102,7 +103,8 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
 
     protected void onGotResult() {
-        if(getUserVisibleHint()&&isResumed()){
+       // if(getUserVisibleHint()&&isResumed()){
+        if(isVisible){
             if(hasResult()) {
                 mListener.enableNext();
             } else {
@@ -113,6 +115,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     public void onPageChanged(boolean isVisible) {
 
+        this.isVisible=isVisible;
         CommonUtils.hideKeyboard(getActivity());
         // CommonUtils.showMessage(getContext(),"onPage "+ position+ " changed "+ isVisible);
         if (isVisible) {

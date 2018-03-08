@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
@@ -115,6 +116,16 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
         } else {
             textViewInstructionRadioFragment.setText(question.getInstruction());
         }
+
+        if(isFreeTextExist()){
+            editTextRadio.setVisibility(View.VISIBLE);
+            if(!freetext.isEmpty()){
+                editTextRadio.setText(freetext);
+            }
+        }
+        if(isFreeTextSelected()){
+            editTextRadio.setEnabled(true);
+        }
         initRadioGroup(question.getAnswer());
 
     }
@@ -126,10 +137,12 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
                 int radioButtonID = radioGroupRatingFragment.getCheckedRadioButtonId();
                 View radioButton = radioGroupRatingFragment.findViewById(radioButtonID);*/
                 selection = radioGroupRadioFragment.indexOfChild(v);
-                if(isFreeTextExist()) {
-                    freetext = editTextRadio.getText().toString();
+                if(isFreeTextSelected()){
+                    editTextRadio.setEnabled(true);
+                } else{
+                    editTextRadio.setEnabled(false);
                 }
-                mListener.enableNext();
+                onGotResult();
                 //  mListener.onRatingChanged(idx + 1);
             }
         };
@@ -147,17 +160,12 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
             if (radioGroupRadioFragment.indexOfChild(rb) == selection)
                 radioGroupRadioFragment.check(rb.getId());
         }
-        if(isFreeTextExist()){
-            editTextRadio.setVisibility(View.VISIBLE);
-            if(!freetext.isEmpty()){
-                editTextRadio.setText(freetext);
-            }
-        }
+
         //    radioGroupRadioFragment.setOrientation(LinearLayout.HORIZONTAL);
     }
 
     private boolean isFreeTextExist() {
-        return (question.getAnswer().get(question.getAnswer().size()-1).equals("אחר:"));
+        return (question!=null&&question.getAnswer().get(question.getAnswer().size()-1).equals("אחר:"));
     }
     private boolean isFreeTextSelected() {
         return (isFreeTextExist()&&question.getAnswer().indexOf("אחר:")==selection);
@@ -170,9 +178,18 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
         super.onSaveInstanceState(outState);
     }
 
+    @OnTextChanged(value = R.id.edit_text_radio,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onTextChanged(CharSequence text) {
+        freetext = editTextRadio.getText().toString();
+        onGotResult();
+    }
 
     @Override
     protected boolean hasResult() {
+        if(isFreeTextSelected()&&freetext.isEmpty()){
+            return false;
+        }
         if (mListener != null && (selection != -1)) {
             return true;
         }
@@ -192,7 +209,9 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
                             , new IOnFirebaseKeyValueListeners.OnStringValueListener() {
                                 @Override
                                 public void onValueRetrieved(String value) {
-                                    freetext=value;
+                                    if(value!=null) {
+                                        freetext = value;
+                                    }
                                     onGotResult();
                                     initViews();
                                 }

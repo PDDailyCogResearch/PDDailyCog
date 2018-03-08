@@ -19,7 +19,6 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 public class TrialViewPagerAdapter extends ViewPagerAdapter {
     public TrialViewPagerAdapter(FragmentManager fm, int activityChoreNum) {
         super(fm, activityChoreNum);
-        count = 5;
     }
 
     @Override
@@ -47,5 +46,10 @@ public class TrialViewPagerAdapter extends ViewPagerAdapter {
                 currentFragment = null;
         }
         return currentFragment;
+    }
+
+    @Override
+    public int getCount() {
+        return 5;
     }
 }
