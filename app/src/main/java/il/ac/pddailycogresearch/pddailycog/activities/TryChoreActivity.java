@@ -50,13 +50,8 @@ public class TryChoreActivity extends BaseChoreActivity{
     FloatingActionButton buttonExit;
 
     private ViewPagerAdapter adapter;
-    private int instrcPressNum;
-    private int soundPressNum;
-    private int exitPressNum;
 
     private int position;
-
-    private long currentSessionStartTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
