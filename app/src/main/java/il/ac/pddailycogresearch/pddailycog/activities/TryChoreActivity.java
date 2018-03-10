@@ -19,6 +19,7 @@ import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.BaseViewPagerFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.CheckBoxFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.InstructionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
@@ -31,8 +32,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
-public class TryChoreActivity extends AppCompatActivity implements
-        BaseViewPagerFragment.OnFragmentInteractionListener {
+public class TryChoreActivity extends BaseChoreActivity{
 
     private static final int CHORE_NUM = 1;
     private static final String TAG = TryChoreActivity.class.getSimpleName();
@@ -61,10 +61,11 @@ public class TryChoreActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_try_chore);
-        ButterKnife.bind(this);
+    }
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM){
+    @Override
+    protected ViewPagerAdapter createViewPagerAdapter() {
+        return  new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
 
             @Override
             public Fragment getItem(int position) {
@@ -97,52 +98,15 @@ public class TryChoreActivity extends AppCompatActivity implements
                 return 5;
             }
         };
-        viewPagerDrinkActivity.setAdapter(adapter);
-        viewPagerDrinkActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                setButtonsVisibility();
-                if (adapter.getPreviousFragment() != null) {
-                    adapter.getPreviousFragment().onPageChanged(false);
-                }
-                if (adapter.getCurrentFragment() != null) {
-                    adapter.getCurrentFragment().onPageChanged(true);
-                }
-            }
-        });
-
-        if (savedInstanceState == null) { //retrieve only if there isn't a saved state
-            initFromDb();
-        } else {
-            position = savedInstanceState.getInt(POSITION_KEY);
-        }
-    }
-
-    private void initFromDb() {
-        FirebaseIO.getInstance().retreieveIntValueByKey(Consts.CHORES_KEY, CHORE_NUM, "position",
-                new IOnFirebaseKeyValueListeners.OnIntValueListener() {
-                    @Override
-                    public void onValueRetrieved(Integer value) {
-                        if (value == null) {
-                            position=0;
-                            return;
-                        }
-                        position=value;
-                        viewPagerDrinkActivity.setCurrentItem(value);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        CommonUtils.onGeneralError(e, TAG);
-                    }
-                });
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        currentSessionStartTime = System.currentTimeMillis();
-    }
+    protected int getChoreNum() {
+            return CHORE_NUM;
+        }
+
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -150,60 +114,17 @@ public class TryChoreActivity extends AppCompatActivity implements
         super.onSaveInstanceState(outState);
     }
 
-    @OnClick({R.id.buttonNextDrinkActivity, R.id.buttonSoundDrinkActivity, R.id.buttonExit,R.id.buttonTrialChoreInstruction})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.buttonTrialChoreInstruction:
-                moveToInstrction();
-                break;
-            case R.id.buttonNextDrinkActivity:
-                SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
-                CommonUtils.hideKeyboard(this);
-                int currentPage = viewPagerDrinkActivity.getCurrentItem();
-                //if (!moveWithDialogIfNeed(currentPage)) {
-                moveNext(currentPage);
-                // }
-                break;
-            case R.id.buttonSoundDrinkActivity:
-                int soundId = getResources().getIdentifier(
-                        Consts.TRIAL_CHORE_RAW_PREFIX + String.valueOf(0),
-                        "raw", getPackageName());
-                SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
-                if (SoundManager.getInstance().isPlaying()) {
-                    soundPressNum++;
-                }
-                break;
-            case R.id.buttonExit:
-                exitPressNum++;
-                showExitAlertDialog();
-                break;
-        }
+    @Override
+    protected void toggleSound() {
+        int soundId = getResources().getIdentifier(
+                Consts.TRIAL_CHORE_RAW_PREFIX + String.valueOf(viewPagerActivity.getCurrentItem()),
+                "raw", getPackageName());
+        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
     }
 
-    private void moveToInstrction() {
-        position = viewPagerDrinkActivity.getCurrentItem();
-        instrcPressNum++;
-        viewPagerDrinkActivity.setCurrentItem(0);
-    }
-
-
-    private void moveNext(int currentPage) {
-        if(currentPage!=position){//instruction clicked
-            viewPagerDrinkActivity.setCurrentItem(position);
-       //     setButtonsVisibility();
-            return;
-        }
-
-        int nextPage = currentPage + 1;
-        unenableNext();
-        if (nextPage == adapter.getCount()) {
-            completeChore();
-            startActivity(new Intent(TryChoreActivity.this, GoodByeActivity.class));
-        } else {
-            viewPagerDrinkActivity.setCurrentItem(viewPagerDrinkActivity.getCurrentItem() + 1);
-            position++;
-       //     setButtonsVisibility();
-        }
+    @Override
+    protected boolean moveWithDialogIfNeed(int currentPage) {
+        return false;
     }
 
     private void setButtonsVisibility() {
@@ -217,69 +138,4 @@ public class TryChoreActivity extends AppCompatActivity implements
         }
     }
 
-    private void completeChore() {
-        FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, CHORE_NUM,
-                Consts.IS_COMPLETED_KEY, true);
-    }
-
-    private void showExitAlertDialog() {
-        DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
-                android.R.string.ok, android.R.string.cancel,
-                new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
-                    @Override
-                    public void onResult(boolean result) {
-                        if (result) {
-                            DialogUtils.createTurnOffAirplaneModeAlertDialog(TryChoreActivity.this);
-                            // finish();
-                            // CommonUtils.closeApp(TrialChoreActivity.this);
-                        }
-                    }
-                });
-    }
-
-    @Override
-    public void onBackPressed() {
-        //unable
-    }
-
-    @Override
-    protected void onStop() {
-        saveToDb();
-        addTimeToDb();
-        SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
-        super.onStop();
-    }
-
-    private void addTimeToDb() {
-        long elapsedTime = System.currentTimeMillis() - currentSessionStartTime;
-        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, Consts.TIME_KEY_PREFIX + "total", elapsedTime);
-        currentSessionStartTime = System.currentTimeMillis();
-    }
-
-    private void saveToDb() {
-        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "instrcPressNum", instrcPressNum);
-        instrcPressNum = 0;
-        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "soundPressNum", soundPressNum);
-        soundPressNum = 0;
-        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "exitPressNum", exitPressNum);
-        exitPressNum = 0;
-        FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "position", position);
-    }
-
-    //region fragment callbacks
-    @Override
-    public void enableNext() {
-        if (!buttonNextDrinkActivity.isEnabled()) {
-            buttonNextDrinkActivity.setEnabled(true);
-            buttonNextDrinkActivity.setBackgroundColor(Color.parseColor("#4656AC"));
-        }
-    }
-
-    @Override
-    public void unenableNext() {
-        if (buttonNextDrinkActivity.isEnabled()) {
-            buttonNextDrinkActivity.setEnabled(false);
-            buttonNextDrinkActivity.setBackgroundColor(Color.parseColor("#979797"));
-        }
-    }
-}
+   }
