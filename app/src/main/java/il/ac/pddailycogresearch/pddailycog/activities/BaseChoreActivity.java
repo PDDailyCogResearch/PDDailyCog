@@ -35,10 +35,10 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
 
     @BindView(R.id.viewPagerActivity)
     NonSwipeableViewPager viewPagerActivity;
-    @BindView(R.id.buttonNextDrinkActivity)
-    Button buttonNextDrinkActivity;
-    @BindView(R.id.buttonSoundDrinkActivity)
-    FloatingActionButton buttonSoundDrinkActivity;
+    @BindView(R.id.buttonNext)
+    Button buttonNextActivity;
+    @BindView(R.id.buttonSound)
+    FloatingActionButton buttonSoundActivity;
 
 
     protected ViewPagerAdapter adapter;
@@ -47,12 +47,12 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     protected int exitPressNum;
 
     private long currentSessionStartTime;
-    protected final static int MAIN_LAYOUT_ID = R.layout.activity_drink_chore;
+    protected final static int MAIN_LAYOUT_ID = R.layout.activity_general_chore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(MAIN_LAYOUT_ID);
+        setContentView(getMainLayoutId());
         ButterKnife.bind(this);
 
         if (savedInstanceState == null) { //retrieve only if there isn't a saved state
@@ -74,6 +74,10 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
         });
 
 
+    }
+
+    protected int getMainLayoutId() {
+        return MAIN_LAYOUT_ID;
     }
 
     protected abstract ViewPagerAdapter createViewPagerAdapter();
@@ -104,18 +108,18 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
         currentSessionStartTime = System.currentTimeMillis();
     }
 
-    @OnClick({R.id.buttonNextDrinkActivity, R.id.buttonSoundDrinkActivity, R.id.buttonExit})
+    @OnClick({R.id.buttonNext, R.id.buttonSound, R.id.buttonExit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.buttonNextDrinkActivity:
-                SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
+            case R.id.buttonNext:
+                SoundManager.getInstance().stopMediaPlayer(buttonSoundActivity);
                 CommonUtils.hideKeyboard(this);
                 int currentPage = viewPagerActivity.getCurrentItem();
                 if (!moveWithDialogIfNeed(currentPage)) {
                     moveNext(currentPage);
                 }
                 break;
-            case R.id.buttonSoundDrinkActivity:
+            case R.id.buttonSound:
                 toggleSound();
                 if (SoundManager.getInstance().isPlaying()) {
                     soundPressNum++;
@@ -147,7 +151,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
         //empty implemention
     }
 
-    private void completeChore() {
+    protected void completeChore() {
         FirebaseIO.getInstance().saveKeyValuePair(Consts.CHORES_KEY, getChoreNum(),
                 Consts.IS_COMPLETED_KEY, true);
     }
@@ -169,7 +173,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         backPressNum++;
-        SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
+        SoundManager.getInstance().stopMediaPlayer(buttonSoundActivity);
         int prevItem = viewPagerActivity.getCurrentItem() - 1;
         if (prevItem < 0) {
             super.onBackPressed();
@@ -182,7 +186,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     protected void onStop() {
         saveToDb();
         addTimeToDb();
-        SoundManager.getInstance().stopMediaPlayer(buttonSoundDrinkActivity);
+        SoundManager.getInstance().stopMediaPlayer(buttonSoundActivity);
         super.onStop();
     }
 
@@ -192,7 +196,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
         currentSessionStartTime = System.currentTimeMillis();
     }
 
-    private void saveToDb() {
+    protected void saveToDb() {
         FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, getChoreNum(), "backPressNum", backPressNum);
         backPressNum = 0;
         FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, getChoreNum(), "soundPressNum", soundPressNum);
@@ -205,17 +209,17 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     //region fragment callbacks
     @Override
     public void enableNext() {
-        if (!buttonNextDrinkActivity.isEnabled()) {
-            buttonNextDrinkActivity.setEnabled(true);
-            buttonNextDrinkActivity.setBackgroundColor(Color.parseColor("#4656AC"));
+        if (!buttonNextActivity.isEnabled()) {
+            buttonNextActivity.setEnabled(true);
+            buttonNextActivity.setBackgroundColor(Color.parseColor("#4656AC"));
         }
     }
 
     @Override
     public void unenableNext() {
-        if (buttonNextDrinkActivity.isEnabled()) {
-            buttonNextDrinkActivity.setEnabled(false);
-            buttonNextDrinkActivity.setBackgroundColor(Color.parseColor("#979797"));
+        if (buttonNextActivity.isEnabled()) {
+            buttonNextActivity.setEnabled(false);
+            buttonNextActivity.setBackgroundColor(Color.parseColor("#979797"));
         }
     }
     //endregion

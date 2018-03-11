@@ -11,7 +11,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
     <RelativeLayout
-        android:id="@+id/relativeLayoutUpDrink"
+        android:id="@+id/relativeLayoutUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -35,7 +35,7 @@
     <TextView
         style="@style/StyleTextView"
         android:textColor="@color/red_dark"
-        android:layout_below="@+id/relativeLayoutUpDrink"
+        android:layout_below="@+id/relativeLayoutUp"
         android:id="@+id/textViewHeaderDrinkInstrcActivity"
         android:text="@string/header_drink_instrc_activity"/>
     <TextView

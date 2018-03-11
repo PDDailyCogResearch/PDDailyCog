@@ -1,32 +1,18 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.OpenQuestionnaireActivity;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
-import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
-import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.BaseViewPagerFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.CheckBoxFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
-import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
@@ -93,7 +79,7 @@ public class DrinkChoreActivity extends BaseChoreActivity {
         int soundId = getResources().getIdentifier(
                 Consts.DRINK_CHORE_RAW_PREFIX + String.valueOf(viewPagerActivity.getCurrentItem()),
                 "raw", getPackageName());
-        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
+        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundActivity);
     }
 
     @Override

@@ -58,11 +58,11 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-                if (CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
-                    retreiveNextChoreNum();
-                else
-                    CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
-               // startActivity(new Intent(this, DrinkChoreActivity.class));
+//                if (CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+//                    retreiveNextChoreNum();
+//                else
+//                    CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
+                startActivity(new Intent(this, DrinkChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();

@@ -9,7 +9,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/relativeLayoutUpDrink"
+        android:id="@+id/relativeLayoutUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -30,7 +30,7 @@
             android:text="@string/instructions" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/buttonSoundDrinkActivity"
+            android:id="@+id/buttonSound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -63,13 +63,13 @@
         android:id="@+id/viewPagerActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayoutUpDrink"
-        android:layout_above="@+id/buttonNextDrinkActivity"
+        android:layout_below="@+id/relativeLayoutUp"
+        android:layout_above="@+id/buttonNext"
         />
 
 
     <Button
-        android:id="@+id/buttonNextDrinkActivity"
+        android:id="@+id/buttonNext"
         style="@style/StyleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

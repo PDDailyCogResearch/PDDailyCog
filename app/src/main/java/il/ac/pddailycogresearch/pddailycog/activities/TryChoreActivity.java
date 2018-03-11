@@ -1,66 +1,60 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
 import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
-import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
-import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.BaseViewPagerFragment;
-import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.CheckBoxFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.InstructionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
-import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
-import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
-public class TryChoreActivity extends BaseChoreActivity{
+public class TryChoreActivity extends BaseChoreActivity {
 
     private static final int CHORE_NUM = 1;
     private static final String TAG = TryChoreActivity.class.getSimpleName();
     private static final String POSITION_KEY = "position";
 
-    @BindView(R.id.viewPagerActivity)
-    NonSwipeableViewPager viewPagerDrinkActivity;
-    @BindView(R.id.buttonNextDrinkActivity)
-    Button buttonNextDrinkActivity;
+    protected final static int MAIN_LAYOUT_ID = R.layout.activity_try_chore;
+
+
     @BindView(R.id.buttonTrialChoreInstruction)
     Button buttonTrialChoreInstruction;
-    @BindView(R.id.buttonSoundDrinkActivity)
-    FloatingActionButton buttonSoundDrinkActivity;
-    @BindView(R.id.buttonExit)
-    FloatingActionButton buttonExit;
-
-    private ViewPagerAdapter adapter;
 
     private int position;
+    private int instrcPressNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewPagerActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                setButtonsVisibility();
+            }
+        });
+    }
+
+    @Override
+    protected int getMainLayoutId() {
+        return MAIN_LAYOUT_ID;
     }
 
     @Override
     protected ViewPagerAdapter createViewPagerAdapter() {
-        return  new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
+        return new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
 
             @Override
             public Fragment getItem(int position) {
@@ -97,16 +91,26 @@ public class TryChoreActivity extends BaseChoreActivity{
 
     @Override
     protected int getChoreNum() {
-            return CHORE_NUM;
-        }
-
-
+        return CHORE_NUM;
+    }
 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(POSITION_KEY,position);
+        outState.putInt(POSITION_KEY, position);
         super.onSaveInstanceState(outState);
+    }
+
+    @OnClick(R.id.buttonTrialChoreInstruction)
+    public void onViewClicked() {
+        moveToInstrction();
+    }
+
+
+    private void moveToInstrction() {
+        position = viewPagerActivity.getCurrentItem();
+        instrcPressNum++;
+        viewPagerActivity.setCurrentItem(0);
     }
 
     @Override
@@ -114,7 +118,33 @@ public class TryChoreActivity extends BaseChoreActivity{
         int soundId = getResources().getIdentifier(
                 Consts.TRIAL_CHORE_RAW_PREFIX + String.valueOf(viewPagerActivity.getCurrentItem()),
                 "raw", getPackageName());
-        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkActivity);
+        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundActivity);
+    }
+
+    @Override
+    protected void moveNext(int currentPage) {
+        if (currentPage != position) {//instruction clicked
+            viewPagerActivity.setCurrentItem(position);
+            //     setButtonsVisibility();
+            return;
+        }
+
+        int nextPage = currentPage + 1;
+        unenableNext();
+        if (nextPage == adapter.getCount()) {
+            completeChore();
+            startActivity(new Intent(TryChoreActivity.this, GoodByeActivity.class));
+        } else {
+            viewPagerActivity.setCurrentItem(viewPagerActivity.getCurrentItem() + 1);
+            position++;
+            //     setButtonsVisibility();
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //unable
     }
 
     @Override
@@ -123,14 +153,19 @@ public class TryChoreActivity extends BaseChoreActivity{
     }
 
     private void setButtonsVisibility() {
-        if(viewPagerDrinkActivity.getCurrentItem()==0) {
-            buttonSoundDrinkActivity.setVisibility(View.VISIBLE);
+        if (viewPagerActivity.getCurrentItem() == 0) {
+            buttonSoundActivity.setVisibility(View.VISIBLE);
             buttonTrialChoreInstruction.setVisibility(View.GONE);
-        }
-        else {
-            buttonSoundDrinkActivity.setVisibility(View.GONE);
+        } else {
+            buttonSoundActivity.setVisibility(View.GONE);
             buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
         }
     }
 
-   }
+    @Override
+    protected void saveToDb() {
+        super.saveToDb();
+        FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, "instrcPressNum", instrcPressNum);
+        instrcPressNum = 0;
+    }
+}
