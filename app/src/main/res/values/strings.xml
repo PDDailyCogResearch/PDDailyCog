@@ -6,6 +6,9 @@
     <!--General -->
     <string name="empty_string" />
     <string name="ok">אישור</string>
+    <string name="yes">כן</string>
+    <string name="no"> לא</string>
+    <string name="finish">סיימתי</string>
     <string name="continue_">המשך</string>
     <string name="take_picture">צלם תמונה</string>
     <string name="instructions">הוראות</string>
@@ -15,6 +18,7 @@
     <string name="stop">הפסק</string>
     <string name="close">סגור</string>
     <string name="goodbye_title">תודה</string>
+    <string name="thanks">תודה רבה!</string>
     <string name="exit">יציאה</string>
 
     <!--Dialogs-->
@@ -42,28 +46,37 @@
 
     <!--Airplane-->
     <string name="open_settings">פתח הגדרות מצב טיסה</string>
-    <string name="airplane_mode_request">הכנס את המכשיר למצב טיסה. לאחר לחיצה על הכפתור הכחול תועבר להגדרות הטלפון לשם ביצוע העברה למצב טיסה. לאחר שתבחר במצב טיסה בטלפון שלך, לחץ על חזור כדי לחזור למסך הזה. לאחר מכן לחץ על כפתור המשך</string>
+    <string name="airplane_mode_request">הכנס את המכשיר למצב טיסה. לאחר לחיצה על הכפתור הכחול תועבר להגדרות הטלפון לשם ביצוע העברה למצב טיסה. לאחר שתבחר במצב טיסה בטלפון שלך, לחץ על <b>חזור</b> כדי לחזור למסך הזה. לאחר מכן לחץ על כפתור המשך</string>
     <string name="error_not_in_airplane_mode">המכשיר אינו במצב טיסה</string>
     <string name="turn_off_airplane_mode_alert_msg">מומלץ לכבות את מצב הטיסה בעת עזיבת האפליקציה</string>
     <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
     <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
+
+    <string name="welcome">ברוכים הבאים \nכל הכתוב והנאמר בלשון זכר מופנה לנשים וגברים כאחד</string>
 
     <!--Trial Chore-->
     <string name="trial_pre_instrc">במסך הבא תהיה הנחיה לביצוע משימה בביתך. אנא עקוב אחר ההנחיה. תוכל גם לשמוע אותה על ידי לחיצה על סימן הרמקול. תוכל תמיד לחזור ולראות או לשמוע את ההנחיה
 </string>
     <string name="trail_chore_instruction">
 קרא את ההוראה וזכור את השלבים. קח בידך את הטלפון שלך, מצא את המפתח של הבית ולך לחדר השינה שלך. שים את המפתח של הבית על הכרית וקרב את השמיכה אל הכרית וצלם. שב על המיטה והקלד חודש ושנה (לדוגמא: 2.2018) ושמך המלא (שם ושם משפחה) בטלפון שלך</string>
+    <string name="text_input_instrc">כעת השלם את משימת הכתיבה</string>
     <string name="rating_question">עד כמה טוב אתה חושב שביצעת את המשימה?</string>
+
+    <string name="now_take_photo">כעת צלם:</string>
+    <string name="trial_notice">לפנייך משימת התנסות שמטרתה לאפשר לך לקרוא הוראות בטלפון ולבצע את ההוראות השונות</string>
+    <string name="order_numbers_instrc">סדר את הספרות בסדר עולה מ-1 עד 7</string>
+
 
     <!--Goodbye-->
     <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
 
     <!--Questionnaire-->
     <string name="open_questionnaire">פתח שאלון</string>
+    <string name="open_questionnaire_text">כעת ענה על שש השאלות הבאות</string>
 
     <!--Drink chore-->
     <string name="instruction_drink_instrc_activity">לפניך משימה. יש לבצע אותה ברציפות במטבח. משך המשימה כחמש עד עשר דקות. אין לעסוק בפעילות אחרת, לשוחח או לענות לטלפון בזמן ביצוע המשימה. האם יש לך את הזמן הדרוש לביצוע המשימה במלואה?</string>
-    <string name="drink_instrc_dialog_explantion">יש לך אפשרות לקבל עזרה על ידי חזרה אחורה למסך הקודם או השמעת ההוראה   %1$s \nיש לשים לב שכל בקשת עזרה נרשמת. יש לנסות לבצע את המשימה תוך שימוש בכמה שפחות עזרה. לפניך שאלת ניסיון</string>
+    <string name="drink_instrc_dialog_explantion">יש לך אפשרות לקבל עזרה על ידי חזרה אחורה למסך הקודם או השמעת ההוראה   %1$s \nיש לשים לב שכל בקשת עזרה נרשמת. יש לנסות לבצע את המשימה תוך שימוש בכמה שפחות עזרה</string>
     <string name="drink_first_dialog_msg">כעת תתבקש להכין לעצמך את השתייה החמה שאתה מעדיף. יש לפעול לפי ההוראות. </string>
     <string name="drink_check_box_instrc">כעת הרתח מים להכנת השתייה החמה. לחץ בוצע לאחר תחילת ההרתחה</string>
     <string name="drag_drink_instr">מהו סדר הפעולות שעלייך לבצע על מנת להכין לעצמך שתיה חמה? (זכור שניתן לגולל ולגרור את הפריטים במסך)</string>
@@ -75,21 +88,8 @@
 
     <string name="drink_minutes">דקות</string>
     <string name="header_drink_instrc_activity">הנחיה</string>
-    <string name="yes">כן</string>
-    <string name="no"> לא</string>
     <string name="check_box_text">בוצע</string>
-    <string name="finish">סיימתי</string>
-    <string name="text_input_instrc">כעת השלם את משימת הכתיבה</string>
-    <string name="open_questionnaire_text">כעת ענה על שש השאלות הבאות</string>
-    <string name="thanks">תודה רבה!</string>
-    <string name="finish_drink">סיימת את המשימה להיום. שתיה נעימה!</string>
-    <string name="welcome">ברוכים הבאים כל הכתוב והנאמר בלשון זכר מופנה לנשים וגברים כאחד</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="now_take_photo">כעת צלם:</string>
-    <string name="trial_notice">לפנייך משימת התנסות שמטרתה לאפשר לך לקרוא הוראות בטלפון ולבצע את ההוראות השונות</string>
-    <string name="order_numbers_instrc">סדר את הספרות בסדר עולה מ-1 עד 7</string>
+    <string name="finish_drink">סיימת את המשימה להיום. שתייה נעימה! \n המשך לשאלות במסך הבא</string>
 
 
 </resources>
