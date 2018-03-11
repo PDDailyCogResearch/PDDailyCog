@@ -62,7 +62,7 @@ public class TryChoreActivity extends BaseChoreActivity {
 
                 switch (position) {
                     case 0:
-                        currentFragment = InstructionFragment.newInstance(position, activityChoreNum, R.string.trail_chore_instruction);//TODO creae new text frahment
+                        currentFragment = InstructionFragment.newInstance(position, activityChoreNum, R.string.trail_chore_instruction);
                         break;
                     case 1:
                         currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.now_take_photo);

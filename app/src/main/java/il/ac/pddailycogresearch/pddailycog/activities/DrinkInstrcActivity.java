@@ -98,7 +98,6 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     private void addTimeToDb() {
         long elapsedTime = System.currentTimeMillis() - currentSessionStartTime;
         FirebaseIO.getInstance().saveIncrementalKeyValuePair(Consts.CHORES_KEY, CHORE_NUM, Consts.TIME_KEY_PREFIX + "total", elapsedTime);
-        //TODO add to time-0 also
         currentSessionStartTime = System.currentTimeMillis();
     }
 

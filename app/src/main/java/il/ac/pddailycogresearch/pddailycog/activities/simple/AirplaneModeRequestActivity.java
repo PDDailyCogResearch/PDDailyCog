@@ -105,7 +105,6 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                     @Override
                     public void onError(Exception e) {
                         CommonUtils.onGeneralError(e, TAG);
-                        //TODO start first activity?
                     }
                 }
         );

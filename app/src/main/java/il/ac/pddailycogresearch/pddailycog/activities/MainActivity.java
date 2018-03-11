@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Exception e) {
                         CommonUtils.onGeneralError(e,TAG);
-                        //TODO start first activity?
                     }
                 }
         );

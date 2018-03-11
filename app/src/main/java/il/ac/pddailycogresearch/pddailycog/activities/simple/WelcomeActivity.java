@@ -29,8 +29,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.BtnOk)
     public void onViewClicked() {
-       startActivity(new Intent(WelcomeActivity.this, AirplaneModeRequestActivity.class));// TODO uncomment
-        //startActivity(new Intent(WelcomeActivity.this, TryChoreActivity.class));
-
+       startActivity(new Intent(WelcomeActivity.this, AirplaneModeRequestActivity.class));
     }
 }

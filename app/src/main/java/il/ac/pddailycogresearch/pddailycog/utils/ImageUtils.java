@@ -21,7 +21,7 @@ public final class ImageUtils {
     private static final String TAG = "ImageUtils";
     public static final String IMAGE_ABSOLUTE_PATH = "image_absolute_path";
 
-    public static String lastTakenImageAbsolutePath; //TODO ask Tal for better sulotion
+    public static String lastTakenImageAbsolutePath; //TODO delete when delete old trial chore
 
     private ImageUtils() {
         // This utility class is not publicly instantiable
