@@ -1,13 +1,11 @@
-package il.ac.pddailycogresearch.pddailycog.activities.simple;
+package il.ac.pddailycogresearch.pddailycog.activities;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 
 
 import com.google.firebase.database.DatabaseException;
@@ -18,13 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.activities.DrinkChoreActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.DrinkInstrcActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.MainActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.QuestionnaireActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.TryChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.simple.TrialNoticeActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
@@ -58,11 +50,11 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-//                if (CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
-//                    retreiveNextChoreNum();
-//                else
-//                    CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
-                startActivity(new Intent(this, DrinkChoreActivity.class));
+                if (CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+                    retreiveNextChoreNum();
+                else
+                    CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
+               // startActivity(new Intent(this, DrinkChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();

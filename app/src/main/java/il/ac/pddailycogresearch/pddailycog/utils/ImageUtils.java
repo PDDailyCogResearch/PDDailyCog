@@ -21,8 +21,6 @@ public final class ImageUtils {
     private static final String TAG = "ImageUtils";
     public static final String IMAGE_ABSOLUTE_PATH = "image_absolute_path";
 
-    public static String lastTakenImageAbsolutePath; //TODO delete when delete old trial chore
-
     private ImageUtils() {
         // This utility class is not publicly instantiable
     }
@@ -57,7 +55,6 @@ public final class ImageUtils {
                         "il.ac.pddailycogresearch.pddailycog.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                lastTakenImageAbsolutePath = photoFile.getAbsolutePath();
                 //so the activity can know the absolute path
                 takePictureIntent.putExtra(IMAGE_ABSOLUTE_PATH, photoFile.getAbsolutePath());
                 return takePictureIntent;

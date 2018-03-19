@@ -7,7 +7,7 @@
     android:orientation="vertical"
     style="@style/StyleActivityLayuot"
     >
-    <!--tools:context="il.ac.pddailycogresearch.pddailycog.activities.DrinkChoreActivity"-->
+    <!--tools:context="il.ac.pddailycogresearch.pddailycog.activities.chores.DrinkChoreActivity"-->
     <RelativeLayout
         android:id="@+id/relativeLayoutUp"
         android:layout_width="match_parent"

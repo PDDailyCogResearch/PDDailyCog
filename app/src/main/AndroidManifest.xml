@@ -14,19 +14,9 @@
 
 
         <!-- android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" -->
-        <activity android:name=".activities.MainActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity android:name=".activities.StepActivity"></activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.simple.AirplaneModeRequestActivity"></activity>
-        <activity android:name=".activities.TrialChoreActivity" />
+        <activity android:name=".activities.AirplaneModeRequestActivity"></activity>
         <activity android:name=".activities.simple.ExitActivity" />
         <activity android:name=".activities.simple.GoodByeActivity" />
         <activity android:name=".activities.QuestionnaireActivity" />
@@ -50,7 +40,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.DrinkChoreActivity" />
+        <activity android:name=".activities.chores.DrinkChoreActivity" />
         <activity android:name=".activities.DrinkInstrcActivity" />
         <activity android:name=".activities.simple.TrialInstrcActivity" />
         <activity android:name=".activities.simple.OpenQuestionnaireActivity" />
@@ -61,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TryChoreActivity">
+        <activity android:name=".activities.chores.TrialChoreActivity">
 
             <!--
             <intent-filter>

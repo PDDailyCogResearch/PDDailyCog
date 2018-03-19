@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/StyleLayuot"
     android:fillViewport="true"
-    tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.AirplaneModeRequestActivity">
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.AirplaneModeRequestActivity">
 <RelativeLayout
     style="@style/StyleActivityLayuot"
     android:layout_width="match_parent"

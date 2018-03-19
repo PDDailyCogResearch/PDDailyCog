@@ -34,9 +34,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListen
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
-import il.ac.pddailycogresearch.pddailycog.model.Chore;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
@@ -134,35 +132,6 @@ public class FirebaseIO {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         listener.onError(databaseError.toException());
-                    }
-                }
-        );
-    }
-
-    public void saveChore(Chore chore) {
-        mUserReference.child(Consts.CHORES_KEY)
-                .child(String.valueOf(chore.getTaskNum())).setValue(chore);
-
-    }
-
-    public void retrieveLastChore(final IOnFirebaseRetrieveLastChoreListener onFirebaseRetrieveLastChoreListener) {
-        Query lastChoreQuery = mUserReference.child(Consts.CHORES_KEY).orderByKey().limitToLast(1);
-        lastChoreQuery.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Chore chore = null;
-                        if (dataSnapshot.getChildren().iterator().hasNext()) {
-                            DataSnapshot ds = dataSnapshot.getChildren().iterator().next();
-                            chore = ds.getValue(Chore.class);
-                        }
-                        onFirebaseRetrieveLastChoreListener.onChoreRetrieved(chore);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
-                        onFirebaseRetrieveLastChoreListener.onError(databaseError.getMessage());
                     }
                 }
         );

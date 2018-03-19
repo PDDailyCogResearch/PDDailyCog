@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.util.Log;
 
 //import com.crashlytics.android.Crashlytics;
@@ -16,9 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
-import il.ac.pddailycogresearch.pddailycog.model.Chore;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if too much for users to call this every time...
@@ -73,45 +69,12 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
 
     private void initImgKeys() {
         imgKeysToSave = new ArrayList<>();
-        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 1,"resultImg"));
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 1,Consts.RESULT_KEY_PREFIX+1));
 
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+8));
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+11));
     }
 
-/*    private void saveChoreImageInDB(Context context) {
-
-        final FirebaseIO firebaseIO = FirebaseIO.getInstance();
-        if(!firebaseIO.isUserLogged())
-            return;
-        firebaseIO.retrieveLastChore(
-                new IOnFirebaseRetrieveLastChoreListener() {
-                    @Override
-                    public void onChoreRetrieved(final Chore chore) {
-                        if (chore!=null&&chore.getResultImg() != null && chore.getResultImg().split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
-                            firebaseIO.saveImage(Uri.parse(chore.getResultImg()),
-                                    new IOnFirebaseSaveImageListener() {
-                                        @Override
-                                        public void onImageSaved(Uri downloadUrl) {
-                                            chore.setResultImg(downloadUrl.toString());
-                                            firebaseIO.saveChore(chore);
-                                        }
-
-                                        @Override
-                                        public void onError(String msg) {
-                                            Log.e(TAG,msg);
-                                        }
-                                    });
-                    }
-
-                    @Override
-                    public void onError(String msg) {
-                        Log.e(TAG,msg);
-                    }
-                }
-        );
-    }*/
 
     private boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager

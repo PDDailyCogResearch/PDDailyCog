@@ -50,7 +50,7 @@ public class InstructionFragment extends BaseViewPagerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_instruction2, container, false);
+        View view = inflater.inflate(R.layout.fragment_instruction, container, false);
         unbinder = ButterKnife.bind(this, view);
         textViewInstructionFragment.setText(instrctionTextId);
         return view;

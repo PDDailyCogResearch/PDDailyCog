@@ -27,8 +27,8 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
  * Created by ggrot on 09/02/2018.
  */
 
-public class TextFragment extends BaseViewPagerFragment {
-    private static final String TAG = TextFragment.class.getSimpleName();
+public class TextInputFragment extends BaseViewPagerFragment {
+    private static final String TAG = TextInputFragment.class.getSimpleName();
     private static final String ARG_INSTRC_KEY = "instruction_id";
     private static List<Integer> MINUTES_VISIBLE_INSTRUCTIONS = Arrays.asList(R.string.drink_time_valuat_text_instrc);
     private static List<Integer> INPUT_TYPE_TEXT_INSTRUCTIONS = Arrays.asList(R.string.text_input_instrc);
@@ -43,12 +43,12 @@ public class TextFragment extends BaseViewPagerFragment {
     private int instrctionTextId;
     private String inputText;
 
-    public TextFragment() {
+    public TextInputFragment() {
         // Required empty public constructor
     }
 
-    public static TextFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
-        TextFragment fragment = new TextFragment();
+    public static TextInputFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
+        TextInputFragment fragment = new TextInputFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
@@ -66,7 +66,7 @@ public class TextFragment extends BaseViewPagerFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_text, container, false);
+        View view = inflater.inflate(R.layout.fragment_text_input, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (savedInstanceState == null) {
             retrieveFromDb();

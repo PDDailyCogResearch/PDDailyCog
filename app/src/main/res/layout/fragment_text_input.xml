@@ -3,26 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/StyleLayuot"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="il.ac.pddailycogresearch.pddailycog.fragments.TextInputFragment">
+    tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextInputFragment">
+<RelativeLayout
+    style="@style/StyleLayuot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textViewInstrc"
+        style="@style/StyleTextView"
+        android:text="@string/drink_first_text_instr" />
+
     <RelativeLayout
         style="@style/StyleLayuot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/textViewTextInput"
-        style="@style/StyleTextView"
-        android:layout_alignParentTop="true"
-        android:text="@string/text_input_instrc" />
-
-    <EditText
-        android:id="@+id/EditTextInputFragment"
-        style="@style/StyleEditText"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewTextInput"
-        android:hint="@string/enter_text_input_hint" />
+        android:layout_below="@+id/textViewInstrc"
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/EditTextInputFragment"
+            style="@style/StyleEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewMinutes"
+            android:hint="@string/enter_text_input_hint"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/textViewMinutes"
+            style="@style/StyleSimpleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drink_minutes"
+            />
+
+    </RelativeLayout>
 </RelativeLayout>
 </ScrollView>

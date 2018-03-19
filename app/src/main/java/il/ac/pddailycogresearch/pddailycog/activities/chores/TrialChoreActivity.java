@@ -1,4 +1,4 @@
-package il.ac.pddailycogresearch.pddailycog.activities;
+package il.ac.pddailycogresearch.pddailycog.activities.chores;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,22 +12,22 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
-import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
+import il.ac.pddailycogresearch.pddailycog.adapters.BaseViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.InstructionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
-import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextInputFragment;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
-public class TryChoreActivity extends BaseChoreActivity {
+public class TrialChoreActivity extends BaseChoreActivity {
 
     private static final int CHORE_NUM = 1;
-    private static final String TAG = TryChoreActivity.class.getSimpleName();
+    private static final String TAG = TrialChoreActivity.class.getSimpleName();
     private static final String POSITION_KEY = "position";
 
-    protected final static int MAIN_LAYOUT_ID = R.layout.activity_try_chore;
+    protected final static int MAIN_LAYOUT_ID = R.layout.activity_trial_chore;
 
 
     @BindView(R.id.buttonTrialChoreInstruction)
@@ -53,8 +53,8 @@ public class TryChoreActivity extends BaseChoreActivity {
     }
 
     @Override
-    protected ViewPagerAdapter createViewPagerAdapter() {
-        return new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
+    protected BaseViewPagerAdapter createViewPagerAdapter() {
+        return new BaseViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
 
             @Override
             public Fragment getItem(int position) {
@@ -68,7 +68,7 @@ public class TryChoreActivity extends BaseChoreActivity {
                         currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.now_take_photo);
                         break;
                     case 2:
-                        currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
                         break;
                     case 3:
                         currentFragment = DragListFragment.newInstance(position, activityChoreNum, R.string.order_numbers_instrc);
@@ -133,7 +133,7 @@ public class TryChoreActivity extends BaseChoreActivity {
         unenableNext();
         if (nextPage == adapter.getCount()) {
             completeChore();
-            startActivity(new Intent(TryChoreActivity.this, GoodByeActivity.class));
+            startActivity(new Intent(TrialChoreActivity.this, GoodByeActivity.class));
         } else {
             viewPagerActivity.setCurrentItem(viewPagerActivity.getCurrentItem() + 1);
             position++;

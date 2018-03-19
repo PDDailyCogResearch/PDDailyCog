@@ -1,4 +1,4 @@
-package il.ac.pddailycogresearch.pddailycog.activities;
+package il.ac.pddailycogresearch.pddailycog.activities.chores;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
+import il.ac.pddailycogresearch.pddailycog.adapters.BaseViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.customviews.NonSwipeableViewPager;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.BaseViewPagerFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
@@ -41,7 +41,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     FloatingActionButton buttonSoundActivity;
 
 
-    protected ViewPagerAdapter adapter;
+    protected BaseViewPagerAdapter adapter;
     protected int backPressNum;
     protected int soundPressNum;
     protected int exitPressNum;
@@ -80,7 +80,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
         return MAIN_LAYOUT_ID;
     }
 
-    protected abstract ViewPagerAdapter createViewPagerAdapter();
+    protected abstract BaseViewPagerAdapter createViewPagerAdapter();
 
     protected abstract int getChoreNum();
 

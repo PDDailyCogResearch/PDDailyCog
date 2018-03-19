@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -13,6 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.activities.chores.DrinkChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
@@ -78,8 +78,6 @@ public class DrinkInstrcActivity extends AppCompatActivity {
                             public void onResult(boolean result) {
                                 if (result) {
                                     DialogUtils.createTurnOffAirplaneModeAlertDialog(DrinkInstrcActivity.this);
-                                    // finish();
-                                    // CommonUtils.closeApp(TrialChoreActivity.this);
                                 }
                             }
                         });

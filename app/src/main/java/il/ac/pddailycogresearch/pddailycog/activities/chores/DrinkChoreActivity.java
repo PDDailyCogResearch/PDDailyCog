@@ -1,4 +1,4 @@
-package il.ac.pddailycogresearch.pddailycog.activities;
+package il.ac.pddailycogresearch.pddailycog.activities.chores;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,12 @@ import android.support.v4.app.Fragment;
 
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.OpenQuestionnaireActivity;
-import il.ac.pddailycogresearch.pddailycog.adapters.ViewPagerAdapter;
+import il.ac.pddailycogresearch.pddailycog.adapters.BaseViewPagerAdapter;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.CheckBoxFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.DragListFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
-import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextInputFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
@@ -28,8 +28,8 @@ public class DrinkChoreActivity extends BaseChoreActivity {
     }
 
     @Override
-    protected ViewPagerAdapter createViewPagerAdapter() {
-        return  new ViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
+    protected BaseViewPagerAdapter createViewPagerAdapter() {
+        return  new BaseViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
 
             @Override
             public Fragment getItem(int position) {
@@ -44,7 +44,7 @@ public class DrinkChoreActivity extends BaseChoreActivity {
                         currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum, R.string.drink_check_box_instrc);
                         break;
                     case 7:
-                        currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.drink_first_text_instr);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.drink_first_text_instr);
                         break;
                     case 8:
                         currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_instr);
@@ -53,7 +53,7 @@ public class DrinkChoreActivity extends BaseChoreActivity {
                         currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_dring_done);
                         break;
                     case 13:
-                        currentFragment = TextFragment.newInstance(position, activityChoreNum, R.string.drink_time_valuat_text_instrc);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.drink_time_valuat_text_instrc);
                         break;
                     default:
                         currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.DRINK_CHORE_ASSETS_PREFIX);

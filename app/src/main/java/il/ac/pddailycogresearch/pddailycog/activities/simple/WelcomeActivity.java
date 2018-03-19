@@ -8,8 +8,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.activities.AirplaneModeRequestActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
