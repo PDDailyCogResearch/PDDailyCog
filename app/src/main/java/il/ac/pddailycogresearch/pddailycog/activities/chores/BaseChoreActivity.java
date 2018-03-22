@@ -93,6 +93,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
                             return;
                         }
                         viewPagerActivity.setCurrentItem(value);
+                        onInitFromDbFinish();
                     }
 
                     @Override
@@ -102,9 +103,13 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
                 });
     }
 
+    protected void onInitFromDbFinish() {
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+        CommonUtils.hideKeyboard(this);
         currentSessionStartTime = System.currentTimeMillis();
     }
 

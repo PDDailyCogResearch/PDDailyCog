@@ -13,6 +13,7 @@ import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragmen
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextInputFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
@@ -79,7 +80,12 @@ public class DrinkChoreActivity extends BaseChoreActivity {
         int soundId = getResources().getIdentifier(
                 Consts.DRINK_CHORE_RAW_PREFIX + String.valueOf(viewPagerActivity.getCurrentItem()),
                 "raw", getPackageName());
-        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundActivity);
+        try {
+            SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundActivity);
+        } catch (Exception e) {//TODO: replace with self made exception
+            CommonUtils.onGeneralError(e,TAG);
+            CommonUtils.showMessage(this,e.getMessage());
+        }
     }
 
     @Override

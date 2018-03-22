@@ -1,11 +1,15 @@
 package il.ac.pddailycogresearch.pddailycog.activities.chores;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -18,6 +22,7 @@ import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.InstructionFragme
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.viewpager.TextInputFragment;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
@@ -26,6 +31,8 @@ public class TrialChoreActivity extends BaseChoreActivity {
     private static final int CHORE_NUM = 1;
     private static final String TAG = TrialChoreActivity.class.getSimpleName();
     private static final String POSITION_KEY = "position";
+    protected static List<Integer> INSTRUC_BTN_VISIBLE_PAGES = Arrays.asList(1, 2);
+    protected static List<Integer> SOUND_BTN_VISIBLE_PAGES = Arrays.asList(0, 3);
 
     protected final static int MAIN_LAYOUT_ID = R.layout.activity_trial_chore;
 
@@ -39,12 +46,21 @@ public class TrialChoreActivity extends BaseChoreActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getInt(POSITION_KEY);
+        }
         viewPagerActivity.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 setButtonsVisibility();
             }
         });
+    }
+
+    @Override
+    protected void onInitFromDbFinish() {
+        super.onInitFromDbFinish();
+        position = viewPagerActivity.getCurrentItem();
     }
 
     @Override
@@ -118,7 +134,12 @@ public class TrialChoreActivity extends BaseChoreActivity {
         int soundId = getResources().getIdentifier(
                 Consts.TRIAL_CHORE_RAW_PREFIX + String.valueOf(viewPagerActivity.getCurrentItem()),
                 "raw", getPackageName());
-        SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundActivity);
+        try {
+            SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundActivity);
+        } catch (Exception e) {//TODO: replace with self made exception
+            CommonUtils.onGeneralError(e,TAG);
+            CommonUtils.showMessage(this,e.getMessage());
+        }
     }
 
     @Override
@@ -153,12 +174,15 @@ public class TrialChoreActivity extends BaseChoreActivity {
     }
 
     private void setButtonsVisibility() {
-        if (viewPagerActivity.getCurrentItem() == 0) {
+        if (SOUND_BTN_VISIBLE_PAGES.contains(viewPagerActivity.getCurrentItem())) {
             buttonSoundActivity.setVisibility(View.VISIBLE);
             buttonTrialChoreInstruction.setVisibility(View.GONE);
-        } else {
+        } else if (INSTRUC_BTN_VISIBLE_PAGES.contains(viewPagerActivity.getCurrentItem())) {
             buttonSoundActivity.setVisibility(View.GONE);
             buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
+        } else {
+            buttonTrialChoreInstruction.setVisibility(View.GONE);
+            buttonSoundActivity.setVisibility(View.GONE);
         }
     }
 

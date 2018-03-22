@@ -38,7 +38,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     private static final String SELECTION_TAG = "selection";
     private static final String ARG_ASSET_FOLDER_KEY = "assets_folder";
     private static final String TAG = RadioQuestionFragment.class.getSimpleName();
-    private static final java.lang.String FREETEXT_TAG = "freetext";
+    private static final String FREETEXT_TAG = "freetext";
 
     @BindView(R.id.textViewQuestionRadioFragment)
     TextView textViewQuestionRadioFragment;

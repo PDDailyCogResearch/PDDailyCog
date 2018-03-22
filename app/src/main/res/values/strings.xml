@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PDDailyCog</string>
-
+    <string name="short_app_name">DailyCog</string>
 
     <!--General -->
     <string name="empty_string" />
@@ -52,7 +52,7 @@
     <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
     <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
 
-    <string name="welcome">ברוכים הבאים \nכל הכתוב והנאמר בלשון זכר מופנה לנשים וגברים כאחד</string>
+    <string name="welcome">ברוכים הבאים! \nכל הכתוב והנאמר בלשון זכר מופנה לנשים וגברים כאחד</string>
 
     <!--Trial Chore-->
     <string name="trial_pre_instrc">במסך הבא תהיה הנחיה לביצוע משימה בביתך. אנא עקוב אחר ההנחיה. תוכל גם לשמוע אותה על ידי לחיצה על סימן הרמקול. תוכל תמיד לחזור ולראות או לשמוע את ההנחיה
@@ -64,11 +64,11 @@
 
     <string name="now_take_photo">כעת צלם:</string>
     <string name="trial_notice">לפנייך משימת התנסות שמטרתה לאפשר לך לקרוא הוראות בטלפון ולבצע את ההוראות השונות</string>
-    <string name="order_numbers_instrc">סדר את הספרות בסדר עולה מ-1 עד 7</string>
+    <string name="order_numbers_instrc">כעת סדר את הספרות בסדר עולה מ1 עד 7 (ניתן לגולל ולגרור את המספרים במסך)</string>
 
 
     <!--Goodbye-->
-    <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
+    <string name="goodbye_msg">השלמת את המשימה. תודה רבה!</string>
 
     <!--Questionnaire-->
     <string name="open_questionnaire">פתח שאלון</string>
@@ -76,13 +76,13 @@
 
     <!--Drink chore-->
     <string name="instruction_drink_instrc_activity">לפניך משימה. יש לבצע אותה ברציפות במטבח. משך המשימה כחמש עד עשר דקות. אין לעסוק בפעילות אחרת, לשוחח או לענות לטלפון בזמן ביצוע המשימה. האם יש לך את הזמן הדרוש לביצוע המשימה במלואה?</string>
-    <string name="drink_instrc_dialog_explantion">יש לך אפשרות לקבל עזרה על ידי חזרה אחורה למסך הקודם או השמעת ההוראה   %1$s \nיש לשים לב שכל בקשת עזרה נרשמת. יש לנסות לבצע את המשימה תוך שימוש בכמה שפחות עזרה</string>
+    <string name="drink_instrc_dialog_explantion">יש לך אפשרות לקבל עזרה על ידי חזרה אחורה למסך הקודם או השמעת ההוראה.   %1$s \nיש לשים לב שכל בקשת עזרה נרשמת. יש לנסות לבצע את המשימה תוך שימוש בכמה שפחות עזרה</string>
     <string name="drink_first_dialog_msg">כעת תתבקש להכין לעצמך את השתייה החמה שאתה מעדיף. יש לפעול לפי ההוראות. </string>
     <string name="drink_check_box_instrc">כעת הרתח מים להכנת השתייה החמה. לחץ בוצע לאחר תחילת ההרתחה</string>
     <string name="drag_drink_instr">מהו סדר הפעולות שעלייך לבצע על מנת להכין לעצמך שתיה חמה? (זכור שניתן לגולל ולגרור את הפריטים במסך)</string>
     <string name="drink_first_text_instr">הוצא בבקשה והנח על השיש: ספל, כפית, קפה או תה, סוכר או ממתיק, חלב או נענע או כל תוספת אחרת למשקה. כמה פריטים יש לך?</string>
     <string name="dring_photo_instr">כעת צלם את כל הפריטים יחד</string>
-    <string name="drink_second_dialog_msg">אם המים רתחו, הכן את השתיה החמה ובסיום לחץ על "סיימתי"</string>
+    <string name="drink_second_dialog_msg">אם המים טרם רתחו המתן עד שירתחו. לאחר שהמים רתחו, הכן את השתיה החמה ובסיום לחץ על סיימתי</string>
     <string name="dring_photo_dring_done">צלם את המשקה המוכן</string>
     <string name="drink_time_valuat_text_instrc">כמה זמן אתה מעריך שלקח לך לבצע את המשימה?</string>
 
@@ -90,6 +90,7 @@
     <string name="header_drink_instrc_activity">הנחיה</string>
     <string name="check_box_text">בוצע</string>
     <string name="finish_drink">סיימת את המשימה להיום. שתייה נעימה! \n המשך לשאלות במסך הבא</string>
+    <string name="sound_error">אירעה שגיאה בעת ההשמעה</string>
 
 
 </resources>

@@ -14,12 +14,14 @@ import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.chores.DrinkChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 public class DrinkInstrcActivity extends AppCompatActivity {
     private static final int CHORE_NUM = 2;
+    private static final String TAG = DrinkInstrcActivity.class.getSimpleName();
 
     @BindView(R.id.buttonSoundDrinkInstrcActivity)
     FloatingActionButton buttonSoundDrinkInstrcActivity;
@@ -45,7 +47,12 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonSoundDrinkInstrcActivity:
-                SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
+                try {
+                    SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
+                } catch (Exception e) {//TODO: replace with self made exception
+                    CommonUtils.onGeneralError(e,TAG);
+                    CommonUtils.showMessage(this,e.getMessage());
+                }
                 if (SoundManager.getInstance().isPlaying()) {
                     soundPressNum++;
                 }

@@ -1,6 +1,7 @@
 package il.ac.pddailycogresearch.pddailycog.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.support.annotation.RawRes;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import il.ac.pddailycogresearch.pddailycog.R;
  */
 
 public class SoundManager {
+    private static final String TAG = SoundManager.class.getSimpleName();
     private static SoundManager mInstance;
 
     private final String buttonStartText = Consts.SPEAKER_EMOJI;
@@ -54,10 +56,14 @@ public class SoundManager {
         }
     }
 
-    public void toggleMediaPlayer(Context context, @RawRes int soundId, final FloatingActionButton soundFloatingButton) {
+    public void toggleMediaPlayer(Context context, @RawRes int soundId, final FloatingActionButton soundFloatingButton) throws Exception {
         this.soundFloatingButton = soundFloatingButton;
         if (mpori == null) {
-            mpori = MediaPlayer.create(context, soundId);
+            try {
+                mpori = MediaPlayer.create(context, soundId);
+            } catch (Resources.NotFoundException e){
+                throw new Exception(context.getResources().getString(R.string.sound_error));
+            }
         }
         if (mpori.isPlaying()) {
             mpori.pause();

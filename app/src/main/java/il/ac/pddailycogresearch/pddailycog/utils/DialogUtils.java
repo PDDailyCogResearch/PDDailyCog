@@ -24,6 +24,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListen
  */
 
 public class DialogUtils {
+    private static final String TAG = DialogUtils.class.getSimpleName();
     private static ProgressDialog mProgressDialog;
 
     private DialogUtils() {
@@ -150,7 +151,13 @@ public class DialogUtils {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SoundManager.getInstance().toggleMediaPlayer(context,soundID,b);
+                try {
+                    SoundManager.getInstance().toggleMediaPlayer(context,soundID,b);
+                } catch (Exception e) {
+                    CommonUtils.onGeneralError(e,TAG);
+                    CommonUtils.showMessage(context,e.getMessage());
+                }
+
                 if (SoundManager.getInstance().isPlaying()) {
                     alertDialogResultListener.onSoundClick();
                 }
