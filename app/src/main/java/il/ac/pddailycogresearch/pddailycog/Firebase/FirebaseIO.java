@@ -99,7 +99,6 @@ public class FirebaseIO {
                     if (mIOnFireBasLoginEventListener != null)
                         mIOnFireBasLoginEventListener.onUserLogin();
 
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
                     mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
@@ -107,7 +106,6 @@ public class FirebaseIO {
                     if (mIOnFireBasLoginEventListener != null)
                         mIOnFireBasLoginEventListener.onUserLoginError("User Is Signed Out.."); //ask Tal
 
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
@@ -312,7 +310,7 @@ public class FirebaseIO {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Log.d(TAG, "image been saved in: " + downloadUrl.toString());
+
                 onFirebaseSaveImageListener.onImageSaved(downloadUrl);
             }
         });
@@ -403,8 +401,6 @@ public class FirebaseIO {
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -421,13 +417,11 @@ public class FirebaseIO {
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(activity, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }

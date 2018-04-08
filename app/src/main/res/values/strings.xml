@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PDDailyCog</string>
+    <string name="app_name">DailyCog</string>
     <string name="short_app_name">DailyCog</string>
 
     <!--General -->

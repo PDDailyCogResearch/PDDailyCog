@@ -50,7 +50,7 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
 
         if(isNetworkAvailable(context)&&FirebaseIO.getInstance().isUserLogged()) {
             if (firstTimestamp == Long.MIN_VALUE || System.currentTimeMillis() - firstTimestamp > TIME_INTERVAL) {
-                firstTimestamp=System.currentTimeMillis();
+                firstTimestamp = System.currentTimeMillis();
                 initImgKeys();
                 for (SavingParams imgkey : imgKeysToSave) {
                     FirebaseIO.getInstance().resaveImageByKey(
@@ -61,9 +61,11 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
                 // saveChoreImageInDB(context);
                 Crashlytics.log("Receiver log");
                 Crashlytics.logException(new Throwable("Receiver non-fatal"));
-            } else {
-                Log.d(TAG, "false receiver");
             }
+//            } else {
+            //TODO
+//                Log.d(TAG, "false receiver");
+//            }
         }
     }
 
