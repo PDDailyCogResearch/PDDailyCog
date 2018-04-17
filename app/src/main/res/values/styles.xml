@@ -14,21 +14,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorToolbar</item>
         <item name="colorAccent">@color/colorRadioButton</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- Buttons -->
     <style name="StyleButton" parent="android:Theme">
         <item name="android:background">@color/colorButtons</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
         <!--<item name="android:textStyle">italic</item>-->
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">fill</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
 
     </style>
 
@@ -36,37 +37,49 @@
     <style name="StyleEditText" parent="android:Theme">
         <item name="android:background">@drawable/rounded_corner</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25sp</item>
-        <item name="android:textStyle">italic</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_gravity">fill</item>
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:padding">15dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:radius">100dp</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <!-- TextView -->
     <style  name="StyleTextView" parent="android:Theme">
-        <item name="android:textColor">@color/black</item><!--
-        <item name="autoSizeTextType">uniform</item>
-        <item name="autoSizeMaxTextSize">30sp</item>
-        <item name="autoSizeMinTextSize">12sp</item>-->
-        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">fill</item>
         <item name="android:radius">100dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/rounded_corner</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <!-- TextView -->
+    <!-- SimpleTextView -->
+    <style  name="StyleSimpleTextView" parent="android:Theme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:radius">100dp</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <!-- TextViewRadioButton -->
     <style name="StyleTextRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
         <item name="android:padding">10dp</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">20sp</item>
         <!--<item name="android:textStyle">italic</item>-->
         <item name="android:layout_gravity">fill</item>
     </style>
@@ -80,12 +93,23 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!--ActivityLayout -->
+    <style name="StyleActivityLayuot" parent="android:Theme">
+        <item name="android:gravity">center</item>
+        <item name="android:layoutDirection"  tools:targetApi="17" >rtl</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <!-- RadioButton -->
     <style name="StyleRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:layout_marginRight">20dp</item>
     </style>
 
 </resources>

@@ -1,0 +1,55 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StyleLayuot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.RadioQuestionFragment">
+
+    <RelativeLayout
+        style="@style/StyleLayuot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewQuestionRadioFragment"
+            style="@style/StyleTextView"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/textViewInstructionRadioFragment"
+            style="@style/StyleSimpleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewQuestionRadioFragment"
+            android:layout_gravity="center" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewInstructionRadioFragment">
+
+            <RadioGroup
+                android:id="@+id/radioGroupRadioFragment"
+                style="@style/StyleRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <EditText
+                android:id="@+id/edit_text_radio"
+                style="@style/StyleEditText"
+                android:layout_toLeftOf="@+id/radioGroupRadioFragment"
+                android:layout_alignBottom="@id/radioGroupRadioFragment"
+                android:gravity="center"
+                android:hint="@string/enter_text_input_hint"
+                android:padding="2dp"
+                android:layout_margin="2dp"
+                android:visibility="gone"
+                android:enabled="false"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

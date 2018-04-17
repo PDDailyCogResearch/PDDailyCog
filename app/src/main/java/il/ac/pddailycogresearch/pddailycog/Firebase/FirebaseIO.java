@@ -20,19 +20,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
-import il.ac.pddailycogresearch.pddailycog.model.Chore;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 import static il.ac.pddailycogresearch.pddailycog.utils.Consts.FIREBASE_LOGIN_STATE_IN;
@@ -96,7 +99,6 @@ public class FirebaseIO {
                     if (mIOnFireBasLoginEventListener != null)
                         mIOnFireBasLoginEventListener.onUserLogin();
 
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
                     mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
@@ -104,50 +106,42 @@ public class FirebaseIO {
                     if (mIOnFireBasLoginEventListener != null)
                         mIOnFireBasLoginEventListener.onUserLoginError("User Is Signed Out.."); //ask Tal
 
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
         };
     }
 
-
-    public void saveChore(Chore chore) {
-        mUserReference.child(Consts.CHORES_KEY)
-                .child(String.valueOf(chore.getTaskNum())).setValue(chore);
-
-    }
-
-    public void retrieveLastChore(final IOnFirebaseRetrieveLastChoreListener onFirebaseRetrieveLastChoreListener) {
+    public void retrieveLastChoreNum(final IOnFirebaseKeyValueListeners.OnIntValueListener listener) {
         Query lastChoreQuery = mUserReference.child(Consts.CHORES_KEY).orderByKey().limitToLast(1);
         lastChoreQuery.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Chore chore = null;
                         if (dataSnapshot.getChildren().iterator().hasNext()) {
                             DataSnapshot ds = dataSnapshot.getChildren().iterator().next();
-                            chore = ds.getValue(Chore.class);
+                            listener.onValueRetrieved(Integer.valueOf(ds.getKey()));
                         }
-                        onFirebaseRetrieveLastChoreListener.onChoreRetrieved(chore);
+                        else {
+                            listener.onValueRetrieved(-1);
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        databaseError.toException().printStackTrace();
-                        onFirebaseRetrieveLastChoreListener.onError(databaseError.getMessage());
+                        listener.onError(databaseError.toException());
                     }
                 }
         );
     }
 
-    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener){
+    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
         mUserReference.child(Consts.QUESTIONNAIRE_KEY).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         List<Integer> answers = new ArrayList<Integer>();
-                        for (DataSnapshot valSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot valSnapshot : dataSnapshot.getChildren()) {
                             answers.add(valSnapshot.getValue(Integer.class));
                         }
                         firebaseQuestionnaireListener.onAnswersRetreived(answers);
@@ -162,28 +156,241 @@ public class FirebaseIO {
         );
     }
 
+    public void retreieveBooleanValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnBooleanListValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            Boolean value = false;
+                            if(dataSnapshot.exists()) {
+                                 value = dataSnapshot.getValue(Boolean.class);
+                            }
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void retreieveStringValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnStringValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            String value = dataSnapshot.getValue(String.class);
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void retreieveIntValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnIntValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            Integer value = dataSnapshot.getValue(Integer.class);
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void retreieveLongValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnLongValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            Long value = dataSnapshot.getValue(Long.class);
+                            listener.onValueRetrieved(value);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void retreieveStringListValueByKey(final String collection, final int choreNum, final String key, final IOnFirebaseKeyValueListeners.OnStringListValueListener listener) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            List<String> items = new ArrayList<String>();
+                            for (DataSnapshot valSnapshot : dataSnapshot.getChildren()) {
+                                items.add(valSnapshot.getValue(String.class));
+                            }
+                            listener.onValueRetrieved(items);
+                        } catch (Exception e) {
+                            listener.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onError(databaseError.toException());
+                    }
+                }
+        );
+    }
+
+    public void downloadImg(final String url, final IOnFirebaseKeyValueListeners.OnStringValueListener listener) {
+        StorageReference islandRef = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+
+        File localFile = null;
+
+        try {
+            localFile = File.createTempFile("images", "jpg");
+            final String absolutePath = localFile.getAbsolutePath();
+
+            islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    listener.onValueRetrieved(absolutePath);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    listener.onError(exception);
+                }
+            });
+        } catch (IOException e) {
+            CommonUtils.onGeneralError(e,TAG);
+        }
+
+    }
+
     public void saveImage(Uri imageUri, final IOnFirebaseSaveImageListener onFirebaseSaveImageListener) {
         UploadTask uploadTask = mStorageReference.child(imageUri.getLastPathSegment()).putFile(imageUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                exception.printStackTrace();
+                CommonUtils.onGeneralError(exception,TAG);
                 onFirebaseSaveImageListener.onError(exception.getMessage());
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Log.d(TAG, "image been saved in: " + downloadUrl.toString());
+
                 onFirebaseSaveImageListener.onImageSaved(downloadUrl);
             }
         });
     }
 
-    public void saveQuestionnaireAnswer(int key, int value){
-        mUserReference.child(Consts.QUESTIONNAIRE_KEY).child(String.valueOf(key)).setValue(value);
+    public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(imageDbKey).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String path = dataSnapshot.getValue(String.class);
+                            if (path != null && path.split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
+                                saveImage(Uri.parse(path),
+                                        new IOnFirebaseSaveImageListener() {
+                                            @Override
+                                            public void onImageSaved(Uri downloadUrl) {
+                                                saveKeyValuePair(collection, choreNum, imageDbKey, downloadUrl.toString());
+                                            }
+
+                                            @Override
+                                            public void onError(String msg) {
+                                                Log.e(TAG, msg);
+                                            }
+                                        });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
     }
-    public void saveQuestionnaireAnswer(List<Integer> answers){
+
+    public void saveKeyValuePair(String collection, int choreNum, String key, int value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
+    public void saveKeyValuePair(String collection, int choreNum, String key, String value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
+    public void saveKeyValuePair(String collection, int choreNum, String key, Boolean value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
+    public void saveKeyValuePair(String collection, int choreNum, String key, List<String> value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum))
+                .child(key).setValue(value);
+    }
+
+    public void saveIncrementalKeyValuePair(final String collection, final int choreNum, final String key, final long value) {
+        mUserReference.child(collection).child(String.valueOf(choreNum)).child(key).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        long prevValue = 0;
+                        if (dataSnapshot.exists()) {
+                            prevValue = dataSnapshot.getValue(Long.class);
+                        }
+                        long nextValue = prevValue + value;
+                        mUserReference.child(collection).child(String.valueOf(choreNum))
+                                .child(key).setValue(nextValue);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
+                    }
+                }
+        );
+    }
+
+    public void saveQuestionnaireAnswer(List<Integer> answers) {
         mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
     }
 
@@ -194,8 +401,6 @@ public class FirebaseIO {
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -212,13 +417,11 @@ public class FirebaseIO {
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(activity, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -255,4 +458,5 @@ public class FirebaseIO {
     public void logout() {
         mAuth.signOut();
     }
+
 }

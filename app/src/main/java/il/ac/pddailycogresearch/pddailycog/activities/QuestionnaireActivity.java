@@ -1,9 +1,10 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
 
     private int questionIdx = 0;
-    private int[] answers_ids;
+ //   private int[] answers_ids;
     private String[] questions;
     private Integer[] answers;
 
@@ -66,7 +67,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
             @Override
             public void onError(DatabaseException e) {
-                e.printStackTrace();
+                CommonUtils.onGeneralError(e,TAG);
                 initEmptyAnswersArray();
                 setCurrentQuestion();
             }
@@ -75,18 +76,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     private void init() {
 
-        TypedArray ta= getResources().obtainTypedArray(R.array.answers_id);
-        int n = ta.length();
-        answers_ids = new int[n];
-        for (int i = 0; i < n; ++i) {
-            int id = ta.getResourceId(i, 0);
-            if (id > 0) {
-                answers_ids[i] = id;
-            } else {
-                Log.e(TAG,"answers xml error");
-                CommonUtils.showMessage(this,R.string.answers_xml_error);
-            }
-        }
+     //   answers_ids = CommonUtils.getIdArrayFromResources(this,R.array.answers_id);
         questions = getResources().getStringArray(R.array.questions);
         radioButtonsListener = new View.OnClickListener() {
             @Override
@@ -100,6 +90,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         };
     }
 
+
     private void initEmptyAnswersArray() {
         //inilize answers array to illegal value
         answers = new Integer[questions.length];
@@ -110,7 +101,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     private void setCurrentQuestion() {
         textViewQuestionnaireQuest.setText(CommonUtils.fromHtml(questions[questionIdx]));
-        String[] answersTexts = getResources().getStringArray(answers_ids[questionIdx]);
+        String[] answersTexts = getResources().getStringArray(
+                getResources().getIdentifier("answers_"+String.valueOf(questionIdx+1), "array",getPackageName()));//(answers_ids[questionIdx]);
         radioGroupQuestionnaireAns.removeAllViews();
         for (String answer : answersTexts) {
            // RadioButton rb = new RadioButton(this);

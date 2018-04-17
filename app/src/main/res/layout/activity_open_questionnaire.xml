@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StyleLayuot"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.OpenQuestionnaireActivity">
+
+    <RelativeLayout style="@style/StyleLayuot">
+
+        <TextView
+            android:id="@+id/textViewOpenQuestionnaire"
+            style="@style/StyleTextView"
+            android:layout_above="@+id/buttonGoodByeOK"
+            android:text="@string/open_questionnaire_text" />
+
+        <Button
+            android:id="@+id/buttonGoodByeOK"
+            style="@style/StyleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@string/open_questionnaire" />
+    </RelativeLayout>
+</ScrollView>

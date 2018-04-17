@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="answers_id">
+ <!--   <array name="answers_id">
         <item>@array/answers_1</item>
         <item>@array/answers_2</item>
         <item>@array/answers_3</item>
         <item>@array/answers_4</item>
         <item>@array/answers_5</item>
         <item>@array/answers_6</item>
-    </array>
+    </array>-->
+    <string-array name="drag_tasks_chore_1">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6 </item>
+        <item>7</item>
+    </string-array>
+    <string-array name="drag_tasks_chore_2">
+        <item>הרתחת מים</item>
+        <item>הוצאת ספל וכפית מהארון</item>
+        <item>הכנסת קפה/תה לספל </item>
+        <item>הוספת סוכר/ממתיק </item>
+        <item>מזיגת מים לספל</item>
+        <item>ערבוב </item>
+        <item>הוספת חלב/נענע/כלום</item>
+    </string-array>
+
+    <string-array name="rating_answers">
+        <item>מצוין</item>
+        <item>טוב מאוד</item>
+        <item>טוב</item>
+        <item>לא טוב</item>
+        <item>גרוע</item>
+    </string-array>
+
     <string-array name="answers_1">
         <item>מצוינת</item>
         <item>טובה מאוד</item>

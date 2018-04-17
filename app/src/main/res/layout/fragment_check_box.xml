@@ -1,0 +1,25 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    style="@style/StyleLayuot"
+    tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.CheckBoxFragment">
+    <RelativeLayout
+        style="@style/StyleLayuot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        style="@style/StyleTextView"
+        android:id="@+id/textViewCheckBox"
+        android:layout_above="@+id/check_box"
+        android:text="@string/drink_check_box_instrc" />
+    <CheckBox
+        style="@style/StyleSimpleTextView"
+        android:id="@+id/check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/check_box_text"/>
+</RelativeLayout>
+</ScrollView>

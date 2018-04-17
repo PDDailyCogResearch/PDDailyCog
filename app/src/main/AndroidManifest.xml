@@ -10,23 +10,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/OurApp">
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/OurApp"> <!--  -->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.StepActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <!-- android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" -->
+        <activity android:name=".activities.StepActivity"></activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.simple.AirplaneModeRequestActivity" />
+        <activity android:name=".activities.AirplaneModeRequestActivity"></activity>
+        <activity android:name=".activities.simple.ExitActivity" />
+        <activity android:name=".activities.simple.GoodByeActivity" />
+        <activity android:name=".activities.QuestionnaireActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -47,16 +40,28 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.TrialChoreActivity" />
-        <activity android:name=".activities.simple.ExitActivity" />
-        <activity android:name=".activities.simple.GoodByeActivity" >
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".activities.chores.DrinkChoreActivity" />
+        <activity android:name=".activities.DrinkInstrcActivity" />
+        <activity android:name=".activities.simple.TrialInstrcActivity" />
+        <activity android:name=".activities.simple.OpenQuestionnaireActivity" />
+        <activity android:name=".activities.simple.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activities.QuestionnaireActivity"></activity>
+        <activity android:name=".activities.chores.TrialChoreActivity">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".activities.simple.TrialNoticeActivity"></activity>
     </application>
 
 </manifest>

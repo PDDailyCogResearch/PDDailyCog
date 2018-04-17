@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layoutDirection="rtl"
-    android:orientation="vertical"
     style="@style/StyleLayuot"
-    tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.AirplaneModeRequestActivity">
-
-
-    <TextView
-        style="@style/StyleTextView"
-        android:id="@+id/textViewAirplaneModeRequest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMaxTextSize="40sp"
-        app:autoSizeMinTextSize="15sp"
-        android:layout_weight="2"
-        android:text="@string/airplane_mode_request" />
-
+    android:fillViewport="true"
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.AirplaneModeRequestActivity">
+<RelativeLayout
+    style="@style/StyleActivityLayuot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <Button
-        style="@style/StyleButton"
-        android:id="@+id/buttonOpenAirplaneModeSettings"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="logout" />
+
+    <TextView
+        android:id="@+id/textViewAirplaneModeRequest"
+        style="@style/StyleTextView"
+              android:text="@string/airplane_mode_request" />
+
+    <Button
+        android:id="@+id/buttonOpenAirplaneModeSettings"
+        style="@style/StyleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewAirplaneModeRequest"
         android:layout_gravity="center"
         android:text="@string/open_settings" />
 
     <Button
-        style="@style/StyleButton"
-android:layout_gravity="center"
         android:id="@+id/buttonAirplaneOk"
+        style="@style/StyleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonOpenAirplaneModeSettings"
+        android:layout_gravity="center"
         android:text="@string/continue_" />
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-</LinearLayout>
+</RelativeLayout>
+
+</ScrollView>

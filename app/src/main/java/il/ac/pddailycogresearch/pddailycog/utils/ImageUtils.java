@@ -21,11 +21,10 @@ public final class ImageUtils {
     private static final String TAG = "ImageUtils";
     public static final String IMAGE_ABSOLUTE_PATH = "image_absolute_path";
 
-    public static String lastTakenImageAbsolutePath; //TODO ask Tal for better sulotion
-
     private ImageUtils() {
         // This utility class is not publicly instantiable
     }
+
     private static File createImageFile(Context context) throws IOException {
         // Create an image file name
         String timeStamp = CommonUtils.getTimeStamp();
@@ -48,9 +47,7 @@ public final class ImageUtils {
             try {
                 photoFile = createImageFile(context);
             } catch (IOException ex) {
-                // Error occurred while creating the File
-                ex.printStackTrace();
-            //TODO error handling
+                CommonUtils.onGeneralError(ex,TAG);
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -58,10 +55,9 @@ public final class ImageUtils {
                         "il.ac.pddailycogresearch.pddailycog.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                lastTakenImageAbsolutePath=photoFile.getAbsolutePath();
                 //so the activity can know the absolute path
                 takePictureIntent.putExtra(IMAGE_ABSOLUTE_PATH, photoFile.getAbsolutePath());
-               return takePictureIntent;
+                return takePictureIntent;
             }
         }
         return null;
@@ -69,8 +65,8 @@ public final class ImageUtils {
 
     public static void setPic(ImageView mImageView, String mCurrentPhotoPath, int targetH, int targetW) {
 
-       // targetH = mImageView.getMeasuredHeight();//.getHeight();
-       // targetW = mImageView.getMeasuredWidth();//.getWidth();
+        // targetH = mImageView.getMeasuredHeight();//.getHeight();
+        // targetW = mImageView.getMeasuredWidth();//.getWidth();
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -79,7 +75,7 @@ public final class ImageUtils {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
@@ -90,13 +86,37 @@ public final class ImageUtils {
         mImageView.setImageBitmap(bitmap);
     }
 
+    public static void setPicFromContentUri(Context context, ImageView mImageView, Uri imageUri, int targetH, int targetW) {
+        try {
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(imageUri.getEncodedPath(), bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            Bitmap bitmap = null;
+
+            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
+            mImageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            CommonUtils.onGeneralError(e,TAG);
+        }
+    }
+
     public static void deleteFiles(Context context) {
         File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (dir.isDirectory())
-        {
+        if (dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++)
-            {
+            for (int i = 0; i < children.length; i++) {
                 new File(dir, children[i]).delete();
             }
         }

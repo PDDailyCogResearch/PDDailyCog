@@ -38,4 +38,5 @@
 <color name="blue_grey_light">#A5B4C8</color>
 <color name="orange">#FFA500</color>
 <color name="yellow">#fff44f</color>
+    <color name="drag_item">#A5B4C8</color>
 </resources>

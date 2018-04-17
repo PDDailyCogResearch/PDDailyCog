@@ -1,0 +1,35 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    style="@style/StyleLayuot"
+    tools:context="il.ac.pddailycogresearch.pddailycog.fragments.viewpager.PhotographFragment">
+    <RelativeLayout
+        style="@style/StyleLayuot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        style="@style/StyleTextView"
+        android:id="@+id/textViewInstrcPhotographFragment"
+        android:layout_alignParentTop="true"
+        android:text="@string/dring_photo_instr" />
+
+    <ImageView
+        android:id="@+id/imageViewPhotographFragment"
+        android:layout_margin="15dp"
+        android:layout_above="@+id/buttonPhotographFragment"
+        android:layout_below="@+id/textViewInstrcPhotographFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <Button
+        style="@style/StyleButton"
+        android:id="@+id/buttonPhotographFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="@string/take_picture" />
+</RelativeLayout>
+</ScrollView>

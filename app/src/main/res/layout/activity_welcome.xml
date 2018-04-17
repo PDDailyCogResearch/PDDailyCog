@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    style="StyleLayuot"
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.WelcomeActivity">
+    <RelativeLayout
+        style="@style/StyleActivityLayuot">
+        <TextView
+            android:id="@+id/logoImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:foregroundGravity="center"
+            android:background="@drawable/logo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            style="@style/StyleTextView"
+            android:id="@+id/textViewAppname"
+            android:text="@string/short_app_name"
+            android:layout_below="@id/logoImage"/>
+
+        <TextView
+            style="@style/StyleTextView"
+            android:id="@+id/textViewWelcome"
+            android:layout_below="@id/textViewAppname"
+            android:text="@string/welcome"
+             />
+
+
+        <Button style="@style/StyleButton"
+            android:id="@+id/BtnOk"
+            android:layout_below="@id/textViewWelcome"
+            android:text="@string/ok" />
+    </RelativeLayout>
+
+
+</ScrollView>
