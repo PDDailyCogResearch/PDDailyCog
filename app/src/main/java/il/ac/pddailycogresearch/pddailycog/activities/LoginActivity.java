@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        mFirebaseIO.signUpNewUser(LoginActivity.this, legalEmial, password,
+        mFirebaseIO.signInExistingUser(LoginActivity.this, legalEmial, password,
                 new IOnFirebaseErrorListener() {
                     @Override
                     public void onError(Exception exception) {

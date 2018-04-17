@@ -412,7 +412,8 @@ public class FirebaseIO {
                 });
     }
 
-    public void signInExistingUser(final Activity activity, String email, String password) {
+    public void signInExistingUser(final Activity activity, String email, String password,
+                                   final IOnFirebaseErrorListener firebaseErrorListener) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -421,11 +422,9 @@ public class FirebaseIO {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(activity, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                        if (!task.isSuccessful() && task.getException() != null) {
+                            firebaseErrorListener.onError(task.getException());
                         }
-
                         // ...
                     }
                 });
