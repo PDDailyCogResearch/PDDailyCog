@@ -80,10 +80,13 @@ public class FirebaseIO {
 
     private void initUserDatabaseReference() {
         if (mAuth.getCurrentUser() != null) {
-            Crashlytics.setUserIdentifier(mAuth.getUid());
-            mUserReference = database.getReference(Consts.USERS_KEY).child(mAuth.getCurrentUser().getUid());
+            String email = mAuth.getCurrentUser().getEmail();
+            String username = email.substring(0, email.indexOf("@"));
+
+            Crashlytics.setUserIdentifier(username);
+            mUserReference = database.getReference(Consts.USERS_KEY).child(username);
             mUserReference.keepSynced(true);//because persistence is enable, need to make sure the data is synced with database
-            mStorageReference = FirebaseStorage.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
+            mStorageReference = FirebaseStorage.getInstance().getReference().child(username);
         }
     }
 
