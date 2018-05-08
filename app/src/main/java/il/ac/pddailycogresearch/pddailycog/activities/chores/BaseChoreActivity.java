@@ -3,6 +3,7 @@ package il.ac.pddailycogresearch.pddailycog.activities.chores;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -216,7 +217,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     public void enableNext() {
         if (!buttonNextActivity.isEnabled()) {
             buttonNextActivity.setEnabled(true);
-            buttonNextActivity.setBackgroundColor(Color.parseColor("#4656AC"));
+            buttonNextActivity.setBackgroundColor(ContextCompat.getColor(this,R.color.colorButtons));//(Color.parseColor("#4656AC"));
         }
     }
 
@@ -224,7 +225,7 @@ public abstract class BaseChoreActivity extends AppCompatActivity implements
     public void unenableNext() {
         if (buttonNextActivity.isEnabled()) {
             buttonNextActivity.setEnabled(false);
-            buttonNextActivity.setBackgroundColor(Color.parseColor("#979797"));
+            buttonNextActivity.setBackgroundColor(ContextCompat.getColor(this,R.color.semi_gray));//Color.parseColor("#979797"));
         }
     }
     //endregion

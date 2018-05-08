@@ -6,8 +6,8 @@
     <color name="colorLogo">#A7D3FE</color>
     <color name="colorBackround">#F5F1E8</color>
     <color name="colorRadioButton">#979797</color>
-    <color name="colorButtons">#4656AC</color>
-    <color name="colorToolbar">#BBB5D1</color>
+    <color name="colorButtons">#56ACB4</color>
+    <color name="colorToolbar">#90bdc1</color>
 
     <color name="light_gray">#dbdbdb</color>
 <color name="gray">#7e7e7e</color>
@@ -38,5 +38,5 @@
 <color name="blue_grey_light">#A5B4C8</color>
 <color name="orange">#FFA500</color>
 <color name="yellow">#fff44f</color>
-    <color name="drag_item">#A5B4C8</color>
+    <color name="drag_item">#9fd8de</color>
 </resources>

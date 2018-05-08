@@ -16,21 +16,26 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:foregroundGravity="center"
-            android:background="@drawable/logo"
+            android:background="@drawable/dailycog_logo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/standard_45"
+
             />
 
-        <TextView
+      <!--  <TextView       android:layout_marginTop="@dimen/standard_105"
+            android:paddingTop="@dimen/standard_105"
+            android:visibility="gone"
             style="@style/StyleTextView"
             android:id="@+id/textViewAppname"
             android:text="@string/short_app_name"
-            android:layout_below="@id/logoImage"/>
+            android:layout_below="@id/logoImage"/>-->
 
         <TextView
+
             style="@style/StyleTextView"
             android:id="@+id/textViewWelcome"
-            android:layout_below="@id/textViewAppname"
+            android:layout_below="@id/logoImage"
             android:text="@string/welcome"
              />
 
