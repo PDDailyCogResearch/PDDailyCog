@@ -37,7 +37,7 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
     /***
      * allow checking wither this is the first receiver
      */
-    private static Long firstTimestamp =Long.MIN_VALUE;
+    private static Long firstTimestamp = Long.MIN_VALUE;
     /***
      * interval to allow saving again
      */
@@ -48,7 +48,7 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
         //act only if there is internet connection and if it is the first instance to react
         //needed because in airplane toggle happens few connectivity changes
 
-        if(isNetworkAvailable(context)&&FirebaseIO.getInstance().isUserLogged()) {
+        if (isNetworkAvailable(context) && FirebaseIO.getInstance().isUserLogged()) {
             if (firstTimestamp == Long.MIN_VALUE || System.currentTimeMillis() - firstTimestamp > TIME_INTERVAL) {
                 firstTimestamp = System.currentTimeMillis();
                 initImgKeys();
@@ -57,24 +57,28 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
                             imgkey.collection, imgkey.number, imgkey.key
                     );
                 }
+                Crashlytics.log(Log.ERROR, TAG, "firstTimestamp: " + firstTimestamp);
+                Crashlytics.log(Log.ERROR, TAG, "System.currentTimeMillis(): " + System.currentTimeMillis());
+                Crashlytics.logException(new Throwable("Receiver non-fatal: after upload"));
+            } else {
 
-                // saveChoreImageInDB(context);
-                Crashlytics.log("Receiver log");
-                Crashlytics.logException(new Throwable("Receiver non-fatal"));
+                Crashlytics.log(Log.ERROR, TAG, "firstTimestamp: " + firstTimestamp);
+                Crashlytics.log(Log.ERROR, TAG, "System.currentTimeMillis(): " + System.currentTimeMillis());
+                Crashlytics.logException(new Throwable("Receiver non-fatal: else interval logic"));
             }
-//            } else {
-            //TODO
-//                Log.d(TAG, "false receiver");
-//            }
+        } else {
+            Crashlytics.log(Log.ERROR, TAG, "isNetworkAvailable(context): " + isNetworkAvailable(context));
+            Crashlytics.logException(new Throwable("Receiver non-fatal: else connectivity"));
         }
     }
 
+
     private void initImgKeys() {
         imgKeysToSave = new ArrayList<>();
-        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 1,Consts.RESULT_KEY_PREFIX+1));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 1, Consts.RESULT_KEY_PREFIX + 1));
 
-        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+8));
-        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2,Consts.RESULT_KEY_PREFIX+11));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2, Consts.RESULT_KEY_PREFIX + 8));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2, Consts.RESULT_KEY_PREFIX + 11));
     }
 
 

@@ -2,6 +2,7 @@ package il.ac.pddailycogresearch.pddailycog.Firebase;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import il.ac.pddailycogresearch.pddailycog.BuildConfig;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
@@ -71,6 +73,7 @@ public class FirebaseIO {
         initUserDatabaseReference();
     }
 
+
     public static FirebaseIO getInstance() {
         if (sInstance == null)
             sInstance = new FirebaseIO();
@@ -87,8 +90,22 @@ public class FirebaseIO {
             mUserReference = database.getReference(Consts.USERS_KEY).child(username);
             mUserReference.keepSynced(true);//because persistence is enable, need to make sure the data is synced with database
             mStorageReference = FirebaseStorage.getInstance().getReference().child(username);
+            saveGeneralInfo();
         }
     }
+
+    private void saveGeneralInfo() {
+        if (mAuth.getCurrentUser() != null) {
+            mUserReference.child(Consts.INFO_KEY).child("sdk_int").setValue(Build.VERSION.SDK_INT);
+            mUserReference.child(Consts.INFO_KEY).child("os_release").setValue(Build.VERSION.RELEASE);
+            mUserReference.child(Consts.INFO_KEY).child("brand").setValue(Build.BRAND);
+            mUserReference.child(Consts.INFO_KEY).child("manufacturer").setValue(Build.MANUFACTURER);
+            mUserReference.child(Consts.INFO_KEY).child("model").setValue(Build.MODEL);
+            mUserReference.child(Consts.INFO_KEY).child("product").setValue(Build.PRODUCT);
+            mUserReference.child(Consts.INFO_KEY).child("version_name").setValue(BuildConfig.VERSION_NAME);
+        }
+    }
+
 
     private void initAuthListener() {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -124,8 +141,7 @@ public class FirebaseIO {
                         if (dataSnapshot.getChildren().iterator().hasNext()) {
                             DataSnapshot ds = dataSnapshot.getChildren().iterator().next();
                             listener.onValueRetrieved(Integer.valueOf(ds.getKey()));
-                        }
-                        else {
+                        } else {
                             listener.onValueRetrieved(-1);
                         }
                     }
@@ -167,8 +183,8 @@ public class FirebaseIO {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try {
                             Boolean value = false;
-                            if(dataSnapshot.exists()) {
-                                 value = dataSnapshot.getValue(Boolean.class);
+                            if (dataSnapshot.exists()) {
+                                value = dataSnapshot.getValue(Boolean.class);
                             }
                             listener.onValueRetrieved(value);
                         } catch (Exception e) {
@@ -296,7 +312,7 @@ public class FirebaseIO {
                 }
             });
         } catch (IOException e) {
-            CommonUtils.onGeneralError(e,TAG);
+            CommonUtils.onGeneralError(e, TAG);
         }
 
     }
@@ -306,7 +322,7 @@ public class FirebaseIO {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                CommonUtils.onGeneralError(exception,TAG);
+                CommonUtils.onGeneralError(exception, TAG);
                 onFirebaseSaveImageListener.onError(exception.getMessage());
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -337,7 +353,7 @@ public class FirebaseIO {
 
                                             @Override
                                             public void onError(String msg) {
-                                                Log.e(TAG, msg);
+                                                CommonUtils.onGeneralError(new Exception(msg), TAG);
                                             }
                                         });
                         }
@@ -387,7 +403,7 @@ public class FirebaseIO {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
+                        CommonUtils.onGeneralError(databaseError.toException(), TAG);
                     }
                 }
         );
