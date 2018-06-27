@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,26 +26,26 @@ public final class CommonUtils {
 
     private static final String TAG = CommonUtils.class.getSimpleName();
 
-    private CommonUtils(){
+    private CommonUtils() {
 
     }
 
-    public static Spanned fromHtml(String html){
+    public static Spanned fromHtml(String html) {
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
         } else {
             result = Html.fromHtml(html);
         }
         return result;
     }
 
-    public static void showMessage(Context context, String msg){
-        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+    public static void showMessage(Context context, String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
-    public static void showMessage(Context context,@StringRes int msgId){
-        showMessage(context,context.getResources().getString(msgId));
+    public static void showMessage(Context context, @StringRes int msgId) {
+        showMessage(context, context.getResources().getString(msgId));
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -60,23 +62,25 @@ public final class CommonUtils {
     }
 
     public static void closeApp(Activity activity) {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             activity.finishAffinity();
         else
             activity.finish();//TODO ask Tal
     }
 
     public static boolean isAirplaneMode(Context context) {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-            return Settings.System.getInt(context.getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,0)==1;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return Settings.System.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) == 1;
         } else {
-            return Settings.System.getInt(context.getContentResolver(),Settings.System.AIRPLANE_MODE_ON,0)==1;
+            return Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1;
 
         }
     }
 
-    public static void onGeneralError(Exception e, String tag){
-        Log.e(tag,e.getMessage(),e);
+    public static void onGeneralError(Exception e, String tag) {
+        Log.e(tag, e.getMessage(), e);
+        Crashlytics.log(Log.ERROR,tag,e.getMessage());
+       // Crashlytics.logException(e);
     }
 
    /* public static int[] getIdArrayFromResources(Activity activity,@ArrayRes int arrayId) {
