@@ -84,7 +84,7 @@ public class TrialChoreActivity extends BaseChoreActivity {
                         currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.now_take_photo);
                         break;
                     case 2:
-                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc).setInputTypeText(true);
                         break;
                     case 3:
                         currentFragment = DragListFragment.newInstance(position, activityChoreNum, R.string.order_numbers_instrc);
