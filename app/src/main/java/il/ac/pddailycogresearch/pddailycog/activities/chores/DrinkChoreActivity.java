@@ -46,7 +46,7 @@ public class DrinkChoreActivity extends BaseChoreActivity {
                         currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_instr);
                         break;
                     case 11:
-                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_dring_done);
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_dring_done).setEnableNext(true);
                         break;
                     case 13:
                         currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.drink_time_valuat_text_instrc)

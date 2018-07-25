@@ -30,8 +30,6 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 public class TextInputFragment extends BaseViewPagerFragment {
     private static final String TAG = TextInputFragment.class.getSimpleName();
     private static final String ARG_INSTRC_KEY = "instruction_id";
-//    private static List<Integer> MINUTES_VISIBLE_INSTRUCTIONS = Arrays.asList(R.string.drink_time_valuat_text_instrc);
-//    private static List<Integer> INPUT_TYPE_TEXT_INSTRUCTIONS = Arrays.asList(R.string.text_input_instrc);
     private boolean isMinutesVisible;
     private boolean isInputTypeText;
 

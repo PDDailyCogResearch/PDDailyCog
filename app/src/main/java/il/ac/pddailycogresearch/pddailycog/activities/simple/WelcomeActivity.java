@@ -10,6 +10,7 @@ import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.AirplaneModeRequestActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.chores.ListChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.receivers.ConnectivityChangeReceiver;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -31,5 +32,6 @@ public class WelcomeActivity extends AppCompatActivity {
     @OnClick(R.id.BtnOk)
     public void onViewClicked() {
        startActivity(new Intent(WelcomeActivity.this, AirplaneModeRequestActivity.class));
+        //startActivity(new Intent(WelcomeActivity.this, ListChoreActivity.class));
     }
 }

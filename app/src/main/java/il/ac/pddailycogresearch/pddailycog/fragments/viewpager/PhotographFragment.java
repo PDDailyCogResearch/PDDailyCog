@@ -47,7 +47,9 @@ public class PhotographFragment extends BaseViewPagerFragment {
     private static final String TAG = PhotographFragment.class.getSimpleName();
     private static final String START_CAMERA_TIME_TAG = "start_camera_time";
     private static final String START_CAMERA_STEP_TAG = "start_camera_step";
-    private static List<Integer> ENABLER_INSTRUCTIONS = Arrays.asList(R.string.dring_photo_dring_done);
+   // private static List<Integer> ENABLER_INSTRUCTIONS = Arrays.asList(R.string.dring_photo_dring_done);
+
+    private boolean isEnableNext;
 
 
     private String imgAbsolutePath;
@@ -222,7 +224,7 @@ public class PhotographFragment extends BaseViewPagerFragment {
             return true;
         }
 
-        if (ENABLER_INSTRUCTIONS.contains(instrctionTextId)) {
+        if (isEnableNext) {
             return true; //if its enabled fragment, result is not required
         }
         return false;
@@ -252,5 +254,11 @@ public class PhotographFragment extends BaseViewPagerFragment {
         unbinder.unbind();
     }
 
-
+    //TODO: refactor
+    //purpose: define how incsatnce from the activity.
+    //return value because polymorphism problems
+    public PhotographFragment setEnableNext(boolean enableNext) {
+        isEnableNext = enableNext;
+        return this;
+    }
 }

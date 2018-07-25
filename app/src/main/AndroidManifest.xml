@@ -43,6 +43,7 @@
 
         <activity android:name=".activities.chores.DrinkChoreActivity" />
         <activity android:name=".activities.DrinkInstrcActivity" />
+        <activity android:name=".activities.chores.ListChoreActivity" />
         <activity android:name=".activities.simple.TrialInstrcActivity" />
         <activity android:name=".activities.simple.OpenQuestionnaireActivity" />
         <activity android:name=".activities.simple.WelcomeActivity">

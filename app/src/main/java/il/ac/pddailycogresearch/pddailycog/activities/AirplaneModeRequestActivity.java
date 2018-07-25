@@ -131,6 +131,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
             case 2:
                 nextActivity = new Intent(AirplaneModeRequestActivity.this,
                         DrinkInstrcActivity.class);
+                //nextActivity.putExtra("")
                 break;
             default:
                // CommonUtils.showMessage(this, R.string.error_no_more_chores);

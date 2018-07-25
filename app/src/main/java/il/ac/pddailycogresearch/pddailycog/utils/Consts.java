@@ -37,4 +37,5 @@ public class Consts {
     public static final String FREE_RESULT_KEY_PREFIX = "freetext-result-";
     public static final String POSITION = "position";
     public static final String INFO_KEY = "info";
+    public static final String LIST_CHORE_ASSETS_PREFIX = "list-chore";
 }
