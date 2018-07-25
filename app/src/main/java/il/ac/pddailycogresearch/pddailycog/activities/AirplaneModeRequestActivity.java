@@ -128,14 +128,11 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 nextActivity = new Intent(AirplaneModeRequestActivity.this,
                         TrialNoticeActivity.class);
                 break;
-            case 2:
+            default:
                 nextActivity = new Intent(AirplaneModeRequestActivity.this,
                         DrinkInstrcActivity.class);
-                //nextActivity.putExtra("")
-                break;
-            default:
-               // CommonUtils.showMessage(this, R.string.error_no_more_chores);
-                nextActivity=new Intent(AirplaneModeRequestActivity.this, QuestionnaireActivity.class);
+                nextActivity.putExtra("chore_num",nextChoreNum);
+
         }
         if (nextActivity != null) {
             startActivity(nextActivity);

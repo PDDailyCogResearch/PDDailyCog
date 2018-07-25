@@ -13,6 +13,7 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.chores.DrinkChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.chores.ListChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
@@ -20,8 +21,9 @@ import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 public class DrinkInstrcActivity extends AppCompatActivity {
-    private static final int CHORE_NUM = 2;
+    //private static final int CHORE_NUM = 2;
     private static final String TAG = DrinkInstrcActivity.class.getSimpleName();
+    private int CHORE_NUM;
 
     @BindView(R.id.buttonSoundDrinkInstrcActivity)
     FloatingActionButton buttonSoundDrinkInstrcActivity;
@@ -33,6 +35,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CHORE_NUM = getIntent().getIntExtra("chore_num",2);
         setContentView(R.layout.activity_drink_instrc);
         ButterKnife.bind(this);
     }
@@ -66,7 +69,13 @@ public class DrinkInstrcActivity extends AppCompatActivity {
                             @Override
                             public void onResult(boolean result) {
                                 if (result) {
-                                    startActivity(new Intent(DrinkInstrcActivity.this, DrinkChoreActivity.class));
+                                    switch (CHORE_NUM) {//TODO refactor this class? or find another way to reuse it
+                                        case 2:
+                                        startActivity(new Intent(DrinkInstrcActivity.this, DrinkChoreActivity.class));
+                                            break;
+                                        case 3:
+                                            startActivity(new Intent(DrinkInstrcActivity.this, ListChoreActivity.class));
+                                    }
                                 }
                             }
 
