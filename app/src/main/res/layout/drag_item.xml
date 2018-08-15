@@ -18,10 +18,11 @@
     android:id="@+id/text"
     style="@style/StyleSimpleTextView"
     android:layout_width="match_parent"
-    android:layout_height="?listPreferredItemHeight"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:layout_margin="5dp"
     android:background="@color/drag_item"
     android:padding="10dp"
     android:gravity="center"
     android:textAppearance="?android:attr/textAppearanceMedium" />
+    <!--android:layout_height="?listPreferredItemHeight"-->

@@ -89,7 +89,7 @@ public class DragListFragment extends BaseViewPagerFragment {
     private void initRecyclerAdapter() {
         adapter = new RecyclerListAdapter(tasksList);
 
-        recyclerView.setHasFixedSize(true);
+       // recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
