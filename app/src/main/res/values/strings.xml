@@ -100,6 +100,7 @@
     <string name="list_second_dialog_msg">במידה וסיימת לחץ  סיימתי</string>
     <string name="list_photo_list_done">כעת צלם את הרשימה המוכנה</string>
     <string name="finish_list">סיימת את המשימה להיום. תודה רבה!</string>
+    <string name="temp_delete">trial-chore</string>
 
 
 </resources>

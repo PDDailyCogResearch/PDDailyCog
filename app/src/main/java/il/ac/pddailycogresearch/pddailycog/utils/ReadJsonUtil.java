@@ -10,7 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
 
@@ -35,6 +38,17 @@ public class ReadJsonUtil {
         String json = loadJSONFromAsset(activity, filename + ".json");
         if (json != null) {
             return gson.fromJson(json, JsonRadioButton.class);
+        }
+        return null;
+    }
+
+    public static String readInstruction(Activity activity, String filename, int position) {
+        Gson gson = new Gson();
+        String json = loadJSONFromAsset(activity, filename + ".json");
+        if(json!=null) {
+            Map<String, String> map = new HashMap<String, String>();
+            map = gson.fromJson(json,map.getClass());
+            return map.get(String.valueOf(position));
         }
         return null;
     }

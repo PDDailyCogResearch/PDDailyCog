@@ -38,4 +38,5 @@ public class Consts {
     public static final String POSITION = "position";
     public static final String INFO_KEY = "info";
     public static final String LIST_CHORE_ASSETS_PREFIX = "list-chore";
+    public static final String INSTRUCTION_FILENAME = "/instructions";
 }

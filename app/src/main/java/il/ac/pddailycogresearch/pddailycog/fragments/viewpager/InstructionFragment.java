@@ -13,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +54,8 @@ public class InstructionFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_instruction, container, false);
         unbinder = ButterKnife.bind(this, view);
-        textViewInstructionFragment.setText(instrctionTextId);
+        String instr = ReadJsonUtil.readInstruction(this.getActivity(),getString(instrctionTextId)+ Consts.INSTRUCTION_FILENAME,position);
+        textViewInstructionFragment.setText(instr);
         return view;
     }
 

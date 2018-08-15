@@ -3,6 +3,7 @@ package il.ac.pddailycogresearch.pddailycog.activities.simple;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -12,6 +13,7 @@ import il.ac.pddailycogresearch.pddailycog.activities.AirplaneModeRequestActivit
 import il.ac.pddailycogresearch.pddailycog.activities.LoginActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.chores.ListChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.receivers.ConnectivityChangeReceiver;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 public class WelcomeActivity extends AppCompatActivity {
 
