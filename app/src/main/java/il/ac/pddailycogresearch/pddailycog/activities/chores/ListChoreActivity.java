@@ -35,26 +35,26 @@ public class ListChoreActivity extends BaseChoreActivity {
                 switch (position) {
 
                     case 5:
-                        currentFragment = DragListFragment.newInstance(position, activityChoreNum, R.string.drag_list_instr);
+                        currentFragment = DragListFragment.newInstance(position, activityChoreNum);
                         break;
                     case 6:
-                        currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum, R.string.list_check_box_instrc);
+                        currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum);
                         break;
                     case 7:
-                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.list_first_text_instr);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum);
                         break;
                     case 8:
-                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.list_photo_instr);
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
                         break;
                     case 11:
-                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.list_photo_list_done).setEnableNext(true);
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum).setEnableNext(true);
                         break;
                     case 13:
-                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.drink_time_valuat_text_instrc)
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum)
                                 .setMinutesVisible(true);
                         break;
                     default:
-                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.LIST_CHORE_ASSETS_PREFIX);
+                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
 
                 }
                 return currentFragment;

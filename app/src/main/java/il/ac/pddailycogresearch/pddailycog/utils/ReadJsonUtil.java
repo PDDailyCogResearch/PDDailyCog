@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.model.JsonRadioButton;
 
 /**
@@ -49,13 +50,16 @@ public class ReadJsonUtil {
         if(json!=null) {
             Map<String, String> map = new HashMap<String, String>();
             map = gson.fromJson(json,map.getClass());
-            return map.get(String.valueOf(position));
+            String instrc = map.get(String.valueOf(position));
+            if(instrc!=null) {
+                return instrc;
+            }
         }
-        return null;
+        return activity.getString(R.string.some_error);
     }
 
     private static String loadJSONFromAsset(Activity activity, String filename) {
-        String json = null;
+        String json;
         try {
             InputStream is = activity.getAssets().open(filename);
             int size = is.available();
