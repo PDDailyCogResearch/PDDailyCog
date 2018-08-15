@@ -4,14 +4,8 @@ import android.app.Activity;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,15 +37,25 @@ public class ReadJsonUtil {
         return null;
     }
 
+
     public static String readInstruction(Activity activity, int choreNum, int position) {
-        Gson gson = new Gson();
         String filepath = Consts.ASSETS_PREFIX + choreNum + Consts.INSTRUCTION_FILENAME + ".json";
+        return readStringByKey(activity, filepath, String.valueOf(position));
+    }
+
+    public static String readDialogInstruction(Activity activity, int choreNum, String key) {
+        String filepath = Consts.ASSETS_PREFIX + choreNum + Consts.DIALOG_FILENAME + ".json";
+        return readStringByKey(activity, filepath, key);
+    }
+
+    public static String readStringByKey(Activity activity, String filepath, String key) {
+        Gson gson = new Gson();
         String json = loadJSONFromAsset(activity, filepath);
-        if(json!=null) {
+        if (json != null) {
             Map<String, String> map = new HashMap<String, String>();
-            map = gson.fromJson(json,map.getClass());
-            String instrc = map.get(String.valueOf(position));
-            if(instrc!=null) {
+            map = gson.fromJson(json, map.getClass());
+            String instrc = map.get(key);
+            if (instrc != null) {
                 return instrc;
             }
         }
@@ -68,7 +72,7 @@ public class ReadJsonUtil {
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
-            CommonUtils.onGeneralError(ex,TAG);
+            CommonUtils.onGeneralError(ex, TAG);
             return null;
         }
         return json;
