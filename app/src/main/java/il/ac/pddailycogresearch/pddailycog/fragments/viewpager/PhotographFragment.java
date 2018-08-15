@@ -32,6 +32,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListene
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -67,7 +68,6 @@ public class PhotographFragment extends BaseViewPagerFragment {
 
     Unbinder unbinder;
     private int takePicturesClickNum = 0;
-    private int instrctionTextId;
 
     private long startCameraActivityTime;
     private long startCameraActivitySteps=-1;
@@ -84,19 +84,11 @@ public class PhotographFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment RadioQuestionFragment.
      */
-    public static PhotographFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
+    public static PhotographFragment newInstance(int position, int choreNum) {
         PhotographFragment fragment = new PhotographFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
     @Override
@@ -107,7 +99,8 @@ public class PhotographFragment extends BaseViewPagerFragment {
         unbinder = ButterKnife.bind(this, view);
 
         setPictureToImageView();
-        textViewInstrcPhotographFragment.setText(instrctionTextId);
+        String instrc = ReadJsonUtil.readInstruction(getActivity(),choreNum,position);
+        textViewInstrcPhotographFragment.setText(instrc);
 
         return view;
     }

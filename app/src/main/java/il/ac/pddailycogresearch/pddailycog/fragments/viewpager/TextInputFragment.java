@@ -21,6 +21,7 @@ import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 
 /**
@@ -40,27 +41,19 @@ public class TextInputFragment extends BaseViewPagerFragment {
     @BindView(R.id.textViewMinutes)
     TextView textViewMinutes;
     Unbinder unbinder;
-    private int instrctionTextId;
     private String inputText;
 
     public TextInputFragment() {
         // Required empty public constructor
     }
 
-    public static TextInputFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
+    public static TextInputFragment newInstance(int position, int choreNum) {
         TextInputFragment fragment = new TextInputFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -72,7 +65,8 @@ public class TextInputFragment extends BaseViewPagerFragment {
             retrieveFromDb();
         }
 
-        textViewInstrc.setText(instrctionTextId);
+        String instrc = ReadJsonUtil.readInstruction(getActivity(),choreNum,position);
+        textViewInstrc.setText(instrc);
 
         initViews();
         return view;

@@ -25,26 +25,17 @@ public class InstructionFragment extends BaseViewPagerFragment {
     @BindView(R.id.textViewInstructionFragment)
     TextView textViewInstructionFragment;
     Unbinder unbinder;
-    private int instrctionTextId;
 
     public InstructionFragment() {
         // Required empty public constructor
     }
 
 
-    public static InstructionFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
+    public static InstructionFragment newInstance(int position, int choreNum) {
         InstructionFragment fragment = new InstructionFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
 
@@ -54,8 +45,8 @@ public class InstructionFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_instruction, container, false);
         unbinder = ButterKnife.bind(this, view);
-        String instr = ReadJsonUtil.readInstruction(this.getActivity(),getString(instrctionTextId)+ Consts.INSTRUCTION_FILENAME,position);
-        textViewInstructionFragment.setText(instr);
+        String instrc = ReadJsonUtil.readInstruction(getActivity(),choreNum,position);
+        textViewInstructionFragment.setText(instrc);
         return view;
     }
 

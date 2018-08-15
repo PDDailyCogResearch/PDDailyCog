@@ -42,9 +42,10 @@ public class ReadJsonUtil {
         return null;
     }
 
-    public static String readInstruction(Activity activity, String filename, int position) {
+    public static String readInstruction(Activity activity, int choreNum, int position) {
         Gson gson = new Gson();
-        String json = loadJSONFromAsset(activity, filename + ".json");
+        String filepath = Consts.ASSETS_PREFIX + choreNum + Consts.INSTRUCTION_FILENAME + ".json";
+        String json = loadJSONFromAsset(activity, filepath);
         if(json!=null) {
             Map<String, String> map = new HashMap<String, String>();
             map = gson.fromJson(json,map.getClass());
