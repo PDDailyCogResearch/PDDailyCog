@@ -39,6 +39,7 @@ public class MainChoreActivity extends BaseChoreActivity {
         choreNum = getIntent().getIntExtra(CHORE_NUM_NAME,2); //TODO replace with base's activityChoreNum
 
         super.onCreate(savedInstanceState);
+
         switch (choreNum){
             case 1:
                 choreRawPrefix = Consts.TRIAL_CHORE_RAW_PREFIX;

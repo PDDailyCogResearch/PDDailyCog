@@ -21,6 +21,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListene
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 
 public class AirplaneModeRequestActivity extends AppCompatActivity {
 
@@ -123,19 +124,23 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
     private void chooseNextActivity() {
         Intent nextActivity = null;
-        switch (nextChoreNum) {
-            case 1:
-                nextActivity = new Intent(AirplaneModeRequestActivity.this,
-                        TrialNoticeActivity.class);
-                break;
-            default:
-                nextActivity = new Intent(AirplaneModeRequestActivity.this,
-                        DrinkInstrcActivity.class);
-                nextActivity.putExtra("chore_num",nextChoreNum);
+        if (nextChoreNum>Consts.CHORES_NUM){ //exit
+            DialogUtils.createTurnOffAirplaneModeAlertDialog(AirplaneModeRequestActivity.this);
+        } else {
+            switch (nextChoreNum) {
+                case 1:
+                    nextActivity = new Intent(AirplaneModeRequestActivity.this,
+                            TrialNoticeActivity.class);
+                    break;
+                default:
+                    nextActivity = new Intent(AirplaneModeRequestActivity.this,
+                            DrinkInstrcActivity.class);
+                    nextActivity.putExtra("chore_num", nextChoreNum);
 
-        }
-        if (nextActivity != null) {
-            startActivity(nextActivity);
+            }
+            if (nextActivity != null) {
+                startActivity(nextActivity);
+            }
         }
     }
 

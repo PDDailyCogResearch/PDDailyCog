@@ -8,6 +8,7 @@ public class Consts {
 
     public static final int FIREBASE_LOGIN_STATE_NOT_AVAILBLE = 0;
     public static final int FIREBASE_LOGIN_STATE_IN = 1;
+    public static final int CHORES_NUM = 4;
     public static final String USERS_KEY = "beta/users";
     public static final String CHORES_KEY = "chores";
     public static final String LOCAL_URI_PREFIX = "content";
@@ -34,10 +35,11 @@ public class Consts {
     public static final String FREE_RESULT_KEY_PREFIX = "freetext-result-";
     public static final String POSITION = "position";
     public static final String INFO_KEY = "info";
-    public static final String LIST_CHORE_ASSETS_PREFIX = "chore-3";
+    public static final String LIST_CHORE_ASSETS_PREFIX = "chore-4";
     public static final String INSTRUCTION_FILENAME = "/instructions";
     public static final String ASSETS_PREFIX = "chore-";
     public static final String DIALOG_FILENAME = "/dialogs";
     public static final String LIST_CHORE_RAW_PREFIX = "list_chore_";
     public static final String FINISH_MSG_KEY = "finish";
+    public static final String OPENING_NAME = "opening";
 }

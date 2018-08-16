@@ -2,6 +2,7 @@ package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.RequiresPermission;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,6 +20,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListen
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 public class DrinkInstrcActivity extends AppCompatActivity {
@@ -29,8 +31,8 @@ public class DrinkInstrcActivity extends AppCompatActivity {
 
     @BindView(R.id.buttonSoundDrinkInstrcActivity)
     FloatingActionButton buttonSoundDrinkInstrcActivity;
-    @BindView(R.id.textViewHeaderDrinkInstrcActivity)
-    TextView textViewHeaderDrinkInstrcActivity;
+    @BindView(R.id.textViewInstrcDrinkInstrcActivity)
+    TextView textViewInstrcDrinkInstrcActivity;
     private int soundPressNum;
     private long currentSessionStartTime;
 
@@ -40,6 +42,10 @@ public class DrinkInstrcActivity extends AppCompatActivity {
         CHORE_NUM = getIntent().getIntExtra("chore_num",2);
         setContentView(R.layout.activity_drink_instrc);
         ButterKnife.bind(this);
+
+        String filepath = Consts.ASSETS_PREFIX + CHORE_NUM + Consts.INSTRUCTION_FILENAME + ".json";
+        String instrc = ReadJsonUtil.readStringByKey(this,filepath, Consts.OPENING_NAME);
+        textViewInstrcDrinkInstrcActivity.setText(instrc);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
 //                                            startActivity(new Intent(DrinkInstrcActivity.this, ListChoreActivity.class));
 //                                    }
                                     Intent newChore = new Intent(DrinkInstrcActivity.this, MainChoreActivity.class);
-                                    newChore.getIntExtra(CHORE_NUM_NAME,CHORE_NUM);
+                                    newChore.putExtra(CHORE_NUM_NAME,CHORE_NUM);
                                     startActivity(newChore);
 
                                 }
