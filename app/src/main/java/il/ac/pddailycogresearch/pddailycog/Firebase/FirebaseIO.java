@@ -154,8 +154,12 @@ public class FirebaseIO {
         );
     }
 
-    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
-        mUserReference.child(Consts.QUESTIONNAIRE_KEY).addListenerForSingleValueEvent(
+    public void retrieveQuestionnaire(int choreNum, final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
+        String key = Consts.QUESTIONNAIRE_KEY;
+        if(choreNum>2){ //backward compatibility = before adding more questionnaires
+            key = key+ choreNum;
+        }
+        mUserReference.child(key).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -409,8 +413,12 @@ public class FirebaseIO {
         );
     }
 
-    public void saveQuestionnaireAnswer(List<Integer> answers) {
-        mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
+    public void saveQuestionnaireAnswer(List<Integer> answers, int choreNum) {
+        String key = Consts.QUESTIONNAIRE_KEY;
+        if(choreNum>2){ //backward compatibility = before adding more questionnaires
+            key = key+ choreNum;
+        }
+        mUserReference.child(key).setValue(answers);
     }
 
 

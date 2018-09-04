@@ -103,24 +103,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         );
     }
 
-    private void chooseNextActivity6() {
-        FirebaseIO.getInstance().retrieveQuestionnaire(new IOnFirebaseQuestionnaireListener() {
-            @Override
-            public void onAnswersRetreived(List<Integer> answers) {
-                if(answers.size()>0){
-                    startActivity(new Intent(AirplaneModeRequestActivity.this, QuestionnaireActivity.class));
-                } else {
-                    //chooseNextChore();
-                }
-            }
 
-            @Override
-            public void onError(DatabaseException e) {
-                CommonUtils.onGeneralError(e,TAG);
-            }
-        });
-
-    }
 
     private void chooseNextActivity() {
         Intent nextActivity = null;

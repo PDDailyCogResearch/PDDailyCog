@@ -39,7 +39,7 @@ public class MainChoreActivity extends BaseChoreActivity {
         choreNum = getIntent().getIntExtra(CHORE_NUM_NAME,2); //TODO replace with base's activityChoreNum
 
         super.onCreate(savedInstanceState);
-
+        openQuestionnaire = true;
         switch (choreNum){
             case 1:
                 choreRawPrefix = Consts.TRIAL_CHORE_RAW_PREFIX;
@@ -47,7 +47,7 @@ public class MainChoreActivity extends BaseChoreActivity {
             case 2:
                 choreRawPrefix = Consts.DRINK_CHORE_RAW_PREFIX;
                 dialogRawPrefix = Consts.DRINK_CHORE_DIALOG_RAW_PREFIX;
-                openQuestionnaire = true;
+
                 break;
             case 3:
                 choreRawPrefix = Consts.TRAVEL_CHORE_RAW_PREFIX;
@@ -165,7 +165,9 @@ public class MainChoreActivity extends BaseChoreActivity {
                     @Override
                     public void onResult(boolean result) {
                         if(openQuestionnaire) {
-                            startActivity(new Intent(MainChoreActivity.this, OpenQuestionnaireActivity.class));
+                            Intent newChore = new Intent(MainChoreActivity.this, OpenQuestionnaireActivity.class);
+                            newChore.putExtra(CHORE_NUM_NAME,choreNum);
+                            startActivity(newChore);
                         } else {
                             startActivity(new Intent(MainChoreActivity.this, GoodByeActivity.class));
                         }
