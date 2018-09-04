@@ -50,7 +50,12 @@ public class MainChoreActivity extends BaseChoreActivity {
                 openQuestionnaire = true;
                 break;
             case 3:
+                choreRawPrefix = Consts.TRAVEL_CHORE_RAW_PREFIX;
+                dialogRawPrefix = Consts.TRAVEL_CHORE_DIALOG_RAW_PREFIX;
+                break;
+            case 4:
                 choreRawPrefix = Consts.LIST_CHORE_RAW_PREFIX;
+                dialogRawPrefix = Consts.LIST_CHORE_DIALOG_RAW_PREFIX;
                 break;
         }
     }
@@ -151,8 +156,11 @@ public class MainChoreActivity extends BaseChoreActivity {
     @Override
     protected void endActivity() {
         String msg = ReadJsonUtil.readDialogInstruction(this,choreNum,Consts.FINISH_MSG_KEY);
+        int soundId = getResources().getIdentifier(
+                dialogRawPrefix + Consts.FINISH_MSG_KEY,
+                "raw", getPackageName());
         DialogUtils.createAlertDialogWithSound(this, msg, R.string.continue_,R.string.empty_string,
-                R.raw.drink_dialog_finish,
+               soundId,
                 new IOnAlertDialogResultListener.IOnAlertDialogWithSoundResultListener() {
                     @Override
                     public void onResult(boolean result) {

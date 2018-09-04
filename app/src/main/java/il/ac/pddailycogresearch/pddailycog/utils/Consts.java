@@ -42,4 +42,10 @@ public class Consts {
     public static final String LIST_CHORE_RAW_PREFIX = "list_chore_";
     public static final String FINISH_MSG_KEY = "finish";
     public static final String OPENING_NAME = "opening";
+    public static final String TRAVEL_CHORE_RAW_PREFIX = "travel_chore_";
+    public static final String TRAVEL_CHORE_DIALOG_RAW_PREFIX = "travel_dialog_";
+    public static final String LIST_CHORE_DIALOG_RAW_PREFIX = "list_dialog_";
+    public static final String LIST_CHORE_NAME_PREFIX = "list_";
+    public static final String TRAVEL_CHORE_NAME_PREFIX = "travel_";
+    public static final String DRINK_CHORE_NAME_PREFIX = "drink_";
 }

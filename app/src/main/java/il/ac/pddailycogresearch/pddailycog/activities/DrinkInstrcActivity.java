@@ -2,7 +2,6 @@ package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.RequiresPermission;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,8 +12,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.activities.chores.DrinkChoreActivity;
-import il.ac.pddailycogresearch.pddailycog.activities.chores.ListChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.chores.MainChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
@@ -35,6 +32,7 @@ public class DrinkInstrcActivity extends AppCompatActivity {
     TextView textViewInstrcDrinkInstrcActivity;
     private int soundPressNum;
     private long currentSessionStartTime;
+    private String choreName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +44,16 @@ public class DrinkInstrcActivity extends AppCompatActivity {
         String filepath = Consts.ASSETS_PREFIX + CHORE_NUM + Consts.INSTRUCTION_FILENAME + ".json";
         String instrc = ReadJsonUtil.readStringByKey(this,filepath, Consts.OPENING_NAME);
         textViewInstrcDrinkInstrcActivity.setText(instrc);
+        switch (CHORE_NUM){
+            case 2:
+                choreName = Consts.DRINK_CHORE_NAME_PREFIX;
+            case 3:
+                choreName = Consts.TRAVEL_CHORE_NAME_PREFIX;
+                break;
+            case 4:
+                choreName = Consts.LIST_CHORE_NAME_PREFIX;
+                break;
+        }
     }
 
     @Override
@@ -59,7 +67,10 @@ public class DrinkInstrcActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.buttonSoundDrinkInstrcActivity:
                 try {
-                    SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
+                    int soundId = getResources().getIdentifier(
+                            choreName + Consts.OPENING_NAME,
+                            "raw", getPackageName());
+                    SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkInstrcActivity);
                 } catch (Exception e) {//TODO: replace with self made exception
                     CommonUtils.onGeneralError(e,TAG);
                     CommonUtils.showMessage(this,e.getMessage());
