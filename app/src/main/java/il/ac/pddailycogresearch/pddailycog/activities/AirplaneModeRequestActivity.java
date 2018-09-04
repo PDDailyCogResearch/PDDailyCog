@@ -108,7 +108,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
     private void chooseNextActivity() {
         Intent nextActivity = null;
         if (nextChoreNum>Consts.CHORES_NUM){ //exit
-            DialogUtils.createTurnOffAirplaneModeAlertDialog(AirplaneModeRequestActivity.this);
+            DialogUtils.createNoMoreChoresAlertDialog(AirplaneModeRequestActivity.this);
         } else {
             switch (nextChoreNum) {
                 case 1:

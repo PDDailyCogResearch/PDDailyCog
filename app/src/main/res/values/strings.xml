@@ -101,6 +101,8 @@
     <string name="list_photo_list_done">כעת צלם את הרשימה המוכנה</string>
     <string name="finish_list">סיימת את המשימה להיום. תודה רבה!</string>
     <string name="temp_delete">trial-chore</string>
+    <string name="notice">שים לב</string>
+    <string name="no_more_chores">אין עוד משימות לביצוע. זכור לצאת ממצב טיסה</string>
 
 
 </resources>
