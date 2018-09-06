@@ -79,6 +79,10 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
 
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2, Consts.RESULT_KEY_PREFIX + 8));
         imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 2, Consts.RESULT_KEY_PREFIX + 11));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 3, Consts.RESULT_KEY_PREFIX + 8));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 3, Consts.RESULT_KEY_PREFIX + 11));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 4, Consts.RESULT_KEY_PREFIX + 8));
+        imgKeysToSave.add(new SavingParams(Consts.CHORES_KEY, 4, Consts.RESULT_KEY_PREFIX + 11));
     }
 
 

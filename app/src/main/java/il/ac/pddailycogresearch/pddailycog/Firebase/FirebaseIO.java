@@ -485,4 +485,9 @@ public class FirebaseIO {
         mAuth.signOut();
     }
 
+    public boolean isUserStaff() {
+        if(mAuth.getCurrentUser().getEmail().charAt(0)=='s')
+            return true;
+        return false;
+    }
 }
