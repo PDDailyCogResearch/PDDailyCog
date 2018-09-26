@@ -44,6 +44,14 @@
             android:id="@+id/BtnOk"
             android:layout_below="@id/textViewWelcome"
             android:text="@string/ok" />
+        <TextView
+            android:id="@+id/TextviewPrivacyPolicy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_below="@id/BtnOk"
+            android:text="@string/privacy_policy"/>
     </RelativeLayout>
 
 

@@ -103,6 +103,7 @@
     <string name="temp_delete">trial-chore</string>
     <string name="notice">שים לב</string>
     <string name="no_more_chores">אין עוד משימות לביצוע. זכור לצאת ממצב טיסה</string>
+    <string name="privacy_policy"><a href="https://privacypolicies.com/privacy/view/651b959cd468ac68961a38879df0adf8">מדיניות פרטיות</a></string>
 
 
 </resources>
