@@ -15,6 +15,7 @@ import java.util.List;
 
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnSuccessListener;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
 public class DataSyncJobService extends JobService {

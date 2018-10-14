@@ -5,23 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 //import com.crashlytics.android.Crashlytics;
 
-import com.crashlytics.android.Crashlytics;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnSuccessListener;
-import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import com.firebase.jobdispatcher.Trigger;
 
 public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if too much for users to call this every time...
     private static final String TAG = ConnectivityChangeReceiver.class.getSimpleName();
@@ -103,7 +94,7 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!isNetworkAvailable(context)) {
-            dispatcherSchdelue(context);
+            dispatcherSchedule(context);
         }
     }
 
@@ -114,12 +105,13 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void dispatcherSchdelue(Context context) {
+    private void dispatcherSchedule(Context context) {
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
 
         Job myJob = dispatcher.newJobBuilder()
                 .setService(DataSyncJobService.class) // the JobService that will be called
                 .setTag(DataSyncJobService.class.getSimpleName())
+                .setTrigger(Trigger.NOW)
                 .setConstraints(
                         Constraint.ON_ANY_NETWORK
                 )
