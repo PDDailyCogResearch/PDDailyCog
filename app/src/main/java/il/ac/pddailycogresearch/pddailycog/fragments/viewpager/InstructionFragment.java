@@ -13,8 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.utils.Consts;
-import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,17 +23,26 @@ public class InstructionFragment extends BaseViewPagerFragment {
     @BindView(R.id.textViewInstructionFragment)
     TextView textViewInstructionFragment;
     Unbinder unbinder;
+    private int instrctionTextId;
 
     public InstructionFragment() {
         // Required empty public constructor
     }
 
 
-    public static InstructionFragment newInstance(int position, int choreNum) {
+    public static InstructionFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         InstructionFragment fragment = new InstructionFragment();
         Bundle args = new Bundle();
+        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
 
@@ -45,8 +52,7 @@ public class InstructionFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_instruction, container, false);
         unbinder = ButterKnife.bind(this, view);
-        String instrc = ReadJsonUtil.readInstruction(getActivity(),choreNum,position);
-        textViewInstructionFragment.setText(instrc);
+        textViewInstructionFragment.setText(instrctionTextId);
         return view;
     }
 

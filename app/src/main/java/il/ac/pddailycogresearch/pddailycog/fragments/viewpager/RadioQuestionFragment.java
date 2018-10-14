@@ -67,9 +67,10 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment RadioQuestionFragment.
      */
-    public static RadioQuestionFragment newInstance(int position, int choreNum) {
+    public static RadioQuestionFragment newInstance(int position, int choreNum, String assetFolder) {
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_ASSET_FOLDER_KEY, assetFolder);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
@@ -78,7 +79,7 @@ public class RadioQuestionFragment extends BaseViewPagerFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        assetsFolder = Consts.ASSETS_PREFIX + choreNum;
+        assetsFolder = getArguments().getString(ARG_ASSET_FOLDER_KEY);
     }
 
     @Override

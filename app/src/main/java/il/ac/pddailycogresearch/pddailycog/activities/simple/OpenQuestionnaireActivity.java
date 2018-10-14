@@ -11,8 +11,6 @@ import il.ac.pddailycogresearch.pddailycog.activities.QuestionnaireActivity;
 
 public class OpenQuestionnaireActivity extends AppCompatActivity {
 
-    private static final String CHORE_NUM_NAME = "chore-num";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +20,7 @@ public class OpenQuestionnaireActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonGoodByeOK)
     public void onViewClicked() {
-        Intent newChore = new Intent(this, QuestionnaireActivity.class);
-        newChore.putExtra(CHORE_NUM_NAME,getIntent().getIntExtra(CHORE_NUM_NAME,2));
-        startActivity(newChore);
+        startActivity(new Intent(this, QuestionnaireActivity.class));
     }
 
     @Override

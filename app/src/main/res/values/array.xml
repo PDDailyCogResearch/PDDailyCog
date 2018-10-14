@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--   <array name="answers_id">
-           <item>@array/answers_1</item>
-           <item>@array/answers_2</item>
-           <item>@array/answers_3</item>
-           <item>@array/answers_4</item>
-           <item>@array/answers_5</item>
-           <item>@array/answers_6</item>
-       </array>-->
+ <!--   <array name="answers_id">
+        <item>@array/answers_1</item>
+        <item>@array/answers_2</item>
+        <item>@array/answers_3</item>
+        <item>@array/answers_4</item>
+        <item>@array/answers_5</item>
+        <item>@array/answers_6</item>
+    </array>-->
     <string-array name="drag_tasks_chore_1">
         <item>1</item>
         <item>2</item>
@@ -26,26 +26,6 @@
         <item>ערבוב </item>
         <item>הוספת חלב/נענע/כלום</item>
     </string-array>
-    <string-array name="drag_tasks_chore_4">
-        <item>לבדוק האם יש לי כבר רשימה</item>
-        <item>לפתוח את המקרר </item>
-        <item>לבדוק האם יש/צריך חלב </item>
-        <item>לבדוק האם יש/צריך גבינות </item>
-        <item>לבדוק האם יש/צריך ביצים </item>
-        <item>לבדוק האם יש/צריך ירקות </item>
-        <item>לבדוק האם יש/צריך פירות </item>
-    </string-array>
-
-    <string-array name="drag_tasks_chore_3">
-        <item>הוצאת תיק</item>
-        <item>הוצאת בגדים מהארון </item>
-        <item>הוצאת כלי רחצה מהאמבטיה והכנסתם לתיק רחצה </item>
-        <item>פיג\'מה </item>
-        <item>הכנת תרופות </item>
-        <item>הכנת אביזרים נוספים (ספר, מטען וכו\') </item>
-        <item>הכנסת כל הפריטים לתיק </item>
-    </string-array>
-
 
     <string-array name="rating_answers">
         <item>מצוין</item>

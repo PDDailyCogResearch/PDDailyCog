@@ -24,6 +24,11 @@ public class DrinkChoreActivity extends BaseChoreActivity {
     private static final int CHORE_NUM = 2;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected BaseViewPagerAdapter createViewPagerAdapter() {
         return  new BaseViewPagerAdapter(getSupportFragmentManager(), CHORE_NUM) {
 
@@ -34,26 +39,25 @@ public class DrinkChoreActivity extends BaseChoreActivity {
                 switch (position) {
 
                     case 5:
-                        currentFragment = DragListFragment.newInstance(position, activityChoreNum);
+                        currentFragment = DragListFragment.newInstance(position, activityChoreNum,R.string.drag_drink_instr);
                         break;
                     case 6:
-                        currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum);
+                        currentFragment = CheckBoxFragment.newInstance(position, activityChoreNum, R.string.drink_check_box_instrc);
                         break;
                     case 7:
-                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.drink_first_text_instr);
                         break;
                     case 8:
-                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_instr);
                         break;
                     case 11:
-                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum).setEnableNext(true);
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.dring_photo_dring_done);
                         break;
                     case 13:
-                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum)
-                                .setMinutesVisible(true);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.drink_time_valuat_text_instrc);
                         break;
                     default:
-                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
+                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.DRINK_CHORE_ASSETS_PREFIX);
 
                 }
                 return currentFragment;

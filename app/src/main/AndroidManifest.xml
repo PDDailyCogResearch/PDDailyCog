@@ -40,18 +40,9 @@
                 <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
             <!--</intent-filter>-->
         </receiver>
-        <service
-            android:exported="false"
-            android:name=".receivers.DataSyncJobService">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
 
         <activity android:name=".activities.chores.DrinkChoreActivity" />
         <activity android:name=".activities.DrinkInstrcActivity" />
-        <activity android:name=".activities.chores.ListChoreActivity" />
-        <activity android:name=".activities.chores.MainChoreActivity" />
         <activity android:name=".activities.simple.TrialInstrcActivity" />
         <activity android:name=".activities.simple.OpenQuestionnaireActivity" />
         <activity android:name=".activities.simple.WelcomeActivity">

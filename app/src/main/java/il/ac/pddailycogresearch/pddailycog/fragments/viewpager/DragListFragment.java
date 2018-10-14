@@ -26,7 +26,6 @@ import il.ac.pddailycogresearch.pddailycog.adapters.draghelpers.SimpleItemTouchH
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
-import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +36,7 @@ public class DragListFragment extends BaseViewPagerFragment {
 
 
     private static final String TAG = DragListFragment.class.getSimpleName();
+    private static final String ARG_INSTRC_KEY = "instrction_id";
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     Unbinder unbinder;
@@ -44,6 +44,7 @@ public class DragListFragment extends BaseViewPagerFragment {
     TextView textViewDragFragment;
     private RecyclerListAdapter adapter;
     private List<String> tasksList;
+    private int instrctionTextId;
 
     public DragListFragment() {
         // Required empty public constructor
@@ -57,11 +58,19 @@ public class DragListFragment extends BaseViewPagerFragment {
      * @param choreNum Parameter 2.
      * @return A new instance of fragment DragListFragment.
      */
-    public static DragListFragment newInstance(int position, int choreNum) {
+    public static DragListFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
         DragListFragment fragment = new DragListFragment();
         Bundle args = new Bundle();
+        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
     }
 
     @Override
@@ -70,8 +79,7 @@ public class DragListFragment extends BaseViewPagerFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_drag_list, container, false);
         unbinder = ButterKnife.bind(this, view);
-        String instrc = ReadJsonUtil.readInstruction(getActivity(),choreNum,position);
-        textViewDragFragment.setText(instrc);
+        textViewDragFragment.setText(instrctionTextId);
         return view;
     }
 
@@ -89,7 +97,7 @@ public class DragListFragment extends BaseViewPagerFragment {
     private void initRecyclerAdapter() {
         adapter = new RecyclerListAdapter(tasksList);
 
-       // recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));

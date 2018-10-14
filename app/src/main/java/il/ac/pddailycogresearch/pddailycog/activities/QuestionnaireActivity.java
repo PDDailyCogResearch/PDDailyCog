@@ -29,7 +29,6 @@ import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
-    private static final String CHORE_NUM_NAME = "chore-num";
     public static String TAG = QuestionnaireActivity.class.getSimpleName();
 
     @BindView(R.id.textViewQuestionnaireQuest)
@@ -47,7 +46,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private Integer[] answers;
 
     private View.OnClickListener radioButtonsListener;
-    private int choreNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questionnaire);
         ButterKnife.bind(this);
         init();
-        firebaseIO.retrieveQuestionnaire(choreNum, new IOnFirebaseQuestionnaireListener() {
+        firebaseIO.retrieveQuestionnaire(new IOnFirebaseQuestionnaireListener() {
             @Override
             public void onAnswersRetreived(List<Integer> prevAnswers) {
                 if (prevAnswers.size() > 0)
@@ -79,7 +77,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private void init() {
 
      //   answers_ids = CommonUtils.getIdArrayFromResources(this,R.array.answers_id);
-        choreNum = getIntent().getIntExtra(CHORE_NUM_NAME,2); //TODO replace with base's activityChoreNum
         questions = getResources().getStringArray(R.array.questions);
         radioButtonsListener = new View.OnClickListener() {
             @Override
@@ -136,7 +133,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     }
 
     private void saveAnswer() {
-        firebaseIO.saveQuestionnaireAnswer(Arrays.asList(answers), choreNum);
+        firebaseIO.saveQuestionnaireAnswer(Arrays.asList(answers));
         // firebaseIO.saveQuestionnaireAnswer(questionIdx + 1, answers[questionIdx] + 1);
     }
 

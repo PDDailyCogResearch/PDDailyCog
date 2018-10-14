@@ -78,19 +78,19 @@ public class TrialChoreActivity extends BaseChoreActivity {
 
                 switch (position) {
                     case 0:
-                        currentFragment = InstructionFragment.newInstance(position, activityChoreNum);
+                        currentFragment = InstructionFragment.newInstance(position, activityChoreNum, R.string.trail_chore_instruction);
                         break;
                     case 1:
-                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum);
+                        currentFragment = PhotographFragment.newInstance(position, activityChoreNum, R.string.now_take_photo);
                         break;
                     case 2:
-                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum).setInputTypeText(true);
+                        currentFragment = TextInputFragment.newInstance(position, activityChoreNum, R.string.text_input_instrc);
                         break;
                     case 3:
-                        currentFragment = DragListFragment.newInstance(position, activityChoreNum);
+                        currentFragment = DragListFragment.newInstance(position, activityChoreNum, R.string.order_numbers_instrc);
                         break;
                     case 4:
-                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum);
+                        currentFragment = RadioQuestionFragment.newInstance(position, activityChoreNum, Consts.TRIAL_CHORE_ASSETS_PREFIX);
                         break;
                     default:
                         currentFragment = null;
