@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -58,7 +59,23 @@ public final class CommonUtils {
     }
 
     public static String getTimeStamp() {
+
         return new SimpleDateFormat(Consts.TIMESTAMP_FORMAT, Locale.US).format(new Date());
+    }
+
+    public static Date imageNameToDate(String imageName) {
+        int tsStart = imageName.indexOf("JPEG") + 5;
+        int tsEnd = tsStart + Consts.TIMESTAMP_FORMAT.length();
+        String ts = imageName.substring(tsStart, tsEnd);
+        DateFormat format = new SimpleDateFormat(Consts.TIMESTAMP_FORMAT, Locale.US);
+        try {
+            Date date = format.parse(ts);
+            System.out.println("date :" + date);
+            return date;
+        } catch (Exception e) {
+            onGeneralError(e, TAG);
+        }
+        return null;
     }
 
     public static void closeApp(Activity activity) {
@@ -79,8 +96,8 @@ public final class CommonUtils {
 
     public static void onGeneralError(Exception e, String tag) {
         Log.e(tag, e.getMessage(), e);
-        Crashlytics.log(Log.ERROR,tag,e.getMessage());
-       // Crashlytics.logException(e);
+        Crashlytics.log(Log.ERROR, tag, e.getMessage());
+        // Crashlytics.logException(e);
     }
 
    /* public static int[] getIdArrayFromResources(Activity activity,@ArrayRes int arrayId) {

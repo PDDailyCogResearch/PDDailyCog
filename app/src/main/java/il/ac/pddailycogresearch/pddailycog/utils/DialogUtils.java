@@ -207,6 +207,20 @@ public class DialogUtils {
                 });
     }
 
+    public static void createNoMoreChoresAlertDialog(final Activity activity) {
+        createAlertDialog(activity, R.string.notice, R.string.no_more_chores,
+                R.string.open_settings, R.string.exit,
+                new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {
+                    @Override
+                    public void onResult(boolean result) {
+                        if (result) {
+                            activity.startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
+                        }
+                        CommonUtils.closeApp(activity);
+                    }
+                });
+    }
+
     public static void createTurnOnAirPlaneModeDialog(final Activity activity) {
         createAlertDialog(activity, R.string.reminder, R.string.airplane_mode_request, android.R.string.ok,
                 new IOnAlertDialogResultListener.IOnAlertDialogBooleanResultListener() {

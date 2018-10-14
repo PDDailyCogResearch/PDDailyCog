@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.google.firebase.database.DatabaseException;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -21,6 +22,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListene
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 
 public class AirplaneModeRequestActivity extends AppCompatActivity {
 
@@ -54,7 +56,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                     retreiveNextChoreNum();
                 else
                     CommonUtils.showMessage(this, R.string.error_not_in_airplane_mode);
-               // startActivity(new Intent(this, DrinkChoreActivity.class));
+                // startActivity(new Intent(this, DrinkChoreActivity.class));
                 break;
             case R.id.logout:
                 FirebaseIO.getInstance().logout();
@@ -80,9 +82,10 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                                         @Override
                                         public void onValueRetrieved(Boolean value) {
                                             if (value) {
-                                                nextChoreNum++;
+                                                continueIfTimeArrived();
+                                            } else {
+                                                chooseNextActivity();
                                             }
-                                            chooseNextActivity();
                                         }
 
                                         @Override
@@ -102,42 +105,48 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         );
     }
 
-    private void chooseNextActivity6() {
-        FirebaseIO.getInstance().retrieveQuestionnaire(new IOnFirebaseQuestionnaireListener() {
-            @Override
-            public void onAnswersRetreived(List<Integer> answers) {
-                if(answers.size()>0){
-                    startActivity(new Intent(AirplaneModeRequestActivity.this, QuestionnaireActivity.class));
-                } else {
-                    //chooseNextChore();
+    private void continueIfTimeArrived() {
+        FirebaseIO.getInstance().retreieveStringValueByKey(Consts.CHORES_KEY, nextChoreNum, Consts.ABSOLUTE_PATH_KEY + 8,//TODO find not hardcoded way
+                new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+
+                    @Override
+                    public void onValueRetrieved(String value) {
+                        if (FirebaseIO.getInstance().isUserStaff()||(new Date()).getTime() - CommonUtils.imageNameToDate(value).getTime()>Consts.MINIMUM_TIME_GAP_BETWEEN_CHORES) {
+                            nextChoreNum++;
+                            chooseNextActivity();
+                        } else {
+                            DialogUtils.createNoMoreChoresAlertDialog(AirplaneModeRequestActivity.this);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        CommonUtils.onGeneralError(e,TAG);
+                    }
                 }
-            }
-
-            @Override
-            public void onError(DatabaseException e) {
-                CommonUtils.onGeneralError(e,TAG);
-            }
-        });
-
+        );
     }
+
 
     private void chooseNextActivity() {
         Intent nextActivity = null;
-        switch (nextChoreNum) {
-            case 1:
-                nextActivity = new Intent(AirplaneModeRequestActivity.this,
-                        TrialNoticeActivity.class);
-                break;
-            case 2:
-                nextActivity = new Intent(AirplaneModeRequestActivity.this,
-                        DrinkInstrcActivity.class);
-                break;
-            default:
-               // CommonUtils.showMessage(this, R.string.error_no_more_chores);
-                nextActivity=new Intent(AirplaneModeRequestActivity.this, QuestionnaireActivity.class);
-        }
-        if (nextActivity != null) {
-            startActivity(nextActivity);
+        if (nextChoreNum > Consts.CHORES_NUM) { //exit
+            DialogUtils.createNoMoreChoresAlertDialog(AirplaneModeRequestActivity.this);
+        } else {
+            switch (nextChoreNum) {
+                case 1:
+                    nextActivity = new Intent(AirplaneModeRequestActivity.this,
+                            TrialNoticeActivity.class);
+                    break;
+                default:
+                    nextActivity = new Intent(AirplaneModeRequestActivity.this,
+                            DrinkInstrcActivity.class);
+                    nextActivity.putExtra("chore_num", nextChoreNum);
+
+            }
+            if (nextActivity != null) {
+                startActivity(nextActivity);
+            }
         }
     }
 

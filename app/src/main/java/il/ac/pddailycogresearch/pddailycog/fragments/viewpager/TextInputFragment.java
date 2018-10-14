@@ -21,6 +21,7 @@ import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 
 
 /**
@@ -30,8 +31,8 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 public class TextInputFragment extends BaseViewPagerFragment {
     private static final String TAG = TextInputFragment.class.getSimpleName();
     private static final String ARG_INSTRC_KEY = "instruction_id";
-    private static List<Integer> MINUTES_VISIBLE_INSTRUCTIONS = Arrays.asList(R.string.drink_time_valuat_text_instrc);
-    private static List<Integer> INPUT_TYPE_TEXT_INSTRUCTIONS = Arrays.asList(R.string.text_input_instrc);
+    private boolean isMinutesVisible;
+    private boolean isInputTypeText;
 
     @BindView(R.id.EditTextInputFragment)
     EditText editTextInputFragment;
@@ -40,27 +41,19 @@ public class TextInputFragment extends BaseViewPagerFragment {
     @BindView(R.id.textViewMinutes)
     TextView textViewMinutes;
     Unbinder unbinder;
-    private int instrctionTextId;
     private String inputText;
 
     public TextInputFragment() {
         // Required empty public constructor
     }
 
-    public static TextInputFragment newInstance(int position, int choreNum, @StringRes int instrcId) {
+    public static TextInputFragment newInstance(int position, int choreNum) {
         TextInputFragment fragment = new TextInputFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_INSTRC_KEY, instrcId);
         fragment.setArguments(putBaseArguments(args, position, choreNum));
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        instrctionTextId = getArguments().getInt(ARG_INSTRC_KEY);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -72,19 +65,20 @@ public class TextInputFragment extends BaseViewPagerFragment {
             retrieveFromDb();
         }
 
-        textViewInstrc.setText(instrctionTextId);
+        String instrc = ReadJsonUtil.readInstruction(getActivity(),choreNum,position);
+        textViewInstrc.setText(instrc);
 
         initViews();
         return view;
     }
 
     private void initViews() {
-        if (MINUTES_VISIBLE_INSTRUCTIONS.contains(instrctionTextId)) {
+        if (isMinutesVisible) {
             textViewMinutes.setVisibility(View.VISIBLE);
         } else {
             textViewMinutes.setVisibility(View.INVISIBLE);
         }
-        if (INPUT_TYPE_TEXT_INSTRUCTIONS.contains(instrctionTextId)) {
+        if (isInputTypeText) {
             editTextInputFragment.setInputType(InputType.TYPE_CLASS_TEXT);
         } else {
             editTextInputFragment.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -141,5 +135,15 @@ public class TextInputFragment extends BaseViewPagerFragment {
     @Override
     protected void saveToDb() {
         firebaseIO.saveKeyValuePair(Consts.CHORES_KEY, choreNum, Consts.RESULT_KEY_PREFIX + position, editTextInputFragment.getText().toString());
+    }
+
+    public TextInputFragment setMinutesVisible(boolean minutesVisible) {
+        isMinutesVisible = minutesVisible;
+        return this;
+    }
+
+    public TextInputFragment setInputTypeText(boolean inputTypeText) {
+        isInputTypeText = inputTypeText;
+        return this;
     }
 }

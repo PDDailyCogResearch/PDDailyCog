@@ -92,5 +92,18 @@
     <string name="finish_drink">סיימת את המשימה להיום. שתייה נעימה! \n המשך לשאלות במסך הבא</string>
     <string name="sound_error">אירעה שגיאה בעת ההשמעה</string>
 
+    <string name="list_first_dialog_msg">כעת תתבקש להכין רשימת קניות של כ-10 פריטים. יש לפעול על פי ההוראות</string>
+    <string name="drag_list_instr">מהו סדר הפעולות שעליך לבצע על מנת להכין לעצמך רשימת קניות של מוצרים הדורשים קירור?</string>
+    <string name="list_check_box_instrc">בבקשה הוצא דף או פנקס, לחץ בוצע לאחר הוצאתו</string>
+    <string name="list_first_text_instr">כעת רשום על הדף רשימה של לפחות 4 מוצרים שנשמרים בדרך כלל במקרר שאתה צריך לקנות. כמה פריטים רשמת?</string>
+    <string name="list_photo_instr">כעת צלם את הרשימה שהכנת</string>
+    <string name="list_second_dialog_msg">במידה וסיימת לחץ  סיימתי</string>
+    <string name="list_photo_list_done">כעת צלם את הרשימה המוכנה</string>
+    <string name="finish_list">סיימת את המשימה להיום. תודה רבה!</string>
+    <string name="temp_delete">trial-chore</string>
+    <string name="notice">שים לב</string>
+    <string name="no_more_chores">אין עוד משימות לביצוע. זכור לצאת ממצב טיסה</string>
+    <string name="privacy_policy"><a href="https://privacypolicies.com/privacy/view/651b959cd468ac68961a38879df0adf8">מדיניות פרטיות</a></string>
+
 
 </resources>

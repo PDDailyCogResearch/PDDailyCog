@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +35,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnSuccessListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
@@ -154,8 +153,12 @@ public class FirebaseIO {
         );
     }
 
-    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
-        mUserReference.child(Consts.QUESTIONNAIRE_KEY).addListenerForSingleValueEvent(
+    public void retrieveQuestionnaire(int choreNum, final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
+        String key = Consts.QUESTIONNAIRE_KEY;
+        if(choreNum>2){ //backward compatibility = before adding more questionnaires
+            key = key+ choreNum;
+        }
+        mUserReference.child(key).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -335,7 +338,7 @@ public class FirebaseIO {
         });
     }
 
-    public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey) {
+    public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey, final IOnSuccessListener iOnSuccessListener) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(imageDbKey).addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -343,25 +346,42 @@ public class FirebaseIO {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             String path = dataSnapshot.getValue(String.class);
-                            if (path != null && path.split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
+                            if (path != null && path.split(":")[0].equals(Consts.LOCAL_URI_PREFIX)) {
                                 saveImage(Uri.parse(path),
                                         new IOnFirebaseSaveImageListener() {
                                             @Override
                                             public void onImageSaved(Uri downloadUrl) {
                                                 saveKeyValuePair(collection, choreNum, imageDbKey, downloadUrl.toString());
+                                                mUserReference.child(collection).child(String.valueOf(choreNum))
+                                                        .child(imageDbKey).setValue(downloadUrl.toString(),
+                                                        new DatabaseReference.CompletionListener() {
+                                                            @Override
+                                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                                if (databaseError != null) {
+                                                                    iOnSuccessListener.onSuccess();
+                                                                }
+                                                            }
+                                                        }
+                                                );
                                             }
 
                                             @Override
                                             public void onError(String msg) {
-                                                CommonUtils.onGeneralError(new Exception(msg), TAG);
+                                                Exception exception = new Exception(msg);
+                                                CommonUtils.onGeneralError(exception, TAG);
                                             }
                                         });
+                            } else {
+                                iOnSuccessListener.onSuccess(); //no need to save considers "success"
+                            }
+                        } else {
+                            iOnSuccessListener.onSuccess(); //no need to save considers "success"
                         }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
                     }
                 }
         );
@@ -409,8 +429,12 @@ public class FirebaseIO {
         );
     }
 
-    public void saveQuestionnaireAnswer(List<Integer> answers) {
-        mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
+    public void saveQuestionnaireAnswer(List<Integer> answers, int choreNum) {
+        String key = Consts.QUESTIONNAIRE_KEY;
+        if(choreNum>2){ //backward compatibility = before adding more questionnaires
+            key = key+ choreNum;
+        }
+        mUserReference.child(key).setValue(answers);
     }
 
 
@@ -477,4 +501,9 @@ public class FirebaseIO {
         mAuth.signOut();
     }
 
+    public boolean isUserStaff() {
+        if(mAuth.getCurrentUser().getEmail().charAt(0)=='s')
+            return true;
+        return false;
+    }
 }

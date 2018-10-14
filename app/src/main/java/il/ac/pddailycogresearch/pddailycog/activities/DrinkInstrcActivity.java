@@ -12,29 +12,48 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.activities.chores.DrinkChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.chores.MainChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.ReadJsonUtil;
 import il.ac.pddailycogresearch.pddailycog.utils.SoundManager;
 
 public class DrinkInstrcActivity extends AppCompatActivity {
-    private static final int CHORE_NUM = 2;
+    //private static final int CHORE_NUM = 2;
     private static final String TAG = DrinkInstrcActivity.class.getSimpleName();
+    private int CHORE_NUM;
+    private static final String CHORE_NUM_NAME = "chore-num";
 
     @BindView(R.id.buttonSoundDrinkInstrcActivity)
     FloatingActionButton buttonSoundDrinkInstrcActivity;
-    @BindView(R.id.textViewHeaderDrinkInstrcActivity)
-    TextView textViewHeaderDrinkInstrcActivity;
+    @BindView(R.id.textViewInstrcDrinkInstrcActivity)
+    TextView textViewInstrcDrinkInstrcActivity;
     private int soundPressNum;
     private long currentSessionStartTime;
+    private String choreName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CHORE_NUM = getIntent().getIntExtra("chore_num",2);
         setContentView(R.layout.activity_drink_instrc);
         ButterKnife.bind(this);
+
+        String filepath = Consts.ASSETS_PREFIX + CHORE_NUM + Consts.INSTRUCTION_FILENAME + ".json";
+        String instrc = ReadJsonUtil.readStringByKey(this,filepath, Consts.OPENING_NAME);
+        textViewInstrcDrinkInstrcActivity.setText(instrc);
+        switch (CHORE_NUM){
+            case 2:
+                choreName = Consts.DRINK_CHORE_NAME_PREFIX;
+            case 3:
+                choreName = Consts.TRAVEL_CHORE_NAME_PREFIX;
+                break;
+            case 4:
+                choreName = Consts.LIST_CHORE_NAME_PREFIX;
+                break;
+        }
     }
 
     @Override
@@ -48,7 +67,10 @@ public class DrinkInstrcActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.buttonSoundDrinkInstrcActivity:
                 try {
-                    SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), R.raw.drink_instrc, buttonSoundDrinkInstrcActivity);
+                    int soundId = getResources().getIdentifier(
+                            choreName + Consts.OPENING_NAME,
+                            "raw", getPackageName());
+                    SoundManager.getInstance().toggleMediaPlayer(getApplicationContext(), soundId, buttonSoundDrinkInstrcActivity);
                 } catch (Exception e) {//TODO: replace with self made exception
                     CommonUtils.onGeneralError(e,TAG);
                     CommonUtils.showMessage(this,e.getMessage());
@@ -66,7 +88,17 @@ public class DrinkInstrcActivity extends AppCompatActivity {
                             @Override
                             public void onResult(boolean result) {
                                 if (result) {
-                                    startActivity(new Intent(DrinkInstrcActivity.this, DrinkChoreActivity.class));
+//                                    switch (CHORE_NUM) {//TODO refactor this class? or find another way to reuse it
+//                                        case 2:
+//                                        startActivity(new Intent(DrinkInstrcActivity.this, DrinkChoreActivity.class));
+//                                            break;
+//                                        case 3:
+//                                            startActivity(new Intent(DrinkInstrcActivity.this, ListChoreActivity.class));
+//                                    }
+                                    Intent newChore = new Intent(DrinkInstrcActivity.this, MainChoreActivity.class);
+                                    newChore.putExtra(CHORE_NUM_NAME,CHORE_NUM);
+                                    startActivity(newChore);
+
                                 }
                             }
 
