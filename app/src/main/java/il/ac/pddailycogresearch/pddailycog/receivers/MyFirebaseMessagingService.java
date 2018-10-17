@@ -1,4 +1,3 @@
-/*
 package il.ac.pddailycogresearch.pddailycog.receivers;
 
 import android.content.Intent;
@@ -23,7 +22,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String token) {
-        FirebaseIO.getInstance().saveMessagingToken(token);
+        if (FirebaseIO.getInstance().isUserLogged())
+            FirebaseIO.getInstance().saveMessagingToken(token);
     }
 }
-*/
