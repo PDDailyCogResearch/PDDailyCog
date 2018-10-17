@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -155,8 +156,8 @@ public class FirebaseIO {
 
     public void retrieveQuestionnaire(int choreNum, final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener) {
         String key = Consts.QUESTIONNAIRE_KEY;
-        if(choreNum>2){ //backward compatibility = before adding more questionnaires
-            key = key+ choreNum;
+        if (choreNum > 2) { //backward compatibility = before adding more questionnaires
+            key = key + choreNum;
         }
         mUserReference.child(key).addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -320,21 +321,31 @@ public class FirebaseIO {
 
     }
 
-    public void saveImage(Uri imageUri, final IOnFirebaseSaveImageListener onFirebaseSaveImageListener) {
-        UploadTask uploadTask = mStorageReference.child(imageUri.getLastPathSegment()).putFile(imageUri);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+    public void saveImage(final Uri imageUri, final IOnFirebaseSaveImageListener onFirebaseSaveImageListener) {
+        final StorageReference imgRef = mStorageReference.child(imageUri.getLastPathSegment());
+        UploadTask uploadTask = imgRef.putFile(imageUri);
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                CommonUtils.onGeneralError(exception, TAG);
-                onFirebaseSaveImageListener.onError(exception.getMessage());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
 
-                onFirebaseSaveImageListener.onImageSaved(downloadUrl);
+                return imgRef.getDownloadUrl();
             }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        CommonUtils.onGeneralError(exception, TAG);
+                        onFirebaseSaveImageListener.onError(exception.getMessage());
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                onFirebaseSaveImageListener.onImageSaved(uri);
+            }
+
         });
     }
 
@@ -381,7 +392,7 @@ public class FirebaseIO {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        CommonUtils.onGeneralError(databaseError.toException(),TAG);
+                        CommonUtils.onGeneralError(databaseError.toException(), TAG);
                     }
                 }
         );
@@ -431,8 +442,8 @@ public class FirebaseIO {
 
     public void saveQuestionnaireAnswer(List<Integer> answers, int choreNum) {
         String key = Consts.QUESTIONNAIRE_KEY;
-        if(choreNum>2){ //backward compatibility = before adding more questionnaires
-            key = key+ choreNum;
+        if (choreNum > 2) { //backward compatibility = before adding more questionnaires
+            key = key + choreNum;
         }
         mUserReference.child(key).setValue(answers);
     }
@@ -502,8 +513,12 @@ public class FirebaseIO {
     }
 
     public boolean isUserStaff() {
-        if(mAuth.getCurrentUser().getEmail().charAt(0)=='s')
+        if (mAuth.getCurrentUser().getEmail().charAt(0) == 's')
             return true;
         return false;
+    }
+
+    public void saveMessagingToken(String token) {
+        mUserReference.child(Consts.INFO_KEY).child(Consts.MESSAGING_TOKEN_KEY).setValue(token);
     }
 }

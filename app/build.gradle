@@ -9,8 +9,8 @@ android {
         applicationId "il.ac.pddailycogresearch.pddailycog"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 11
-        versionName "1.0.10"
+        versionCode 12
+        versionName "1.0.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -39,11 +39,13 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    compile 'com.google.firebase:firebase-core:11.8.0'
-    compile "com.google.firebase:firebase-auth:11.8.0"
-    compile "com.google.firebase:firebase-database:11.8.0"
-    compile "com.google.firebase:firebase-storage:11.8.0"
+    //11.8.0
+    compile 'com.google.firebase:firebase-core:16.0.4'
+    compile "com.google.firebase:firebase-auth:16.0.4"
+    compile "com.google.firebase:firebase-database:16.0.3"
+    compile "com.google.firebase:firebase-storage:16.0.3"
     compile 'com.firebase:firebase-jobdispatcher:0.8.5'
+    compile 'com.google.firebase:firebase-messaging:17.3.3'
 
 
     // code generator for view
