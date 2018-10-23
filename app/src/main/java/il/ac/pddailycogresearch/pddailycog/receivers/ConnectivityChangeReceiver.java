@@ -14,6 +14,8 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Trigger;
 
+import il.ac.pddailycogresearch.pddailycog.services.DataSyncJobService;
+
 public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if too much for users to call this every time...
     private static final String TAG = ConnectivityChangeReceiver.class.getSimpleName();
 

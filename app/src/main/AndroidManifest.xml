@@ -43,7 +43,7 @@
         </receiver>
 
         <service
-            android:name=".receivers.DataSyncJobService"
+            android:name=".services.DataSyncJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
@@ -75,12 +75,20 @@
         </activity>
         <activity android:name=".activities.simple.TrialNoticeActivity" />
 
-        <service
-            android:name=".receivers.MyFirebaseMessagingService">
+        <service android:name=".services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <receiver
+            android:name=".receivers.MyPackageReplacedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter >
+                <action   android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

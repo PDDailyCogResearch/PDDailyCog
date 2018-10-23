@@ -14,7 +14,7 @@ import com.firebase.jobdispatcher.Trigger;
 import java.util.concurrent.TimeUnit;
 
 import il.ac.pddailycogresearch.pddailycog.receivers.ConnectivityChangeReceiver;
-import il.ac.pddailycogresearch.pddailycog.receivers.DataSyncJobService;
+import il.ac.pddailycogresearch.pddailycog.services.DataSyncJobService;
 
 /**
  * Created by User on 21/06/2018.
