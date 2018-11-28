@@ -82,7 +82,12 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                                         @Override
                                         public void onValueRetrieved(Boolean value) {
                                             if (value) {
-                                                continueIfTimeArrived();
+                                                if(nextChoreNum>1){
+                                                continueIfTimeArrived();}
+                                                else {
+                                                    nextChoreNum++;
+                                                    chooseNextActivity();
+                                                }
                                             } else {
                                                 chooseNextActivity();
                                             }

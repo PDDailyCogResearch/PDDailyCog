@@ -48,6 +48,6 @@ public class Consts {
     public static final String LIST_CHORE_NAME_PREFIX = "list_";
     public static final String TRAVEL_CHORE_NAME_PREFIX = "travel_";
     public static final String DRINK_CHORE_NAME_PREFIX = "drink_";
-    public static final long MINIMUM_TIME_GAP_BETWEEN_CHORES = 75L * 24 * 60 * 60 * 1000;
+    public static final long MINIMUM_TIME_GAP_BETWEEN_CHORES = 50L * 24 * 60 * 60 * 1000;
     public static final String MESSAGING_TOKEN_KEY = "messaging-token";
 }
