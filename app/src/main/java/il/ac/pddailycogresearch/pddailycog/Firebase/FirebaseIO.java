@@ -37,6 +37,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListen
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseResaveImage;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnSuccessListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
@@ -352,7 +353,7 @@ public class FirebaseIO {
         });
     }
 
-    public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey, final IOnSuccessListener iOnSuccessListener) {
+    public void resaveImageByKey(final String collection, final int choreNum, final String imageDbKey, final IOnFirebaseResaveImage iOnFirebaseResaveImage) {
         mUserReference.child(collection).child(String.valueOf(choreNum))
                 .child(imageDbKey).addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -371,8 +372,13 @@ public class FirebaseIO {
                                                         new DatabaseReference.CompletionListener() {
                                                             @Override
                                                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                                                if (databaseError != null) {
-                                                                    iOnSuccessListener.onSuccess();
+                                                                if (databaseError == null) {
+                                                                    iOnFirebaseResaveImage.onLogEvent(
+                                                                            "success chore: "+ choreNum + " key: "+ imageDbKey);
+                                                                    iOnFirebaseResaveImage.onSuccess();
+                                                                } else {
+                                                                    iOnFirebaseResaveImage.onLogEvent(
+                                                                            "failure: " +databaseError.getMessage()+" chore: "+ choreNum + " key: "+ imageDbKey);
                                                                 }
                                                             }
                                                         }
@@ -383,19 +389,23 @@ public class FirebaseIO {
                                             public void onError(String msg) {
                                                 Exception exception = new Exception(msg);
                                                 CommonUtils.onGeneralError(exception, TAG);
+                                                iOnFirebaseResaveImage.onLogEvent(
+                                                        "failure: " +msg+" chore: "+ choreNum + " key: "+ imageDbKey);
                                             }
                                         });
                             } else {
-                                iOnSuccessListener.onSuccess(); //no need to save considers "success"
+                                iOnFirebaseResaveImage.onSuccess(); //no need to save considers "success"
                             }
                         } else {
-                            iOnSuccessListener.onSuccess(); //no need to save considers "success"
+                            iOnFirebaseResaveImage.onSuccess(); //no need to save considers "success"
                         }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         CommonUtils.onGeneralError(databaseError.toException(), TAG);
+                        iOnFirebaseResaveImage.onLogEvent(
+                                "failure: " +databaseError.getMessage()+" chore: "+ choreNum + " key: "+ imageDbKey);
                     }
                 }
         );
@@ -509,6 +519,10 @@ public class FirebaseIO {
 
     public boolean isUserLogged() {
         return mAuth.getCurrentUser() != null;
+    }
+
+    public String getUsername() {
+        return mAuth.getCurrentUser().getEmail();
     }
 
     public void logout() {

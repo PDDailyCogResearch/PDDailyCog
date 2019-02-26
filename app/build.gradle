@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 14
-        versionName "1.0.13"
+        versionName "1.0.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -46,6 +46,7 @@ dependencies {
     compile "com.google.firebase:firebase-storage:16.0.3"
     compile 'com.firebase:firebase-jobdispatcher:0.8.5'
     compile 'com.google.firebase:firebase-messaging:17.3.3'
+    compile 'com.google.firebase:firebase-core:16.0.7'
 
 
     // code generator for view
