@@ -7,6 +7,7 @@ package il.ac.pddailycogresearch.pddailycog.services;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bugfender.sdk.Bugfender;
 import com.crashlytics.android.Crashlytics;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -75,8 +76,10 @@ public class DataSyncJobService extends JobService {
 
     private void logEvent(String event, String message) {
         Bundle params = new Bundle();
+        message = FirebaseIO.getInstance().getUsername() + ": "+message;
         params.putString("message",message);
         mFirebaseAnalytics.logEvent(event, params);
+        Bugfender.sendIssue(event,message);
     }
 
 

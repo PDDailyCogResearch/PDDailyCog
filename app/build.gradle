@@ -9,8 +9,8 @@ android {
         applicationId "il.ac.pddailycogresearch.pddailycog"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 14
-        versionName "1.0.14"
+        versionCode 16
+        versionName "1.0.15"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -47,6 +47,9 @@ dependencies {
     compile 'com.firebase:firebase-jobdispatcher:0.8.5'
     compile 'com.google.firebase:firebase-messaging:17.3.3'
     compile 'com.google.firebase:firebase-core:16.0.7'
+
+
+    compile 'com.bugfender.sdk:android:1.+'
 
 
     // code generator for view

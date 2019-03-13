@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
+import com.bugfender.sdk.Bugfender;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
@@ -28,6 +29,11 @@ public class App extends Application {
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(new ConnectivityChangeReceiver(), intentFilter);
         dispatcherSchdelue(getApplicationContext());
+
+        Bugfender.init(this, "iktivrLKDF4kkPbrsDkVtdar5Knnwo7O", BuildConfig.DEBUG);
+        Bugfender.enableCrashReporting();
+        Bugfender.enableUIEventLogging(this);
+        Bugfender.enableLogcatLogging();
     }
 
     private void dispatcherSchdelue(Context context) {
