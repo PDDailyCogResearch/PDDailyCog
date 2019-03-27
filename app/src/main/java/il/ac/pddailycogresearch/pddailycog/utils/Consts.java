@@ -50,4 +50,6 @@ public class Consts {
     public static final String DRINK_CHORE_NAME_PREFIX = "drink_";
     public static final long MINIMUM_TIME_GAP_BETWEEN_CHORES = 50L * 24 * 60 * 60 * 1000;
     public static final String MESSAGING_TOKEN_KEY = "messaging-token";
+    public static final int QUESTIONNAIRE_ANSWERS_SIZE = 6;
+    public static final long MAXIMUM_TIME_GAP_FOR_QUESTIONNAIRE = 30L * 24 * 60 * 60 * 1000;
 }

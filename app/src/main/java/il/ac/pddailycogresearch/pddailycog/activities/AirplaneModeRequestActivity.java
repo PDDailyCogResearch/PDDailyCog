@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.activities.chores.MainChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.simple.OpenQuestionnaireActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.TrialNoticeActivity;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseKeyValueListeners;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
@@ -27,6 +29,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 public class AirplaneModeRequestActivity extends AppCompatActivity {
 
     private static final String TAG = AirplaneModeRequestActivity.class.getSimpleName();
+    private static final String CHORE_NUM_NAME = "chore-num";
 
     private int nextChoreNum = 1;
 
@@ -82,11 +85,47 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                                         @Override
                                         public void onValueRetrieved(Boolean value) {
                                             if (value) {
-                                                if(nextChoreNum>1){
-                                                continueIfTimeArrived();}
-                                                else {
+                                                if (nextChoreNum > 1) {
+                                                    FirebaseIO.getInstance().retrieveQuestionnaire(nextChoreNum,
+                                                            new IOnFirebaseQuestionnaireListener() {
+                                                                @Override
+                                                                public void onAnswersRetreived(List<Integer> answers) {
+                                                                    if (answers.size()==0 || answers.get(5) == -1) {
+                                                                        FirebaseIO.getInstance().retreieveStringValueByKey(Consts.CHORES_KEY, nextChoreNum, Consts.ABSOLUTE_PATH_KEY + 8,//TODO find not hardcoded way
+                                                                                new IOnFirebaseKeyValueListeners.OnStringValueListener() {
+
+                                                                                    @Override
+                                                                                    public void onValueRetrieved(String value) {
+                                                                                        if (FirebaseIO.getInstance().isUserStaff() || (new Date()).getTime() - CommonUtils.imageNameToDate(value).getTime() < Consts.MAXIMUM_TIME_GAP_FOR_QUESTIONNAIRE) {
+                                                                                            Intent newChore = new Intent(AirplaneModeRequestActivity.this, OpenQuestionnaireActivity.class);
+                                                                                            newChore.putExtra(CHORE_NUM_NAME, nextChoreNum);
+                                                                                            startActivity(newChore);
+                                                                                        } else {
+                                                                                            DialogUtils.createNoMoreChoresAlertDialog(AirplaneModeRequestActivity.this);
+                                                                                        }
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onError(Exception e) {
+                                                                                        CommonUtils.onGeneralError(e, TAG);
+                                                                                    }
+                                                                                }
+                                                                        );
+                                                                    } else {
+                                                                        continueIfTimeArrived();
+                                                                        chooseNextActivity();
+                                                                    }
+                                                                }
+
+                                                                @Override
+                                                                public void onError(DatabaseException e) {
+                                                                    CommonUtils.onGeneralError(e, TAG);
+                                                                }
+                                                            });
+                                                } else {
                                                     nextChoreNum++;
                                                     chooseNextActivity();
+
                                                 }
                                             } else {
                                                 chooseNextActivity();
@@ -116,7 +155,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
                     @Override
                     public void onValueRetrieved(String value) {
-                        if (FirebaseIO.getInstance().isUserStaff()||(new Date()).getTime() - CommonUtils.imageNameToDate(value).getTime()>Consts.MINIMUM_TIME_GAP_BETWEEN_CHORES) {
+                        if (FirebaseIO.getInstance().isUserStaff() || (new Date()).getTime() - CommonUtils.imageNameToDate(value).getTime() > Consts.MINIMUM_TIME_GAP_BETWEEN_CHORES) {
                             nextChoreNum++;
                             chooseNextActivity();
                         } else {
@@ -126,7 +165,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        CommonUtils.onGeneralError(e,TAG);
+                        CommonUtils.onGeneralError(e, TAG);
                     }
                 }
         );
