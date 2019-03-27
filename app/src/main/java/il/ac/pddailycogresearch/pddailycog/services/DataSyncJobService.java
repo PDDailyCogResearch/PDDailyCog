@@ -76,7 +76,8 @@ public class DataSyncJobService extends JobService {
 
     private void logEvent(String event, String message) {
         Bundle params = new Bundle();
-        message = FirebaseIO.getInstance().getUsername() + ": "+message;
+        if(FirebaseIO.getInstance().isUserLogged())
+            message = FirebaseIO.getInstance().getUsername() + ": "+message;
         params.putString("message",message);
         mFirebaseAnalytics.logEvent(event, params);
         Bugfender.sendIssue(event,message);
